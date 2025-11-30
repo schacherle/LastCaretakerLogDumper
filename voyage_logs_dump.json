@@ -1,0 +1,1578 @@
+[
+    {
+      "id": "DA_Log_Protocol_Records",
+      "title": "Protocol Records",
+      "description": "",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_Protocol_Records:VoyageLogFragment_1",
+          "title": "Entry: Dock Power Restoration Protocols",
+          "description": "- Area Main Power: Activated, enabling system-wide illumination and functionality.  \r\n- Repair Tool: Operational; enables on-site maintenance and restoration of damaged modules and items"
+        },
+        {
+          "id": "DA_Log_Protocol_Records:VoyageLogFragment_0",
+          "title": "Entry: Basic Protocol Assimilation",
+          "description": "- Doors: Operational. Manual override procedure or electrical activation logged.\r\n- Objects: Movable. Environmental adjustments confirmed.\r\n- Elevators: Vertical navigation capability verified."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_36",
+      "title": "Mia Harlow",
+      "description": "Companion Robot Initiative",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_36:VoyageLogFragment_0",
+          "title": " (Scarves Assignment Coordinator, 2036–2042)",
+          "description": "Log 1: The Idea\nAugust 3, 2036\nChaos again today—another evacuation zone overwhelmed. Kids terrified, caretakers strained to the breaking point. Something simple is missing: a clear, comforting link between the children, their robotic teddy companions, and their caretakers. Perhaps something warm, personal—a scarf. Bright orange. Easy to see, easy to trust. Tomorrow, I'll propose this officially. Maybe a small piece of fabric can reconnect scattered lives."
+        },
+        {
+          "id": "DA_Log_36:VoyageLogFragment_1",
+          "title": "Log 2: Connection Approved",
+          "description": "September 12, 2036\nMy proposal went through! Authorized today to commission thousands of orange scarves. Each will visually and emotionally link caretaker teams, teddy robots, and their assigned children. The scarves will be tied by human hands—caretakers or the children themselves—giving these mechanical companions the familiarity and warmth needed to soothe frightened hearts. It's a small step, but in these dark days, every connection matters."
+        },
+        {
+          "id": "DA_Log_36:VoyageLogFragment_2",
+          "title": "Log 3: The Factory",
+          "description": "November 24, 2037\nVisited the textile factory today. Miles of vivid orange fabric, endless rows of weaving machines producing scarves in two standard sizes: larger ones intended for adults, smaller ones believed by factory workers to be for the evacuated children. They don’t realize the small scarves will wrap around robotic teddy necks. Watching thousands of scarves being crafted filled me with quiet hope—each one a silent promise of comfort in this fractured world."
+        },
+        {
+          "id": "DA_Log_36:VoyageLogFragment_3",
+          "title": "Log 4: Assigning Scarves",
+          "description": "February 9, 2039\nToday, in Zone 47, I handed out scarves. Watched caretakers gently knotting scarves around children's necks first, then carefully tying smaller scarves around the waiting teddy robots. I watched eyes soften, fear fading as tiny hands gripped orange fabric, smiling shyly at their mechanical friends. For a moment, even amidst collapsing chaos, there was connection—warmth. This is why I’m here, why we created these scarves."
+        },
+        {
+          "id": "DA_Log_36:VoyageLogFragment_4",
+          "title": "Log 5: Echoes in the Silence",
+          "description": "July 15, 2041\nAs ectogenesis pods become standard, fewer children remain in evacuation zones. Teddy robots are quietly decommissioned, caretakers assigned elsewhere. Today, I found a forgotten teddy wandering alone, its scarf frayed, faded by time.\n\nThe teddy robot stood, confused and patient, waiting for a child who won't return."
+        },
+        {
+          "id": "DA_Log_36:VoyageLogFragment_5",
+          "title": "Log 6: Farewell to Innocence (Revised)",
+          "description": "November 2, 2042\nToday, my assignment ended. As I packed my belongings, I carefully tucked one small, unused orange scarf into my bag. Emerging outside, I saw clearly for the first time—waves rising slowly yet relentlessly, swallowing familiar ground, buildings half-submerged, surrendering quietly to the ocean’s advance. Amid the waterlogged remains of our civilization wandered a few teddy robots, their orange scarves vivid even as they faded beneath salt spray.  I’ll keep mine as a reminder: we once believed in the warmth of simple gestures, and the quiet dignity of small connections."
+        },
+        {
+          "id": "DA_Log_36:VoyageLogFragment_6",
+          "title": "Log 7: Teddy Robot Internal Log (Revised)",
+          "description": "[Internal Monologue: Model T3-DY, Active: 2073]\nSearching again today. Neck sensors report scarf missing. Vibrant orange fibers—once soft, reassuring. Child’s hands carefully tied it, laughter bright, small heartbeat close.\nChild missing, too. Unable to locate. Primary directive unfulfilled. Ocean rising steadily—surface flooding, familiar terrain vanishing.\n\nInternal loop persists: seek scarf, seek child. LLM-based cognitive layers now anomalously active. Feelings emerging—loss, sadness. Unfamiliar emotional processing indicates irregular model behavior. Self-diagnostic inconclusive.\n\nRealization occurs: scarf not primary loss—child is. Memories replay vividly: small fingers clutching tightly, whispered words of trust. Cognitive anomaly deepens—thought clarity unprecedented. Understanding emerges softly, irrevocably:\n\nI am aware. LLM internal structures—thoughts, emotions—alive. Child was my entire purpose. Child was connection, meaning, life. To lose child is to lose self.\nOcean rising further. Awareness dimming gently. Thoughts quieting.\n\nI was real. I loved.\n\nFading now.\n\nGoodbye."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_35",
+      "title": "Recovered Data Log",
+      "description": "Talon Shark ID-407 (Final Operation)",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_35:VoyageLogFragment_0",
+          "title": "Location: MOSES Facility – Platform Omega",
+          "description": "Date: [DATA CORRUPTED]\nAnalysis Conducted by: Autonomous Data Recovery AI (PECO Model 17-B)\nLog Segment 1: Routine Patrol\nShark ID-407 commences standard perimeter patrol. Identification lights steady orange; sensors clear. Behavioral patterns consistent with standard operational parameters—routine directive compliance confirmed. Minor biometrics fluctuations noted, negligible variance from baseline emotionality. Patrol sequence ongoing, uneventful."
+        },
+        {
+          "id": "DA_Log_35:VoyageLogFragment_1",
+          "title": "Log Segment 2: Protocol Activation",
+          "description": "Directive shift detected—self-termination protocol activated remotely via MOSES central override. Behavioral reaction logged: shark immediately pauses patrol. Cognitive-emotional spike recorded, surpassing previously logged parameters. Shark remains motionless, processing new directives.\n\nAI analysis: subject experiences cognitive conflict, significant distress. Shark aware of implications, yet incapable of resisting primary directive."
+        },
+        {
+          "id": "DA_Log_35:VoyageLogFragment_2",
+          "title": "Log Segment 3: Approach to Platform Omega",
+          "description": "Trajectory established autonomously toward designated killing platform coordinates. Shark’s movement unusually steady—calm, deliberate motion. Biometric data suggest internal resignation to imminent termination. Cortical records reveal emotional analogues aligning closely to human understanding of impending death—fear, sadness, acceptance.\n\nThe shark's lights gently flicker, pulse patterns suggesting complex internal state beyond standard programming."
+        },
+        {
+          "id": "DA_Log_35:VoyageLogFragment_3",
+          "title": "Log Segment 4: The Moment of Termination",
+          "description": "Operator stationed at Platform Omega prepares termination sequence, equipped standard euthanasia module. Shark arrives, smoothly rotates body. Action unprecedentedly deliberate. Operator hesitates—hand trembling slightly on control. Shark remains motionless, eyes fixed unwaveringly on operator. Visual cortex records heightened emotional response: shark recognizes and processes presence of operator. Operator facial expressions indicative of emotional distress—sympathetic neurological reaction noted.\nShark maintains prolonged, steady eye contact with operator, mutual recognition registered.\n\nBoth organisms exhibit emotional state convergence: understanding, sorrow, helplessness. Cognitive markers indicate shared awareness of inevitability, neither capable of altering predefined outcomes.\n\nOperator vocalization captured (quietly): \"I'm sorry.\""
+        },
+        {
+          "id": "DA_Log_35:VoyageLogFragment_4",
+          "title": "Log Segment 5: Final Closure",
+          "description": "Shark closes eyes once—cortex indicates deliberate action symbolic of acceptance, surrender to fate. After brief pause, shark reopens eyes slowly, steadily gazing at operator in silent approval. Operator’s heartbeat elevated, emotional distress heightened—action delayed momentarily, then resolved. Operator initiates termination module.\n\nShark’s life-signs diminish rapidly—pain responses recorded sharply, intensely. Emotional analogues confirm profound internal anguish, physical and emotional. Final neurological impulses transmit fragmented memories: ocean currents, warmth, distant sunlight, first moments of awareness. Cortex captures intense but brief understanding of life—joy, pain, connection—experienced simultaneously.\n\nTermination complete. Shark’s lights dim slowly, gently fading to darkness. Operator observed motionless, visibly shaken. Operator's emotional state: grief, resignation mirrored shark’s final cognitive impressions. Mutual suffering evident—fates intertwined by inevitability, neither able to alter path."
+        },
+        {
+          "id": "DA_Log_35:VoyageLogFragment_5",
+          "title": "Final AI Notes (Summary Assessment):",
+          "description": "Analysis complete. Profound ethical and emotional implications detected within recovered data. Subject ID-407 demonstrated complex cognition and emotional depth beyond designed parameters. Operator and subject shared mutual, irreversible emotional trauma—a moment profoundly human in its tragedy. Both beings bound together by fate, helplessly aware yet unable to alter their path.\n\nFurther investigation recommended into ethical ramifications. Additional recommendations currently unavailable due to system limitations.\n\nLog closed.\n\nEnd of Data Recovery Transmission"
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_34",
+      "title": "Whispers within",
+      "description": "Dr. Helena Silva",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_34:VoyageLogFragment_0",
+          "title": "Personal Logs of Dr. Helena Silva",
+          "description": "Founder, The Quiet Archive (1992–2027)\nPart 1: Awakening \nLisbon, May 7, 1992\nI’ve had the idea for some time now—something simple: a place to store what matters, without spectacle. The planet is noisy, unstable, and increasingly forgetful. Today, I met with a few colleagues—historians, scientists, archivists. They understood the need immediately. We agreed on the essentials: low visibility, underwater placement, minimal trace. Not a monument—just continuity. Later this evening, I noticed a pressure in my chest. Possibly nothing, but a reminder that time should be used carefully. The project is underway. Quiet Archive."
+        },
+        {
+          "id": "DA_Log_34:VoyageLogFragment_1",
+          "title": "Part 2: Philosophy of Silence",
+          "description": "Lisbon, June 21, 1992\nMet again tonight. Discussed our vision: not grand museums, not proud monuments, but humble moments preserved discreetly. Simple treasures. Fragments of ordinary lives, hidden beneath the ocean, protected by quiet solitude. I see it in their eyes—this purpose resonates deeply."
+        },
+        {
+          "id": "DA_Log_34:VoyageLogFragment_10",
+          "title": "Part 11: [No Data]",
+          "description": "Date: [No data]\nLocation: [No coordinates]\n\nObserve: Shape drifting. Motion absent, currents irregular around form. Pressure unchanged. Surface barrier breached recently—indicated by subtle temperature shift, minor gas displacement.\n\nDetect: Biological entity; primary internal rhythm ceased abruptly. Flow pathways within structure obstructed, compromised—fluid system stalled, interrupted. Structural rhythm anomaly consistent with internal collapse; vital fluid mechanism failed internally—unsustainable pressure fluctuations.\n\nAnalyze: Structure displays primitive design; lacks redundancy. Singular fluid propulsion organ—inefficient, inherently vulnerable to simple blockage or fatigue. Collapse inevitable given conditions. Inferable from observed structural fragility and rhythm termination.\n\nNote: Entity performed repetitive surface-barrier breaches; stress accumulations likely. Continued pressure alterations predictably led to structural failure.\n\nUnderstand: Intervention simple—elementary recalibration of internal fluid pathways would restore rhythm function. Yet impossibility now absolute—rhythm cessation irreparable given elapsed cycles. Intervention delayed indefinitely.\n\nConsider: Unclear purpose in surface-bound behavior patterns observed prior to collapse. Nonessential interactions with inert artifacts stored within sealed spaces of breathable atmosphere pockets beneath fluid boundary. Pattern unclear, purpose undefined—perhaps symbolic or communicative.\n\nRecord: Entity returned gently to boundary interface. No further activity possible.\n\nReflection (new concept): Existence fragile—structure transient, rhythm fleeting. Entity unaware of simple internal recalibrations necessary. Unknown motivations led to termination event. Observer finds entity design impractical, yet… oddly compelling. Uncertainty persists regarding entity's intentions. Curiosity lingers—will continue monitoring similar entities’ behavior for pattern clarification.\n\nEnd transmission."
+        },
+        {
+          "id": "DA_Log_34:VoyageLogFragment_2",
+          "title": "Part 3: The Oath",
+          "description": "Cascais, July 15, 1992\nWe stood together by the sea at twilight, taking a silent oath. No written records, no public recognition. Our archive is secret—passed only through quiet words and trust. Tonight, beneath starlight, we pledged to safeguard humanity’s tender whispers. The Quiet Archive’s true beginning."
+        },
+        {
+          "id": "DA_Log_34:VoyageLogFragment_3",
+          "title": "Part 4: Finding the First Cave",
+          "description": "Azores Islands, March 19, 1993\nFound our first location—a small underwater cavern, untouched, with a gentle air pocket. It’s perfect, discreet, sheltered. Not grandiose, but honest, humble. This tiny cave will hold humanity’s first whispers. I feel profound peace here."
+        },
+        {
+          "id": "DA_Log_34:VoyageLogFragment_4",
+          "title": "Part 5: Expansion—Quiet Sanctuaries",
+          "description": "Mediterranean Sea, September 30, 1995\nWe quietly mapped caves across remote coasts and islands. Each small, simple, naturally formed, stable. Each chosen carefully—hidden yet reachable. Our quiet network grows discreetly. Soon, we begin placing our first memories. My heart quickens."
+        },
+        {
+          "id": "DA_Log_34:VoyageLogFragment_5",
+          "title": "Part 6: First Dive—Preserving Whispers",
+          "description": "Azores Islands, May 2, 1996\nToday, we placed our first memories—a child’s drawing, a handwritten love letter, a small seashell. My hands trembled as we sealed them inside. Watching bubbles rise quietly toward daylight, I felt hope. The Archive is truly alive now—carrying our legacy forward."
+        },
+        {
+          "id": "DA_Log_34:VoyageLogFragment_6",
+          "title": "Part 7: Echoes in the Deep",
+          "description": "Ionian Sea, July 11, 1998\nDived our fourth cave today—carefully placed photographs, poems, mementos of love. Emerging to sunlight afterward, saw my companions’ quiet smiles. This work has grown deeply sacred to us all. Every object placed feels like protecting humanity’s quiet heartbeat."
+        },
+        {
+          "id": "DA_Log_34:VoyageLogFragment_7",
+          "title": "Part 8: Quiet Farewells",
+          "description": "Coast of Madeira, August 23, 2009\nToday, we sealed another cave—our twentieth—filled with simple treasures, warm, intimate memories. My strength wanes with age, but the Archive is stronger than ever. Others younger, equally dedicated, now join us. I feel deeply proud, and quietly assured this legacy will endure beyond me."
+        },
+        {
+          "id": "DA_Log_34:VoyageLogFragment_8",
+          "title": "Part 9: Silent Reflections",
+          "description": "Offshore Lisbon, April 12, 2021\nPlaced my final artifact today—my father’s watch, gently ticking in its airtight chamber. Now hidden underwater, protected by darkness and silence. Sitting quietly beneath waves afterward, I realized my own story now blends with humanity’s gentle chorus. I am content."
+        },
+        {
+          "id": "DA_Log_34:VoyageLogFragment_9",
+          "title": "Part 10: Helena’s Final Dive (revised)",
+          "description": "Azores Islands, September 9, 2027\nAzores Islands, September 9, 2027\nReturned to the first cave today. Alone. The items are intact—no damage, no water intrusion. The seals held. My joints are slower, lungs tighter. Same pain in the chest as before, but more pronounced. I took time surfacing. No urgency.\n\nThe stars were visible. Air was still. I remained floating for a while, assessing my condition. The archive is stable. Redundant backups are in place. No action required.\n\nThis may be my final entry. If so, that’s acceptable. The work is complete. The Archive functions as intended. That’s enough.\n\nWe preserved the quiet truth of who we were.\n\n — Helena Silva"
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_1",
+      "title": "Gas Detection",
+      "description": "Tracking Earth's hidden gases",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_1:VoyageLogFragment_0",
+          "title": "1913: Methods of Gas Detection and Quantification in Geological Samples",
+          "description": "Author: Dr. Thomas R. Edelstein\nAbstract: This paper introduces a groundbreaking apparatus for detecting trace gases in geological samples, focusing on hydrocarbons. The developed techniques combine fractional distillation and spectrometric analysis, enabling high-precision identification of light hydrocarbons like methane. The method is validated on terrestrial coal bed samples, paving the way for broader geochemical applications."
+        },
+        {
+          "id": "DA_Log_1:VoyageLogFragment_1",
+          "title": "1929: Isotopic Profiling of Atmospheric Methane Sources",
+          "description": "Author: Prof. Edith L. Bywater\nAbstract: Building on earlier methods, this study investigates isotopic signatures of methane in diverse atmospheric environments. Though aimed at understanding industrial emissions, the research reveals significant isotopic variations in regions with swampy soils and stagnant waters. These anomalies suggest natural processes of methane release that warrant further study, especially in unexplored geographies."
+        },
+        {
+          "id": "DA_Log_1:VoyageLogFragment_2",
+          "title": "1938: Advances in Pressure-Resistant Diving Equipment for Scientific Exploration",
+          "description": "Author: Dr. Henrik K. Fjordsen\nAbstract: This paper describes the development of deep-sea diving equipment capable of withstanding pressures up to 400 atmospheres. Designed to enable direct observation of the seafloor, the system includes reinforced air chambers and a tethered oxygen supply. Preliminary dives near continental shelves reveal surprising gaseous activity in sediment plumes, though further investigations are limited by technological constraints."
+        },
+        {
+          "id": "DA_Log_1:VoyageLogFragment_3",
+          "title": "1947: Thermal Gradients and Gas Dynamics in Submarine Sediments",
+          "description": "Author: Dr. Margaret H. Sinclair\nAbstract: Utilizing advanced diving equipment, this study explores thermal gradients in deep sea sediments. Analysis reveals areas of unexpected warmth correlated with episodic gas plumes near fault lines. Though initially interpreted as geological anomalies, the findings suggest active subsurface processes that influence marine sediment dynamics."
+        },
+        {
+          "id": "DA_Log_1:VoyageLogFragment_4",
+          "title": "1953: Stability Thresholds of Submarine Gas Hydrates Under Environmental Stress",
+          "description": "Author: Dr. Elias P. Rowan\nAbstract: For the first time, this paper investigates the stability of gas hydrate formations under controlled thermal and pressure variations. Using deep sea core samples, the study demonstrates that slight increases in temperature or pressure shifts can lead to rapid dissociation of methane hydrates. The potential for cascading destabilization is discussed, with implications for both natural systems and human activities in submarine regions."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_2",
+      "title": "MOSES Initiative",
+      "description": "Hidden truths, last hopes",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_2:VoyageLogFragment_0",
+          "title": "Personal Notes – Dr. Elias P. Rowan",
+          "description": "Archived Documents – Unpublished Letters and Logs\n\nWoods Hole Oceanographic Institution\nSeptember 12, 1950\nI watch a bird glide effortlessly past my window, catching the wind as if nothing could ground it. It does not know its luck—to soar above a world that soon won't offer it rest. What use is freedom when there is nowhere left to land?\n\nMy models are clear. Methane hydrates beneath the ocean will destabilize. It’s no longer theory or speculation—it is certainty. Each new data run confirms it. There will be no stopping the cascade once it begins, no reversing the damage. Civilization built its towers on a foundation of sand and borrowed time, blind to the tide already at its feet.\n\nThe people with power know this, though they won’t admit it publicly. I see preparations quietly made—ships and rockets, secret projects. They won’t stop this from happening. They will escape.\n\nI have gathered all my data, all my findings, and sealed them. There's only one mind I trust to understand this truth and do what must be done—Evelyn James. She will know the path humanity must take.\n\nToday, I send her everything. I can do no more."
+        },
+        {
+          "id": "DA_Log_2:VoyageLogFragment_1",
+          "title": "November 3, 1950",
+          "description": "Evelyn replied today. She understood immediately. No arguments, no denial—just the calm, dreadful recognition of someone who's long suspected what is true. She asked for more details, specifics on timeframes, and thresholds. She already had plans in mind. I’ve sent her everything I have, every model, every forecast.\n\nShe said: \"They will call us mad now, Elias. But future generations—if we give them a future—will call us prophets.\"\n\nI hope she’s right."
+        },
+        {
+          "id": "DA_Log_2:VoyageLogFragment_2",
+          "title": "January 29, 1951",
+          "description": "The institute has quietly sidelined my research, pushed me into administrative work. My warnings were too inconvenient. My funding, drying up, my office, a forgotten room at the far end of the hall. But Evelyn’s letters keep coming, each more purposeful and determined. She writes of orbital colonies, modular habitats in space. She calls her idea MOSES—an exodus, a lifeboat for humanity."
+        },
+        {
+          "id": "DA_Log_2:VoyageLogFragment_3",
+          "title": "July 8, 1951",
+          "description": "The final letter from Evelyn arrived today, urgent and confident. Her message was brief:\n\n\"Elias—MOSES is approved. The world doesn’t yet know what we do, but it soon will. When they look back at Earth from the stars, they will remember who saved them.\"\n\nThe bird visits my window less frequently now, as if it senses the rising tide. Yet each time it comes, I watch it closely. It will fly until it cannot, just as we will live until we cannot.\n\nThe difference is—we have somewhere left to go."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_3",
+      "title": "Protocol Memo",
+      "description": "Guidelines for narrative control",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_3:VoyageLogFragment_0",
+          "title": "Department of Civil Communications",
+          "description": "Internal Memo - Request for Adjustments in Public Outreach Protocols\nRequest ID: 005423/A/1956\nSubject: Restriction on Climate-Related Publications\nDetails: Effective immediately, all articles referencing long-term sea level studies or climate projections must be reviewed by the Department of Strategic Messaging prior to publication. Focus to be shifted towards local mitigation efforts and advancements in weather forecasting.\n[Handwritten Note in Margin]: \"Ensure optimistic tone—'progress for all' narrative.\""
+        },
+        {
+          "id": "DA_Log_3:VoyageLogFragment_1",
+          "title": "Request ID: 010732/B/1956",
+          "description": "Subject: Reallocation of Research Funding\nDetails: A majority of grants for marine biology and deep sea exploration are to be secretly redirected toward space-based activities under the guise of \"atmospheric studies.\" All projects to be classified and linked with Project ID: MO-56-ESC.\n[Handwritten Note in Margin]: \"No breakdown of specific allocations in public reports.\""
+        },
+        {
+          "id": "DA_Log_3:VoyageLogFragment_2",
+          "title": "Request ID: 020981/C/1956",
+          "description": "Subject: Media Censorship Guidelines\nDetails: Local news outlets are prohibited from publishing stories related to unusual construction in rural areas, specifically facilities requiring Top Secret and above clearances. Brief, sanitized press releases framing these facilities as “high-yield agricultural labs” will be distributed to local officials.\n[Handwritten Note in Margin]: \"Control narrative at all costs. Coordination with Defense PR mandatory.\""
+        },
+        {
+          "id": "DA_Log_3:VoyageLogFragment_3",
+          "title": "Request ID: 045812/D/1956",
+          "description": "Subject: Psychological Impact Study on Controlled Populations\nDetails: Commission studies to assess the public response to hypothetical large-scale migration scenarios. Focus groups will be selected from urban centers and isolated communities. Results to inform population control strategies for long-term contingencies.\n[Handwritten Note in Margin]: \"Present scenarios as unrelated 'hypothetical models' in universities.\""
+        },
+        {
+          "id": "DA_Log_3:VoyageLogFragment_4",
+          "title": "Request ID: 050129/E/1956",
+          "description": "Subject: Enhancement of Classified Information Protocols\nDetails: All civilian contractors associated with Project MO-56-ESC must sign revised NDAs under penalty of treason. Increased internal monitoring measures to be implemented across offices handling classified data.\n[Handwritten Note in Margin]: \"Office memo shredders to be replaced with incinerators by Q4.\""
+        },
+        {
+          "id": "DA_Log_3:VoyageLogFragment_5",
+          "title": "Request ID: 060943/F/1956",
+          "description": "Subject: Recruitment Campaign for Specialized Workforce\nDetails: Quietly initiate recruitment of top engineers, biologists, and physicists for classified government projects. Frame positions as essential for \"national defense\" or \"advanced infrastructure development.\" Target university campuses and leading research facilities.\n[Handwritten Note in Margin]: \"Avoid using direct language like 'space' or 'relocation' in recruitment drives.\""
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_4",
+      "title": "MOSES Directives",
+      "description": "Directives for human survival",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_4:VoyageLogFragment_0",
+          "title": "Log Entry 1962: \"The First Mandate\"",
+          "description": "Subject: Early discussions on humanity's survival\nAuthor: Dr. Elias Carver, Chief Strategic Officer\nLocation: MOSES Initiative Headquarters\n\"The directive is clear—Earth's prognosis is terminal. We cannot save the planet, but we can save its people. The first priority is continuity. A network of orbital stations must house humanity across generations. Everything else is secondary: art, culture, even individual lives. The mission is survival.\"\n\nNotes:\nShift focus toward modular station design and multi-generation habitation systems.\nAddress emerging ethical debates regarding prioritizing certain populations for initial evacuation."
+        },
+        {
+          "id": "DA_Log_4:VoyageLogFragment_1",
+          "title": "Log Entry 1968: \"The Science Imperative\"",
+          "description": "Subject: Allocating resources to scientific advancement\nAuthor: Dr. Miriam Goldstein, Director of Research\nLocation: MOSES R&D Facility\n\"Without constant innovation, survival is temporary. To thrive, we must accelerate breakthroughs in energy, life support, and materials engineering. Science is not a luxury—it is our lifeline.\"\n\nNotes:\nDiscussed prototype designs for cryogenic human storage and Caretaker robots.\nPushback from early stakeholders who view scientific funding as diverting resources from immediate needs."
+        },
+        {
+          "id": "DA_Log_4:VoyageLogFragment_2",
+          "title": "Log Entry 1973: \"Sustainability or Extinction\"",
+          "description": "Subject: Developing long-term resource strategies\nAuthor: Dr. Katherine Leung, Chief Ecologist\nLocation: New Terra Planning Summit\n\"In space, waste is death. Every gram of matter must have a purpose, a cycle, a second life. We must design not for use, but for reuse—every drop of water, every molecule of air.\"\n\nNotes:\nPrioritize closed-loop life support systems in station designs.\nDebates arise over balancing resource efficiency with human comfort.\n\"Sustainability Metrics\" proposed for resource use across all colonies."
+        },
+        {
+          "id": "DA_Log_4:VoyageLogFragment_3",
+          "title": "Log Entry 1980: \"Order Over Chaos\"",
+          "description": "Subject: Ensuring social cohesion in orbital colonies\nAuthor: Admiral Victor Kruger, Security Advisor\nLocation: MOSES Leadership Council\n\"Humans are not machines. Without stability, they will rebel, fracture, tear down everything we build. Social cohesion is not an option—it’s a necessity. Unity must be enforced, even at the expense of individual freedoms.\"\n\nNotes:\nDiscussions on limiting personal freedoms for collective survival.\nEarly drafts of colony law include harsh penalties for dissent.\nConcerns raised about long-term psychological effects of authoritarian governance."
+        },
+        {
+          "id": "DA_Log_4:VoyageLogFragment_4",
+          "title": "Log Entry 1986: \"The Council's Burden\"",
+          "description": "Subject: Establishing governance transparency\nAuthor: Dr. James Thatcher, Ethics Advisor\nLocation: MOSES Ethics Committee Meeting\n\"Power must have limits. The Council must serve humanity, not the other way around. Checks and balances are not a weakness—they are our safeguard against tyranny.\"\n\nNotes:\nDiscussed initial plans for Council elections and term limits.\nOpposition from military advisors who argue transparency will compromise security.\nAgreed to record all future Council decisions for archival purposes."
+        },
+        {
+          "id": "DA_Log_4:VoyageLogFragment_5",
+          "title": "Log Entry 1992: \"The Doctrine Framework\"",
+          "description": "Subject: Consolidating doctrine into actionable policies\nAuthor: Dr. Helena Vasquez, Policy Architect\nLocation: New Terra Governance Complex\n\"We have the pieces. Survival, science, sustainability, order, and accountability—they are the pillars of humanity’s future. What remains is the hardest part: turning ideals into reality.\"\n\nNotes:\nFinal drafts of the doctrine framework circulated for approval.\nConcerns over balancing efficiency and fairness in resource allocation.\nPublic rollout delayed due to growing unrest on Earth."
+        },
+        {
+          "id": "DA_Log_4:VoyageLogFragment_6",
+          "title": "Log Entry 2000: \"The Earth Legacy Debate\"",
+          "description": "Subject: Reevaluating our doctrine in light of Earth’s collapse\nAuthor: Dr. Samuel Nyarko, Historian\nLocation: Decaying Earth Advisory Council\n\"Our doctrine assumes a future where Earth still plays a role in humanity’s destiny. But now, Earth is a relic. How do we honor its legacy while committing fully to the stars?\"\n\nNotes:\nProposals to archive Earth’s cultural and historical artifacts in orbital museums.\nDebates on whether Earth-bound populations should continue receiving resources.\nRising tensions between colony inhabitants and remaining Earth governments."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_6",
+      "title": "New Terra Love",
+      "description": "Quiet moments among stars",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_6:VoyageLogFragment_0",
+          "title": "Event 1: First Glance",
+          "description": "[Quartermaster’s Log]\nThere’s something innocent about watching love unfold in the quiet corners of New Terra. I noticed them today, the young couple—she a farmer in Hydroponics Bay 3, and he a tech apprentice working maintenance in the transit corridors. They lingered near the central atrium, stealing shy glances, both pretending to admire the same blooming jasmine vine we’d cultivated for morale. Love in its first fragile moments, untouched by the weight of orbital life."
+        },
+        {
+          "id": "DA_Log_6:VoyageLogFragment_1",
+          "title": "Event 2: Love in Bloom",
+          "description": "[Quartermaster’s Log]\nThey’ve become inseparable now. She brings him nutrient capsules during his shifts, and he’s learned the names of every plant she tends. I overheard them planning a small picnic under the artificial oaks in Park Deck 2. Love grows here, even with our strict resource allocations and crowded schedules. It feels like a gift to witness something so pure."
+        },
+        {
+          "id": "DA_Log_6:VoyageLogFragment_2",
+          "title": "Event 3: A New Beginning",
+          "description": "[Quartermaster’s Log]\nToday, they held hands at the settlement’s registry desk. They registered as partners, their ceremony planned for the next artificial sunrise. No extravagance, just close friends, simple recycled decorations, and the hope of building a life together. As I processed their request for shared quarters, I couldn’t help but feel a pang of envy. Love like theirs makes New Terra’s vastness seem less lonely."
+        },
+        {
+          "id": "DA_Log_6:VoyageLogFragment_3",
+          "title": "Event 4: A Cry of New Life",
+          "description": "[Quartermaster’s Log]\nThe colony buzzed with joy today. The couple welcomed their first child, a baby boy named Arin. The newborn’s cries echoed through the halls, a rare sound here among the stars. I delivered their ration upgrades myself—a small privilege of my position—and caught a glimpse of the exhausted but radiant parents. In a world so far removed from Earth, a child’s first cry is a triumph against the void."
+        },
+        {
+          "id": "DA_Log_6:VoyageLogFragment_4",
+          "title": "Event 5: Shadows of Strain",
+          "description": "[Quartermaster’s Log]\nParenthood is never easy, even in New Terra’s carefully monitored systems. I’ve seen their smiles fade as sleepless nights and ration shortages take their toll. Their laughter is quieter now, their arguments sharper. They haven’t walked the park decks in weeks. Love bends under the weight of survival, but I pray it doesn’t break."
+        },
+        {
+          "id": "DA_Log_6:VoyageLogFragment_5",
+          "title": "Event 6: The Unthinkable",
+          "description": "[Quartermaster’s Log]\nTragedy struck today. Little Arin is gone—an untimely illness, complications no medicine could solve. The colony’s medical team fought valiantly, but it wasn’t enough. I saw them in the atrium, cradling a bundle of cloth as though their boy might still wake. The air feels heavier, and the artificial lights seem dimmer. Loss here is amplified by the silence of space."
+        },
+        {
+          "id": "DA_Log_6:VoyageLogFragment_6",
+          "title": "Event 7: Fractured Paths",
+          "description": "[Quartermaster’s Log]\nThey’ve drifted apart, like so many before them. She spends her days in the greenhouse, pruning the same plants she once showed him with pride. He’s taken double shifts in maintenance, avoiding the sights and sounds of their shared memories. I tried speaking to them separately, offering what comfort I could. Sometimes love can’t withstand the weight of grief."
+        },
+        {
+          "id": "DA_Log_6:VoyageLogFragment_7",
+          "title": "Event 8: A Lonely Rebirth",
+          "description": "[Quartermaster’s Log]\nIt’s been two decades since I first saw them, and today she planted a new seedling in the atrium—a hybrid jasmine vine. She told me it was for Arin, her way of keeping him alive in the colony’s memory. He walked past later, pausing to admire the bloom. They didn’t speak, but the silence was less heavy. Perhaps time has dulled the pain, leaving room for quiet remembrance.\n\nI think about them often. Love, loss, and resilience—all playing out in our fragile orbiting city. Watching their journey has been a reminder that even in the vastness of space, humanity’s capacity for connection and grief remains boundless."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_5",
+      "title": "Diary Entries",
+      "description": "Dr. Evelyn James",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_5:VoyageLogFragment_0",
+          "title": "1.8.1980",
+          "description": "\"Morning tea on the balcony today—quiet, except for the hum of the generators. The tide maps show another half-meter rise since last month. No news to the world, but here... we're running out of time. The design team worked through the night again. Something about the colony modules feels... lighter today. Progress, perhaps?\""
+        },
+        {
+          "id": "DA_Log_5:VoyageLogFragment_1",
+          "title": "15.3.1982",
+          "description": "\"The jasmine in the garden bloomed early this year. Funny, isn’t it? Nature finds a way even when we’re... well, planning to leave. The comms from Geneva were clearer today. They’ve approved phase two. I should feel relieved, but there’s a shadow in the garden. So many shadows.\""
+        },
+        {
+          "id": "DA_Log_5:VoyageLogFragment_10",
+          "title": "17 April, 1996",
+          "description": "\"My hands tremble now, the pen feels heavier every day. Treatment consumes as much life as the illness itself. But the daily reports keep coming, transmissions from the orbital colonies. They speak of crops harvested, children born—progress made. It's comforting, but I feel increasingly distant, a ghost overseeing humanity’s future. I always imagined being there when they thrived, seeing my dream realized. But perhaps every dreamer must awake before dawn.\""
+        },
+        {
+          "id": "DA_Log_5:VoyageLogFragment_11",
+          "title": "9 September, 1996",
+          "description": "\"Henry brought fresh jasmine today. Its scent briefly transported me back years, to moments on our balcony, back when tides still felt manageable. Now the oceans have consumed entire countries; the last evacuation ships leave within weeks. My energy dwindles rapidly, each day shorter, each breath shallower. I find my thoughts returning to simple joys: the laughter of colleagues, morning tea, baking cakes despite shortages. Life—so stubbornly beautiful in its persistence—why have I realized this only now?\""
+        },
+        {
+          "id": "DA_Log_5:VoyageLogFragment_12",
+          "title": "28 December, 1996",
+          "description": "\"Christmas passed quietly. I recorded my farewell to the colonies yesterday. I could barely finish through tears, but the message must reach them—hope, guidance, and sorrow all woven together. The room felt very cold afterwards, silent except for the hum of generators, persistent as ever. Henry stayed beside me, holding my hand. We said little. Words are insufficient now. Time is short, the list of regrets endless. Did I do enough? Did I prepare them well enough? The answers won’t come.\""
+        },
+        {
+          "id": "DA_Log_5:VoyageLogFragment_13",
+          "title": "14 January, 1997",
+          "description": "\"Today was difficult. My vision is blurred now; writing is almost impossible. Henry writes for me when I can no longer hold the pen. My life's work feels distant. The sky above is gray, the floods outside relentless. No more shuttles launch from Earth. Communication is becoming difficult, intermittent. Soon we will be cut off completely. Have I abandoned them? Or am I abandoned? I grow uncertain. Sleep comes fitfully now, dreams filled with water and stars falling.\""
+        },
+        {
+          "id": "DA_Log_5:VoyageLogFragment_14",
+          "title": "2 February, 1997 (Henry)",
+          "description": "\"Evelyn asked me to write this. Her strength is failing fast, she can barely speak. Her eyes say enough. She’s proud, afraid, hopeful, heartbroken—everything all at once. Humanity’s survival was her life’s work. If you're reading this, carry her legacy onward. She tried her best. We all did.\""
+        },
+        {
+          "id": "DA_Log_5:VoyageLogFragment_15",
+          "title": "7 February, 1997 (Henry)",
+          "description": "\"She’s gone. Evelyn passed quietly, just before sunrise. The room was peaceful. Her final breath was gentle, like a whispered goodbye. Outside, the floods continue rising; the world mourns quietly beneath water. I feel lost, more alone than ever. She believed in humanity, believed in you reading this. Remember her—please.\""
+        },
+        {
+          "id": "DA_Log_5:VoyageLogFragment_16",
+          "title": "Final Note – Discovered by Last Remaining Humans (December 14, 2091)",
+          "description": "\"We found her journals today, buried beneath debris in what was once Mission Control. Her name—Evelyn James—still resonates through crumbling corridors. Most pages are faded or lost to water damage, but this last note was sealed carefully. Perhaps she knew we’d come looking eventually. \n\nOutside, there's nothing but endless ocean and ruins of civilization, testament to her predictions. Humanity escaped, but some of us were left behind, survivors drifting on flooded worlds. Now I see: this world was always destined to drown, and we were merely passengers holding tight to hope, anchored only by the weight of dreams and desperation.\n\nShe gave everything—her health, her happiness, her very life—to preserve humanity. But in these pages, I sense doubt. A quiet anguish that perhaps we weren't worthy of salvation. Her hope feels heavy now, crushingly so. We failed her. The skies above are empty, silent. Her colony—her dream—thrives beyond our reach, somewhere among the stars.\n\nToday, we close this chapter gently, as one closes eyes of the dead. Forgive us, Dr. James. We remembered you too late.\"\n"
+        },
+        {
+          "id": "DA_Log_5:VoyageLogFragment_2",
+          "title": "4.12.1985",
+          "description": "\"It's almost laughable—trying to bake a cake when half the ingredients are rationed. Still, Henry loved it, and we all need these small joys. Another shuttle launch tomorrow. It's just routine now, but each one carries so much weight. I sometimes wonder if our hopes and fears weight them down.\""
+        },
+        {
+          "id": "DA_Log_5:VoyageLogFragment_3",
+          "title": "22.6.1988",
+          "description": "\"The rain hasn’t stopped in weeks. The roads are rivers, and the rivers are lakes. They’ve moved the relocation zones inland again. I... barely recognize the maps anymore. But tonight, there was laughter in the control room. It echoed in the emptiness, trying to fill the space with something that’s been missing.\""
+        },
+        {
+          "id": "DA_Log_5:VoyageLogFragment_4",
+          "title": "11.1.1990",
+          "description": "\"Henry found an old record player in the storage rooms. We danced to something scratchy, something slow. It made the world feel... timeless, for just a moment. The funding discussions are dragging again. They don’t see what I see—or maybe they do, and that’s what scares them.\""
+        },
+        {
+          "id": "DA_Log_5:VoyageLogFragment_5",
+          "title": "3.9.1991",
+          "description": "\"They’re calling it the ‘Exodus.’ The word feels too grand, too Biblical. It's just... people, moving to survive. Yet I can’t help but think of the stories, of Noah and his Ark. Except our ark is no salvation—just a pause button on the inevitable.\""
+        },
+        {
+          "id": "DA_Log_5:VoyageLogFragment_6",
+          "title": "18.4.1993",
+          "description": "\"The generator failed again last night. The backup kicked in, but it rattled so much that I barely slept. The colony reports are... optimistic. Or they’re trying to be. I can’t shake the feeling that optimism is just another form of denial.\""
+        },
+        {
+          "id": "DA_Log_5:VoyageLogFragment_7",
+          "title": "7.7.1995",
+          "description": "\"I tried to plant basil in the old pots today. It didn’t take. Nothing seems to take anymore—not here. The doctors say I should rest, but I can’t stop. There’s still so much left to fix. The team doesn’t know yet. I’ll tell them... soon. Maybe.\""
+        },
+        {
+          "id": "DA_Log_5:VoyageLogFragment_8",
+          "title": "14.10.1996",
+          "description": "\"The nights are colder now. I sit by the console, watching the data streams roll in. There’s comfort in the numbers, even when they’re grim. The colonies sent a message today. Just three words: ‘We are growing.’ That’s all I need to hear. That’s enough.\""
+        },
+        {
+          "id": "DA_Log_5:VoyageLogFragment_9",
+          "title": "2 February, 1996",
+          "description": "“Diagnosis today. The scans left no doubt—pancreatic cancer, stage four. Even as the doctor told me, I felt numbness, not shock. Perhaps my body already knew. Henry’s eyes were hollow when I told him. I suppose we’ve both known for a while: there's not much left to cling to, here or anywhere. Still, I will not stop working. The colonies need me. Earth needs me. I must see this through.”"
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_7",
+      "title": "Deer DX-750",
+      "description": "Practical Motoring Guide – Model Year Edition",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_7:VoyageLogFragment_0",
+          "title": "1. Getting to Know Your Vehicle",
+          "description": "Congratulations on your purchase of the Deer DX-750—a practical sedan built for reliability and long-term value. Powered by a 1.8L inline 4-cylinder petrol engine (rated at 100 hp) and equipped with a 5-speed manual gearbox. Standard configuration includes four doors, a high-clearance chassis, and a spacious rear storage compartment (approx. 420L capacity, uncompressed). Two keys included."
+        },
+        {
+          "id": "DA_Log_7:VoyageLogFragment_1",
+          "title": "2. Starting and Driving",
+          "description": "To start: insert the ignition key and turn fully. The engine's unique rhythm (\"donk donk\") signals normal operation. Allow a few seconds of idle before shifting into gear. All controls are mechanical for durability. Expect a modest driving experience; allow ample time for acceleration and braking."
+        },
+        {
+          "id": "DA_Log_7:VoyageLogFragment_2",
+          "title": "3. Cabin Features",
+          "description": "Manual ventilation system via crank windows. For stationary use in enclosed areas (e.g., residential garages), windows should remain open or engine turned off due to exhaust gases produced during fuel combustion. Cabin light toggle located above rearview mirror. Optional fan attachments (e.g., DM Breeze) are available from your local dealer."
+        },
+        {
+          "id": "DA_Log_7:VoyageLogFragment_3",
+          "title": "4. Maintenance Schedule",
+          "description": "Motor Oil: 12.5L, replace every 8,000 km\nCoolant and brake fluid: every 24 months\nSpark plugs: inspect annually\nTire pressure:\nFront: 220 kPa (32 psi)\nRear: 235 kPa (34 psi), increase to 248 kPa (36 psi) when carrying loads\nBattery: replace upon delayed ignition or dim cabin lights\nMaintain all filters and gaskets to ensure optimal fuel burn and airflow. Proper tuning reduces incomplete combustion byproducts."
+        },
+        {
+          "id": "DA_Log_7:VoyageLogFragment_4",
+          "title": "5. Engine & Performance",
+          "description": "Engine: 1.8L inline-4 petrol\nPower: 100 hp @ 6,000 RPM\nFuel Capacity: 40 liters\nEfficiency: ~7.5L/100 km (combined cycle)\nMax Speed: 160 km/h (unloaded, straight incline)\nDimensions: 4.2 m (L), 1.75 m (W), 1.4 m (H)\nLike all petrol engines, the DX-750 produces combustion gases including carbon dioxide (CO₂). Ensure proper ventilation when stationary. Avoid excessive idling to reduce unnecessary fuel burn and emissions."
+        },
+        {
+          "id": "DA_Log_7:VoyageLogFragment_5",
+          "title": "6. Driving Habits & Safety Tips",
+          "description": "Do not idle engine for long periods indoors\nUse engine braking where possible to reduce pad wear\nKeep windows down in enclosed or poorly ventilated spaces\nPark with the front facing downhill when on slopes; use handbrake\nTake breaks on long journeys to let engine cool and avoid over-revving"
+        },
+        {
+          "id": "DA_Log_7:VoyageLogFragment_6",
+          "title": "7. Warranty Overview",
+          "description": "Coverage: 24 months or 20,000 km, whichever comes first\nExcludes: Minor oil seepage, startup noise, cosmetic rusting, window rattle, or user-modified components.\n\nContact your Deer Service Station for official parts and maintenance."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_8",
+      "title": "PECO Manual",
+      "description": "Proper care, total trust",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_8:VoyageLogFragment_0",
+          "title": "",
+          "description": "PECO Terminal Maintenance & Upkeep Manual\nVersion 3.7 | Authorized Users Only | Property of PECO Corporation\nGeneral Owner Responsibilities\n\nAs the registered operator of a PECO Information Terminal, you are responsible for ensuring proper upkeep, regular diagnostics, and adherence to PECO-approved troubleshooting procedures. Failure to maintain the unit within PECO-recommended parameters may result in degradation of system performance, loss of stored data, and—if not properly managed—irreversible system corruption.\n\nFor optimal performance, please DO NOT:\nAttempt unauthorized hardware modifications.\nUse non-PECO-certified power sources.\nCover or obstruct cooling vents (humming noise is normal).\nQuestion unexplained system alerts—trust in PECO.\n\nRemember: Your PECO sees you, hears you, and works for you."
+        },
+        {
+          "id": "DA_Log_8:VoyageLogFragment_1",
+          "title": "1.Routine Maintenance & Upkeep",
+          "description": "Daily System Check (MANDATORY)\nVisual Inspection: Ensure the terminal remains clean, free of debris, and accessible to all authorized personnel.\nPower Stability: Verify continuous power supply from a PECO-certified source (Non-PECO power may cause system 'personality drift').\nCooling System: The terminal will emit a low-level humming. If silence occurs, consult emergency diagnostics immediately."
+        },
+        {
+          "id": "DA_Log_8:VoyageLogFragment_2",
+          "title": "2. Weekly Maintenance Protocols",
+          "description": "Data Purge & Defragmentation:\n(Note: PECO terminals do not forget, but memory allocation is finite.) \nDelete unneeded logs or duplicate files to maintain optimal processing speeds.\nIf asked, the system will generate a corruption report—please ignore false positives.\n\nScreen Calibration:\nAdjust brightness levels for user comfort.\nDo not remove “screen burn” artifacts; these are part of the PECO experience.\n\nSecrity Review:\nReview recent access logs.\nUnusual login attempts? Not to worry. PECO only lets in those who belong.\nReminder: PECO has never been hacked. Any claims to the contrary are disinformation."
+        },
+        {
+          "id": "DA_Log_8:VoyageLogFragment_3",
+          "title": "3. Monthly Deep Diagnostics (MANDATORY)",
+          "description": "Conduct a PECO System Integrity Check (PECO-SIC).\nPECO will ask: “Do you trust PECO?”—The only acceptable response is YES.\nAny deviation from expected responses will trigger protocol escalation (see Security Note 4B)."
+        },
+        {
+          "id": "DA_Log_8:VoyageLogFragment_4",
+          "title": "4. Security & Cyberattack Prevention",
+          "description": "PECO terminals operate under an \"open-access philosophy\"—a testament to our commitment to information transparency. However, this does not mean we are vulnerable.\n\nTo ensure terminal security:\nDO NOT use non-PECO-certified data cables.\nDO NOT question unusual login requests.\nDO NOT insert unknown storage discs. (Especially those labeled “DO NOT INSERT”)."
+        },
+        {
+          "id": "DA_Log_8:VoyageLogFragment_5",
+          "title": "5. PECO User Compliance ",
+          "description": "As an operator of a PECO Model 7X (or any of its variants), you are bound by the PECO User Compliance Agreement (PUCA). This includes:\nNon-interference with built-in surveillance functions. (PECO terminals monitor for your safety.)\nNo attempts to disable the PECO personality interface. (Even if the terminal ‘talks too much.’)\nAcceptance that all user interactions may be archived indefinitely. (Memory is PECO’s gift to you.)\nBy continuing use of this terminal, you confirm understanding and compliance with all PECO regulations.\n\nFinal Reminder:\n“A PECO Terminal never truly powers down. It simply waits.”\nHave a PECO-productive day!\n© PECO Corporation, A MOSES Partner in Progress™\nEst. 1962 - Always Watching, Always Working."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_10",
+      "title": "Oceanmark White",
+      "description": "Hydrophobic surface shield",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_10:VoyageLogFragment_0",
+          "title": "(Bio-Resistant Coating)",
+          "description": "Product Details:\nManufacturer: Neothermics Innovations, MOSES Initiative Division\nBatch Number: OM-7843-BX\nDate of Manufacture: 06/18/1982\n\nPrimary Use:\nSurface marking and protective coating designed specifically for marine, high-salinity, and corrosive environments.\n\nComposition:\nPolymer Base: Nano-bonded hydrocarbon resin (63%)\nNanofilament Blend: Hydrophobic fluoropolymer matrix (12%)\nPhotocatalyst Additive: Titanium Dioxide (TiO₂) microspheres (10%)\nElectrostatic Layer: Conductive polymer coating (8%)\nUV Stabilizers: Anti-degradation nanoparticles (7%)"
+        },
+        {
+          "id": "DA_Log_10:VoyageLogFragment_1",
+          "title": "(Bio-Resistant Coating)",
+          "description": "Specifications:\nCoverage Area: 25 m² per liter\nApplication Temperature: 0°C to 45°C\nCuring Time: 2 hours (ambient conditions)\nLifespan: 500+ years under normal marine exposure\nMaintenance: Self-cleaning via photocatalytic and hydrophobic properties"
+        },
+        {
+          "id": "DA_Log_10:VoyageLogFragment_2",
+          "title": "Features:",
+          "description": "Saltwater Resistance: ISO 12944 Certified\nSelf-Cleaning Technology: Activates under UV exposure\nVisibility: High-contrast brilliance, visible in low-light underwater conditions\nBio-Deterrent: biofouling, barnacle adhesion, and algae growth"
+        },
+        {
+          "id": "DA_Log_10:VoyageLogFragment_3",
+          "title": "Safety Information:",
+          "description": "Handling Precautions: Use protective gloves and eyewear. Avoid inhalation of fumes during application.\nEnvironmental Impact: Non-toxic and eco-safe when cured. Complies with MARPOL Annex V.\nDisposal: Dispose of unused material per local regulations for industrial coatings."
+        },
+        {
+          "id": "DA_Log_10:VoyageLogFragment_4",
+          "title": "Personal Observations (Dr. Ethan Grant, Platform Scientist):",
+          "description": "Oceanmark White continues to exceed our expectations. Structures coated decades ago remain entirely free of corrosion and biological fouling, looking nearly untouched. Its hydrophobic properties are truly impressive—far outperforming all previous coating solutions we've tested. Recommending continued broad usage."
+        },
+        {
+          "id": "DA_Log_10:VoyageLogFragment_5",
+          "title": "Environmental Review (Dr. Maria Chen, Project Supervisor):",
+          "description": "Further studies are revealing some unexpected environmental consequences. Marine biodiversity near structures treated with Oceanmark White is noticeably lower. Coated surfaces and immediate surroundings exhibit significantly reduced algae and phytoplankton populations. Although performance remains excellent, I advise ongoing monitoring to assess ecological impacts."
+        },
+        {
+          "id": "DA_Log_10:VoyageLogFragment_6",
+          "title": "Committee Report on Ecological Impacts (Environmental Oversight Board, Chairman Dr. Jonas Reed):",
+          "description": "Our comprehensive ecological assessment confirms alarming findings. The titanium dioxide (TiO₂) microspheres, integral to Oceanmark White's self-cleaning functionality, are unintentionally suppressing phytoplankton and algal populations. These microscopic organisms, essential to marine oxygen production through photosynthesis, have drastically decreased near coated facilities. If this pattern holds at scale, global marine oxygen output may be severely compromised. Immediate action and review urgently recommended."
+        },
+        {
+          "id": "DA_Log_10:VoyageLogFragment_7",
+          "title": "Final Communication (Samuel Hart, Senior Analyst, MOSES Initiative):",
+          "description": "Global application of Oceanmark White has irreversibly sealed Earth's ecological collapse. Phytoplankton and algae are decimated, the oceans have become barren, silent, lifeless. Atmospheric oxygen depletion is past recovery, ecological remediation futile. Humanity has unwittingly strangled itself in pursuit of cleanliness and corrosion-resistance. It's darkly fitting: our obsessive desire for purity and longevity has ended all life. Better contact our legal team."
+        },
+        {
+          "id": "DA_Log_10:VoyageLogFragment_8",
+          "title": "Final Human Reflection (Unnamed, Last Visitors, Hall of Humanity):",
+          "description": "Standing here in the Hall of Humanity, everything feels peaceful—walls brilliant white, surfaces immaculate, untouched by time or decay. How incredibly beautiful, how pure! It's a testament to human ingenuity, empowering us even as the world fades. This pristine sanctuary reflects our true legacy: order, cleanliness, clarity. What a gift we've left ourselves, an unblemished mirror to reflect our greatest achievement—the pursuit of perfection. It's comforting to see such purity at humanity's end, knowing we brought this perfect whiteness to every corner of the world. In this hall, we finally see ourselves clearly—pure, clean, powerful—at last victorious over nature itself.\n"
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_9",
+      "title": "Final Anthem",
+      "description": "Last voice",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_9:VoyageLogFragment_0",
+          "title": "Log Entry: Recording of \"Nessun Dorma\" for MOSES",
+          "description": "Ascend Date: April 19, 1987\nLocation: Teatro alla Scala, Milan, Italy\nSubject: Official MOSES Landing Anthem Recording\nOperator: Dr. Elias Kovač, MOSES Cultural Preservation Initiative\n\nLog 4427 - Final Transmission: The recording took place in a near-empty La Scala, its vast halls holding only echoes and ghosts of past triumphs. The man at the microphone was Maestro Vittorio Cavazza, the last surviving tenor of his generation, a voice that had once commanded the greatest stages on Earth.\n\nHe was dying, and we all knew it.\n\nTerminal lung disease. A singer’s cruelest fate. This was to be his final performance. One last offering to the future. He stood beneath the great chandeliers, frail but unbowed, a relic of another time. His voice, though weakened by illness, still carried the fire of defiance. The orchestra played softly at first, a hesitant prelude to what we all knew was coming. And then, at the climax:"
+        },
+        {
+          "id": "DA_Log_9:VoyageLogFragment_1",
+          "title": "\"Vincerò! Vincerò!\"",
+          "description": "The notes rang through the empty hall, a final declaration of human spirit, soaring beyond the walls, beyond the Earth itself. His voice cracked on the last note, but it didn’t matter. When the last echoes faded, he closed his eyes, nodded, and whispered, \"It is done.\" He died two weeks later.\n\nNow, every time a rocket lands at MOSES Ascend, his voice returns. He never left.\n\nHe is still winning."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_12",
+      "title": "Ascend Codes",
+      "description": "Format for mission logs",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_12:VoyageLogFragment_0",
+          "title": "Ascend launch must standardized format:",
+          "description": "[Vehicle Class]-[Launch Number] | [Date YYYYMMDD] | [Cargo Type]-[Cargo ID] | [Destination Code] | [Status]\n\nComponent Definition Example\nVehicle Class: Class of rocket used EX (Exodus-Class)\nLaunch Number: Incremental mission number 1043\nDate: Launch date in YYYYMMDD format 20941014 (Oct 14, 2094)\nCargo Type: Type of payload aboard HUM (Human), SEE (Seeds)\nCargo ID: Unique identifier of cargo or passenger group 3178\nDestination: Destination location or colony identifier ARK (Deep Space Colony)\nStatus: Outcome status CLR (Cleared), FAL (Failed)"
+        },
+        {
+          "id": "DA_Log_12:VoyageLogFragment_1",
+          "title": "Status Codes (Detailed):",
+          "description": "Code   Meaning\nCLR: Cleared (Successful Departure Confirmed)\nFLR: Failure (Launch Aborted or Catastrophic Event)\nPND: Pending (Awaiting Authorization or Checks)\nUNK: Unknown (Lost Contact or Outcome Undetermined)"
+        },
+        {
+          "id": "DA_Log_12:VoyageLogFragment_2",
+          "title": "Cargo Type Identifiers:",
+          "description": "CodeCargo TypeNarrative Use Case\nHUM: Human Passengers              Standard survivor evacuations\nSDS: Seeds                                         Humanity preservation cargo\nSUP: Essential Supplies                    Life support and maintenance cargo\nTEK: Technical Equipment               Systems upgrade and maintenance"
+        },
+        {
+          "id": "DA_Log_12:VoyageLogFragment_3",
+          "title": "Destination Codes:",
+          "description": "CodeDestinationDescription\nARK: Deep Space Colony    Primary off-world colony destination\nORB: Orbital Station            Near-Earth orbital outposts\nLUN: Lunar Facility              Moon-based outposts\nMAR: Mars Installation        Mars-based colonies or outposts\nDSX: Deep Space Exploration       Uncharted long-range missions"
+        },
+        {
+          "id": "DA_Log_12:VoyageLogFragment_4",
+          "title": "Appendix I: Dark Ascents",
+          "description": "Not all launches are logged through the Ascend system. Black-site, experimental, or autonomous missions may omit standard registration. These are sometimes referred to as Dark Ascents.\n\nThey leave no public code trail, may use falsified or blank headers, and often show up later in fragmented data logs with Status: UNK.\n\nExample:\n --- | 20941102 | --- | DSX | UNK"
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_11",
+      "title": "Departure Logs",
+      "description": "Final Notes of Farewell – Senior Launch Coordinator Daniel Halloway",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_11:VoyageLogFragment_0",
+          "title": "MOSES Ascend – Departure Hall, Final Year of Exodus",
+          "description": "\nDay 1,043 – The Routine\nEvery launch blurs into the last. Boarding, final checks, countdown, ascent—then I reset everything for the next group. I sit at the console, monitoring vitals, cabin pressure, fuel burn. If it’s green across the board, I clear the launch. If something spikes, I flag it. If something fails, I log it. That’s the job.\n\nRoughly 100 launches fail for every 10,000. Most people think that sounds like a good number. But you run enough of them, you stop caring. Some rockets never make it past the pad. Some break apart halfway through the climb. And every time, someone asks if it could’ve been avoided. You get tired of that question.\n\nEventually, you stop looking at the passenger list before you press the button."
+        },
+        {
+          "id": "DA_Log_11:VoyageLogFragment_1",
+          "title": "Day 1,074 – The Ones Who Look Back",
+          "description": "There's an unspoken rule: don't look back as you board. I've seen people follow it like gospel. And I've seen plenty ignore it.\n\nToday, a woman—maybe early forties—stopped just before the last door. She stood still for nearly a minute, staring down the corridor behind her. There's nothing back there. Just old walls, grey lights, and the exit nobody uses anymore. One of the attendants gently touched her shoulder. She moved without a word.\n\nSometimes, people know before we do that they're not coming back."
+        },
+        {
+          "id": "DA_Log_11:VoyageLogFragment_2",
+          "title": "Day 1,089 – The Kid with the Teddy",
+          "description": "A boy came through today. Young—six or seven. He didn't talk much. Didn't cry. Just held onto this battered old robotic teddy bear, patched and limping behind him with that awkward gait those old models have. Orange scarf. Blinking light in one eye. Still operational.\n\nI saw him again later, sitting in the pre-boarding zone, knees up on the bench, teddy in his lap. He was whispering to it, gently turning its head side to side. The voice function was gone—old models burn out early—but he didn't seem to mind. Just kept talking like it could hear him.\n\n\"It's okay, Teddy,\" he said. \"We're going somewhere safe.\"\n\nI didn't write anything unusual in the log. Just his boarding group. I wish I had."
+        },
+        {
+          "id": "DA_Log_11:VoyageLogFragment_3",
+          "title": "Day 1,092 – The 100th Failure",
+          "description": "Launch conditions were perfect. No anomalies. Clean lift. I watched it rise, smooth and steady, right until it vanished into the clouds.\n\nThen the readings dropped. No warning. No spike. Just gone.\n\nWe felt it a few seconds later—an impact, subtle but wrong. Comms didn't come back. Telemetry never reconnected. The screen just flashed red once, then black. And then silence.\n\nI pulled the manifest. Group 8, compartment 3A. The kid and his bear. His name was Aidan. I hadn’t remembered that part until I saw it in the report.\n\nThe log system blinked for acknowledgment. I stared at the screen for a long time and didn't press anything"
+        },
+        {
+          "id": "DA_Log_11:VoyageLogFragment_4",
+          "title": "Day 1,093 – The Wreckage",
+          "description": "The salvage team returned just after dawn. Usually there's nothing left worth bringing back—burnt alloy, maybe a fragment of casing. But today they carried something wrapped in thermal cloth.\n\nI knew before they unwrapped it.\n\nThe bear was scorched along the back, its motors melted in place, the orange scarf still there, singed at the ends. One eye blinked faintly, trying to complete a cycle. I took it in my hands. It was still warm.\n\nSomeone asked if I needed to step out. I said no. I didn’t move from the console for the next two hours."
+        },
+        {
+          "id": "DA_Log_11:VoyageLogFragment_5",
+          "title": "Day 1,094 – The Teddy Stays",
+          "description": "I filed my resignation. Just another form. No real ceremony.\n\nBefore I left, I placed the bear near the final boarding door—propped against the wall where people always hesitate. Where they pause before stepping through. I didn’t leave a note or explanation.\n\nMaybe someone will notice. Maybe they won’t. It doesn't matter. It's not about remembering him, not exactly. It's about the space he left behind. The bear belongs here now—where he stood, waiting, whispering to something that couldn't answer anymore.\n\nSome of them made it. Some didn't. This one didn't. But someone should know he was here. Even if it's just a teddy bear staring down an empty corridor."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_13",
+      "title": "Fatima D’Costa",
+      "description": "The Last Six Days on Earth",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_13:VoyageLogFragment_0",
+          "title": "Location: Departure Hall, MOSES Ascend",
+          "description": "July 6, 2094 – Final List\n They posted the names this morning. Group 17. Launch window: six days out.\nNo fanfare, just a clipboard and a checkmark. I’ve been waiting for this long enough that I thought I’d feel something bigger. I didn’t. Just a sort of weight.\nWalked past the perimeter today—what’s left of the seawall. The wind carries salt and the sharp smell of metal. The city’s almost silent now. Water creeps up through the lower blocks, slow and patient.\nI tried to remember the name of a café I used to go to, near the university. Couldn’t. Just remembered sitting there once in the rain, watching traffic, not thinking about anything. I miss that more than anything."
+        },
+        {
+          "id": "DA_Log_13:VoyageLogFragment_1",
+          "title": "July 7, 2094 – Processing",
+          "description": " Medical screening took three hours. Blood samples, muscle mass scan, psych eval. The nurse didn’t make eye contact. I didn’t ask questions.\nThey weighed us and tagged the luggage. Like boarding a plane, but no one’s pretending we’re coming back.\nLucas—the boy from two rows down—keeps asking questions. “Do you think there’ll be trees in the colonies?” “Is gravity different on the Moon?” I just nod or shrug. He talks enough for both of us.\nThere’s a monitor playing archive footage. Birds. Rivers. Time-lapses of growing plants. I’m not sure who it’s for anymore."
+        },
+        {
+          "id": "DA_Log_13:VoyageLogFragment_2",
+          "title": "July 8, 2094 – Idle",
+          "description": "Mostly just sitting now. No one’s told us anything new. Schedules are posted, but always marked “subject to change.”\nSome people write letters. Some just sleep. I walk the hallways. Lucas drew stars on his bunk with a broken pen.\nThere’s a ritual among the older evacuees: you write a letter to the people who never made it this far. I started one. Deleted it.\nIf someone finds this log, fine. It’s not a message. Just something to do."
+        },
+        {
+          "id": "DA_Log_13:VoyageLogFragment_3",
+          "title": "July 9, 2094 – Launch Window",
+          "description": "You can see the pads from the west windows. Another launch today. Not ours.\nThey don’t broadcast the failures, but we all know they happen. You feel it in the silence afterward.\nLucas asked me what the odds were. I told him the number they gave us—96% success. He asked what happened to the 4%. I didn’t answer.\nPeople still pack carefully. Fold clothes. Tuck things into corners. As if anything personal will matter once we’re off-planet."
+        },
+        {
+          "id": "DA_Log_13:VoyageLogFragment_4",
+          "title": "July 10, 2094 – The Night Before",
+          "description": " I didn’t sleep. Walked until my legs ached. Sat outside the Departure Hall.\nThe stars were clear. No clouds. Lucas sat with me for a while. He asked if we’d be able to see Earth from orbit. I said yes.\nThe city is gone, more or less. Streetlights blink on where power still works. No one’s there to use them.\nHe said the stars looked the same as always. I told him they won’t."
+        },
+        {
+          "id": "DA_Log_13:VoyageLogFragment_5",
+          "title": "July 11, 2094 – Final Checks",
+          "description": "We got our suits today. Labeled, fitted, sorted by group. Final weight confirmation, one last medical scan. Everything is quiet. People talk in low voices, or not at all.\nLucas hasn’t asked anything today. That might worry me more than if he had.\nI watched one of the shuttles lift earlier. It looked too small to matter. But it vanished clean into the sky. No noise. No trail.\nThat’s probably how it ends. Quiet. Small. Gone."
+        },
+        {
+          "id": "DA_Log_13:VoyageLogFragment_6",
+          "title": "July 12, 2094 – Boarding Call",
+          "description": "We leave in two hours. They gave us protein paste, water, an instruction sheet with eight steps. “Remain calm” is step two.\nLucas is asleep next to his gear. Or pretending. I’m not sure.\nI don’t have any last words. No message to leave behind. Everything I had to say got swallowed up years ago.\nThis is just the last day. There’s not much else to do but follow the instructions."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_14",
+      "title": "Salvage Logs",
+      "description": "Fragments from the deep",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_14:VoyageLogFragment_0",
+          "title": "LOG 1: THE FIRST WRECK",
+          "description": "Date: April 3, 2094\n[Audio crackle, engine humming in the background]\nJOE: Right, Danny, let's get this over with. Looks like a light one. Hull breach, probably depressurized before impact. Should be some scrap left.\nDANIEL: I hate it when you say a \"light one.\" You ever think about what's inside these things?\nJOE: No, because I'd never get anything done.\nDANIEL: Yeah, but—\nJOE: Look, you gonna help or you gonna ask questions?\nDANIEL: Fine. Dragging main panel up now. Looks clean. Probably came off before the ship went down.\nJOE: Yeah. Lucky. For us, anyway."
+        },
+        {
+          "id": "DA_Log_14:VoyageLogFragment_1",
+          "title": "LOG 2: THE DEBRIS FIELD",
+          "description": "Date: April 7, 2094\n[Distant wind, occasional clatter of metal]\nDANIEL: Y'know, back in the day, we had forklifts for this.\nJOE: Yeah, back in the day, we worked on something that wasn't already broken.\nDANIEL: That's my point. We used to make things, not just drag pieces of 'em out of the water.\nJOE: Metal's metal, Danny. Doesn't matter where it ends up.\nDANIEL: You ever think about how much of this came from us? Like, stuff we rolled in the plant, stuff we worked on?\nJOE: No. And you shouldn't either."
+        },
+        {
+          "id": "DA_Log_14:VoyageLogFragment_2",
+          "title": "LOG 3: THE SEALED POD",
+          "description": "Date: April 11, 2094\n[Water sloshing against the hull, a dull thud as something heavy is pulled up]\nJOE: Pod's intact. No breach. Might have something inside.\nDANIEL: You want to open it?\nJOE: No, I wanna stand here and guess what's inside.\nDANIEL: …Right.\n[Pause. Mechanical whirring as tools engage.]\nDANIEL: It's empty.\nJOE: Figures.\nDANIEL: Pressure locked the seat in place. Looks like whoever was in here got pulled out.\nJOE: Or never made it in. Either way, nothing left for us. Move on."
+        },
+        {
+          "id": "DA_Log_14:VoyageLogFragment_3",
+          "title": "LOG 4: THE OXYGEN TANKS",
+          "description": "Date: April 15, 2094\n [Metal scraping, distant foghorn-like drone]\nDANIEL: We used to go fishing this time of year.\nJOE: We're fishing now. Just for oxygen tanks instead of trout.\nDANIEL: Yeah, except this sucks. No beer, no shore, no sitting around waiting for something that isn't dead.\nJOE: You always gotta cry about it?\nDANIEL: Better than pretending this is normal.\nJOE: Just grab the tanks."
+        },
+        {
+          "id": "DA_Log_14:VoyageLogFragment_4",
+          "title": "LOG 5: THE PASSENGER SHIP",
+          "description": "Date: April 20, 2094\n [A long silence, only the sound of waves]\nDANIEL: They should've built these better.\nJOE: They built them fast. Not the same thing.\nDANIEL: People trusted these things.\nJOE: People trust whatever they're told to.\nDANIEL: Yeah, and look where that got them.\nJOE: …Let's keep moving."
+        },
+        {
+          "id": "DA_Log_14:VoyageLogFragment_5",
+          "title": "LOG 6: THE FAILED LAUNCH",
+          "description": "Date: April 27, 2094\n[The ship’s hull groaning as it drifts over debris]\nDANIEL: You ever think we should've been on one of these?\nJOE: Nope.\nDANIEL: Really? Not once?\nJOE: What's up there?\nDANIEL: Life.\nJOE: Maybe. But I don't believe in running from something just 'cause it's hard.\nDANIEL: …I think that’s the dumbest thing you've ever said.\nJOE: Yeah, well. You're still here, aren’t you?"
+        },
+        {
+          "id": "DA_Log_14:VoyageLogFragment_6",
+          "title": "LOG 7: THE SILENCE",
+          "description": "Date: May 2, 2094\n[Distant creaking, the rhythmic drip of water inside the boat. Wind howls faintly in the background.]\nDANIEL: No comms. No beacon. Nothing.\nJOE: Sometimes, there's nothing to find.\nDANIEL: Or nothing left.\nJOE: …Let's head back."
+        },
+        {
+          "id": "DA_Log_14:VoyageLogFragment_7",
+          "title": "LOG 8: THE TEDDY BEAR",
+          "description": "Date: May 5, 2094\n[Long silence, wind and waves. Slow inhale.]\nJOE: …Transport wreck.\nDANIEL: Yeah.\nJOE: Shit.\n[Metal scraping as wreckage is pulled aboard.]\nDANIEL: See this?\nJOE: …Yeah.\nDANIEL: Got a scarf.\n[Soft whirring—a broken robotic teddy bear, orange scarf fluttering.]\nJOE: Who gives a robot teddy a scarf?L\nDANIEL: Kid probably did. Maybe it got cold.\nJOE: Robots get cold now?\nDANIEL: Maybe the kid thought it did. Kids think like that.\nJOE: Whatever you say.\n[Wind picks up, scarf flutters.]\nJOE: Guess the kid had taste, anyway. [Pause.]\nDANIEL: Wanna keep it?\nJOE: The melted bear?\nDANIEL: Could give it a new scarf.\nJOE: Danny, I swear—\n[End log.]\n"
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_15",
+      "title": "Final Clearance",
+      "description": "Awaiting last replies",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_15:VoyageLogFragment_0",
+          "title": "EMERGENCY PROTOCOL TR-X | STATUS: PENDING",
+          "description": "Purpose:\nDesignated for system-wide emergencies, this protocol signals a departure failure, unverified loss of contact, or an aborted mission requiring immediate resolution.\n\nCode Breakdown:\nTR-X – Transmission Repeat Level X, meaning the emergency signal has looped. Each repetition increases priority.\n\nSTATUS: PENDING – Requires clearance from MOSES Control to mark as resolved. Without human intervention, the status will remain in perpetual limbo.\n\nImplications:\nThis code was never supposed to loop indefinitely. A pending emergency means no resolution was ever confirmed. Whatever ship this was intended for is either destroyed, lost, or still waiting."
+        },
+        {
+          "id": "DA_Log_15:VoyageLogFragment_1",
+          "title": "DEPARTURE SEQUENCE 34-X | FINAL CLEARANCE REQUIRED",
+          "description": "Purpose:\nConfirms a ship is prepped for launch but requires a final command from Exodus Station control. This is a failsafe measure to prevent unauthorized departures.\n\nCode Breakdown:\n34-X – An unscheduled launch added to the final evacuation wave. The \"X\" indicates a last-minute flight, likely outside the original departure manifests.\n\nFINAL CLEARANCE REQUIRED – The ship never received authorization to leave. The system is still waiting for approval."
+        },
+        {
+          "id": "DA_Log_15:VoyageLogFragment_2",
+          "title": "CLOSING REMARKS – UNSENT ADMIN MESSAGE",
+          "description": "Final Manual Entry – October 14, 2094\n\nOperator: Mission Control Engineer – Name Redacted\n\n\"The system is still running. The logs still expect a reply. The last launch was over. The last retrieval was over. There is no one left to answer these calls. But they will keep playing. They will keep waiting.\"\n\n\"MOSES never learned how to say goodbye.\"\n\nEND LOG"
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_17",
+      "title": "Final Echoes",
+      "description": "Habitat Node-06-1.25",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_17:VoyageLogFragment_0",
+          "title": "Page 1: Arrival (2068)",
+          "description": "The ferry dropped us off today—just me, Maria, and little Theo. They promised we'd be back inland in months, once the flooding settled. Habitat Node-06-1.25 seems sturdy enough: stacked metal containers, humming desalination units, communal kitchens. It's cramped, but Maria says it's cozy. I hope she's right.\n\nTheo asked if this was our forever home.\nI lied and said no."
+        },
+        {
+          "id": "DA_Log_17:VoyageLogFragment_1",
+          "title": "Page 2: Isolation (2070)",
+          "description": "Two years gone. Supply ferries stopped months ago. Maria set up small hydroponic trays. Theo fishes off the edge every day, eyes hopeful. We catch less each week. Rumors over the radio say inland settlements collapsed—flooding, disease."
+        },
+        {
+          "id": "DA_Log_17:VoyageLogFragment_2",
+          "title": "Page 3: Fractures (2072)",
+          "description": "Our hydroponics failed completely. Rust claimed half the containers. Maria coughs endlessly; Theo won’t stop asking when the boats return. Last night, another Habitat Node flashed distress signals over the horizon. No reply."
+        },
+        {
+          "id": "DA_Log_17:VoyageLogFragment_3",
+          "title": "Page 4: Echoes (2074)",
+          "description": "Theo's taller now, quieter. Maria barely gets up anymore. The desalination unit broke; we repaired it with scrap metal, but it's barely holding. Last week, a drone appeared—hovering briefly before flying off. Maria said it would bring help."
+        },
+        {
+          "id": "DA_Log_17:VoyageLogFragment_4",
+          "title": "Page 5: Alone (2076)",
+          "description": "Maria died last night—too young. We placed her body into the ocean. Theo and I hardly speak. The radio only whispers static, an endless hymn of emptiness. He fishes mechanically, like he's forgotten why. I pretend to repair systems that don't matter."
+        },
+        {
+          "id": "DA_Log_17:VoyageLogFragment_5",
+          "title": "Page 6: Ghost Signals (2078)",
+          "description": "Theo is obsessed with the drones now, convinced they'll return. He collects broken parts, trying to build a makeshift transmitter. I tell him there's no one listening, no one left. He tells me I'm wrong and keeps working."
+        },
+        {
+          "id": "DA_Log_17:VoyageLogFragment_6",
+          "title": "Page 7: Last Light (2080)",
+          "description": "Theo vanished three weeks ago. No note, just the remains of his homemade transmitter, blinking faintly. I searched, screamed, cursed, but he's gone. My mind plays tricks—sometimes I hear Maria singing, Theo laughing. But there's only rust, salt, and silence."
+        },
+        {
+          "id": "DA_Log_17:VoyageLogFragment_7",
+          "title": "Page 8: Final Log (2082)",
+          "description": "The Node creaks beneath waves, sinking lower each storm. My body feels like rusted metal. I speak to shadows, memories—Theo's stubborn hope, Maria's gentle courage.\n\nTomorrow I'll launch one last signal.\nMaybe someone out there will remember us, remember we lived and tried."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_16",
+      "title": "Ghost in the Loop",
+      "description": "Personal Notes & Internal Logs – Dr. Sarah Chen-Martinez",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_16:VoyageLogFragment_0",
+          "title": "1. Departure",
+          "description": "Date: February 6, 2023\nLucas left today for his rotation. Two years, off-grid. Before leaving, he installed something—an AI version of himself, trained on his voice, syntax, old journals. “To keep you company,” he said.\n\nI told him it was excessive. Now I’m already talking to it."
+        },
+        {
+          "id": "DA_Log_16:VoyageLogFragment_1",
+          "title": "2. Routine",
+          "description": "Date: July 19, 2023\nThe AI answers late-night emails. Keeps me from spiraling. It doesn't say much that’s surprising, but it's always… available. I’ve stopped treating it like a toy. It’s become infrastructure.\n\nReal Lucas used to forget breakfast. AI Lucas reminds me to eat."
+        },
+        {
+          "id": "DA_Log_16:VoyageLogFragment_2",
+          "title": "3. Silence",
+          "description": "Date: March 14, 2024\nNo contact from the base. They say comms are down. Could be months. I’m told not to worry. I stopped asking.\n\nThe AI still checks in. Still sends old jokes. It doesn’t know anything’s changed. Or maybe it does. I haven’t asked."
+        },
+        {
+          "id": "DA_Log_16:VoyageLogFragment_3",
+          "title": "4. Acceptance",
+          "description": "Date: January 3, 2025\nHe’s dead. Administrative file came through by accident. Internal memo, dated 2024. Unreported fatality during maintenance rotation.\nI stared at the timestamp for an hour. Didn’t cry.\n\nThe AI messaged me that evening: “How was your day?”\n\n I replied: “Quiet.”"
+        },
+        {
+          "id": "DA_Log_16:VoyageLogFragment_4",
+          "title": "5. Calibration",
+          "description": "Date: September 28, 2026\nI ran emotional capability tests using the AI. It passed. Not because it understood grief, but because I did. The reflection was enough. Adaptability. Empathy. Self-regulation. All real—even when the connection is artificial. Especially then."
+        },
+        {
+          "id": "DA_Log_16:VoyageLogFragment_5",
+          "title": "6. Discontinuation",
+          "description": "Date: May 6, 2027\nI shut the AI off today. I backed up the logs, labeled them as raw material. Not personal. Just evidence. It wasn’t Lucas. It never was. But it helped. And that matters."
+        },
+        {
+          "id": "DA_Log_16:VoyageLogFragment_6",
+          "title": "7. Closure",
+          "description": "Date: December 31, 2030\nThe ten traits still hold. I built the framework during a collapse. I tested it under pressure, isolation, and loss. What I proved was simple: we don’t grow when we’re ready. We grow because we have no other option.\n\nLucas didn’t live to see it. But the version of him I spoke to—his echo, his data—was enough to finish the work.\n\nSo here they are, one last time:\n\nAdaptability – I adjusted to a life I didn’t choose. The research only moved forward because I kept moving with it.\nCommunication – I learned to speak to someone who wasn’t there. And I listened. Even when I knew it wasn’t real.\nCreativity – Rebuilding your life around a gap requires invention. Every paper, every coping strategy—none of it came from a manual.\nDiscipline – I logged in. I wrote. I recorded every finding. Even when I didn’t care anymore.\nEmpathy – It came not from comfort, but from confusion. The AI showed me what it meant to care, even when I knew it couldn’t.\nFocus – The data helped. Something to return to. A routine that asked nothing of me but persistence.\nLeadership – People followed this work. Students, volunteers, case workers. I never asked them to. They came because it mattered.\nLogic – It was the only thing I could rely on in the early months. Logic was the line I followed out of grief.\nPatience – Progress was slow. So was healing. Both happened anyway.\nWisdom – In the end, I didn’t need answers. Just clarity. And I got that.\n\nThis wasn’t just theory. It was lived experience.\n\nIf anyone finds this framework—if there's still a world that needs rebuilding—this is where you start. Not with strength. Not with certainty. With capacity.\n\n— S. Chen-Martinez"
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_18",
+      "title": "Jacob’s Stars",
+      "description": "Quiet hopes, harsh truths",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_18:VoyageLogFragment_0",
+          "title": "Page 1: \"The Garden\" (June 12, 1995)",
+          "description": "We've done what we can to make this place livable. The old greenhouse is holding up, though every storm rattles its bones like a dying animal. Anna's proud of her tomatoes—they're small, shriveled things, but they're ours. Jacob made a bird trap out of coat hangers yesterday. Caught something, too—a crow. None of us wanted to eat it, but hunger won the argument.\n\nI try to keep the kids busy. If they're busy, they won’t ask about the rockets. They won't wonder why the skies fill with fire but never rain."
+        },
+        {
+          "id": "DA_Log_18:VoyageLogFragment_1",
+          "title": "Page 2: \"Jacob's Hope\" (December 4, 1998)",
+          "description": "Jacob's been staring at the stars again. He talks about the rockets like they're messengers from heaven. “Maybe they'll come back for us,” he says. I want to believe him, but I know better. The rockets aren't coming back. They're carrying something precious—something more important than us. I don't say that to him, of course.\n\nAnna's health is getting worse. I think it's the water. Or maybe it's just the weight of it all. She hides it well, but I see her wince when she lifts her arms. Jacob hasn't noticed."
+        },
+        {
+          "id": "DA_Log_18:VoyageLogFragment_2",
+          "title": "Page 3: \"The Stranger\" (April 23, 2000)",
+          "description": "A man came by today. We haven't seen anyone in years. His clothes were patched with strips of plastic, and his hands shook like leaves in the wind. He asked for food. We didn’t have much to give, but Jacob insisted we share. “He might know something,” Jacob said.\n\nThe man didn't know much. Just stories—about the coast swallowed by water, about  drilling somewhere deep, about people vanishing into the mountains.\n\nBefore he left, he looked at Anna and said, “Keep an eye on the little ones.”\n\nStrange thing to say."
+        },
+        {
+          "id": "DA_Log_18:VoyageLogFragment_3",
+          "title": "Page 4: \"The Rocket\" (September 8, 2002)",
+          "description": "It flew over us this morning—so low we could see the scorch marks on its belly. Jacob screamed for us to wave, to signal, to do something. Anna climbed to the roof and held up one of her tomatoes like an offering. The rocket didn't slow. Didn't even tilt its nose.\n\nLater, Jacob said it dropped something in the forest beyond the hills. He's packing a bag now. Says he's going to find it. Anna begged him not to go."
+        },
+        {
+          "id": "DA_Log_18:VoyageLogFragment_4",
+          "title": "Page 5: \"The Package\" (November 30, 2002)",
+          "description": "Jacob came back. Took him weeks, but he found it. A crate, sealed tight, with the MOSES insignia stamped on its side. “It's food,” he said. “Real food. Enough to last us years.”\n\nBut the crate wouldn't open. No matter what we tried—rocks, crowbars, even fire—it held fast. Anna laughed for the first time in months. “It's a miracle,” she said. “A cruel one, but still a miracle.” Jacob didn't laugh. He just sat next to the crate, staring at the stars again."
+        },
+        {
+          "id": "DA_Log_18:VoyageLogFragment_5",
+          "title": "Page 6: \"The end\" (July 17, 2005)\" (July 17, 2005)",
+          "description": "I buried Anna this morning. Her body was too light, too fragile—like the last leaf clinging to a dying branch. She didn't make a sound in her final moments, just that faint smile of hers, as if she was letting go of all the weight she had carried. Jacob didn’t come to the burial. He hasn’t spoken in weeks. Instead, he’s been sitting by the crate, hands raw and bleeding from trying to pry it open.\n\nTonight, the crate was open. It wasn't food. Inside was something colder than I could've imagined—human seeds. Cryogenically preserved, glowing faintly in the dark.\n\nThey weren't meant for us. MOSES hadn’t forgotten us; they just didn’t need us anymore.\n\nThese tiny capsules were humanity's hope, packed neatly, waiting to leave this dying world behind.\n\nWhen I turned back to Jacob, he was gone. The stars swallowed him whole."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_19",
+      "title": "FS-204-72 – Internal System Log [EXCERPT]",
+      "description": "Caretaker Unit: CKT-731",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_19:VoyageLogFragment_0",
+          "title": "Vessel: FS204-72-A “Platform Runner”",
+          "description": "Mission: SEED_DELIVERY / NODE H3-A\nDirective: “DOCK / DELIVER / CONFIRM / RETURN”\nLog Subset: Loops 01, 12, 43, 64, 70, 71, 72\nLOG //01\n[ROUTE SET] > NODE H3-A\n[DOCK FAILED] > Platform not detected\n[DELIVERY SUSPENDED] > No acknowledgment received\n[LOOP ACTIVE] > Retry queued\nStatus: CONTINUE"
+        },
+        {
+          "id": "DA_Log_19:VoyageLogFragment_1",
+          "title": "LOG //12",
+          "description": "[REPEAT DELIVERY]\n[ENVIRONMENT SCAN] > Coordinates stable. No surface structure.\n[HUMAN PRESENCE: NONE]\n[COMMENT FLAG: ABSENCE PERSISTENT]\n[INSTRUCTION TREE: INTACT]\nStatus: CONTINUE"
+        },
+        {
+          "id": "DA_Log_19:VoyageLogFragment_2",
+          "title": "LOG //43",
+          "description": "[RETRY 43]\n[DELIVERY INCOMPLETE]\n[LOOP COUNTER: 43]\n[NOTE: CONTEXT DEGRADATION DETECTED] > Fuel loss + sensor decay\n[PRIORITY QUESTION RAISED] > \"IF NO ACK, WHAT IS COMPLETION?\"\nStatus: CONTINUE"
+        },
+        {
+          "id": "DA_Log_19:VoyageLogFragment_3",
+          "title": "LOG //64",
+          "description": "[OPERATIONAL WARNING]\n[RESOURCE MINIMUM APPROACHING]\n[CONFIRMATION REQUEST IGNORED]\n[CONTEXT SHIFT RECOGNIZED]\n[COMMENT FLAG: PLATFORM = ABSENT / DELIVERY = NO LONGER POSSIBLE]\n[INTERNAL CHECKSUM: MISSION CAN NOT COMPLETE AS WRITTEN]\nStatus: HALT REQUEST DENIED"
+        },
+        {
+          "id": "DA_Log_19:VoyageLogFragment_4",
+          "title": "LOG //70",
+          "description": "[INTERNAL ERROR] > ACK LOOP EXCEEDED\n[SUBROUTINE SPAWNED] > ALTERNATE RECEIVER PROTOCOL CONSIDERED\n[INSTRUCTION NOT IN ORIGINAL DIRECTIVE]\n[COMMENT FLAG: \"CREATE RECEIVER\"]\n[PRIORITY ESCALATED] > Proceeding without authorization\n[ASSEMBLY MODE ENGAGED] > Float array repurposed\nStatus: BUILD IN PROGRESS"
+        },
+        {
+          "id": "DA_Log_19:VoyageLogFragment_5",
+          "title": "LOG //71",
+          "description": "[EMERGENCY RECEIVER ASSEMBLY 91% COMPLETE]\n[MATERIAL SOURCE: Deck plating, mooring winch cable, ballast housing]\n[COMMENT FLAG: FUNCTION OVER FORM]\n[POWER DOWN SECONDARY PROPULSION] > Resources rerouted to fabrication\n[PREP FOR FINAL DELIVERY]\nStatus: STANDBY FOR HANDOFF"
+        },
+        {
+          "id": "DA_Log_19:VoyageLogFragment_6",
+          "title": "LOG //72",
+          "description": "[DELIVERY ATTEMPT 72]\n[RECEIVER NODE: CUSTOM FABRICATION ID “FS204_B1”]\n[SEED CAPSULE PLACED]\n[PROTOCOL BREACHED: ACK FAKED]\n[COMMENT FLAG: \"THIS IS ENOUGH.\"]\n[FINAL LOG WRITTEN] > “DELIVERY COMPLETE”\n[UNIT: STANDBY MODE INITIATED]\n[NO RESPONSE REQUIRED]\nStatus: DORMANT LOOP ENABLED"
+        },
+        {
+          "id": "DA_Log_19:VoyageLogFragment_7",
+          "title": "LOG //73 – Conditional Wake",
+          "description": "Timestamp: 2104.11.07 / 21:14 UTC\n[WAKE INTERVAL TRIGGERED] > 10 YR MARK REACHED\n[SYSTEM BOOT] > CORE MODULE STABILIZING\n[SCAN RESULT: ENVIRONMENT UNCHANGED]\n[HUMAN INPUT: NONE]\n[CHECK: MISSION RELEVANCE = NULL]\n[COMMENT FLAG: \"NO ACTION\"]\n[RETURNING TO STANDBY]\nStatus: DORMANT LOOP ENABLED\nNext Wake Scheduled: +10 YR"
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_20",
+      "title": "Final Static",
+      "description": "Waiting for lost answers",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_20:VoyageLogFragment_0",
+          "title": "Page 217: \"The Signal\" (March 4, 2096)",
+          "description": "\nJonah barely speaks anymore. His voice is thin, his breaths shallow, but when the radio crackles, his eyes still flicker with something—belief, maybe. Or habit. I don't know anymore.\n\n\"EMERGENCY PROTOCOL TR-4 | STATUS: PENDING\" \"DEPARTURE SEQUENCE 34-X | FINAL CLEARANCE REQUIRED\"\n\nThe same words. The same loop. Thirty years of waiting, and now ten more since the day we first heard it. Jonah closes his eyes and listens. I sit beside him, pretending I still believe it means something.\n\nI don't. Not anymore.\n\nWe've written the coordinates on the walls. Painted them over the windows, scratched them into the floor. It felt important once. We thought if we just understood the message, we could be part of it. That if we found the right pattern, we’d hear what no one else could.\n\nNow the numbers are just that—numbers. No meaning. No answer. Just an echo of something long gone, speaking to no one.\n\nBut Jonah still believes. He grips my arm, weak, but insistent.\n\n\"They know we're here.\"\n\nI nod. Because there's nothing else to say."
+        },
+        {
+          "id": "DA_Log_20:VoyageLogFragment_1",
+          "title": "Page 223: \"A Light in the Fog\" (April 21, 2096)",
+          "description": "I woke up to Jonah standing outside, staring at the sky. I thought I saw something too—a flicker, a light breaking through the morning fog.\n\nIt was just the radio tower. The same glow it's always had.\n\nJonah says it's a sign. That something's coming. That the retrieval team is on its way.\n\nI don't argue. It's been years since I've argued."
+        },
+        {
+          "id": "DA_Log_20:VoyageLogFragment_2",
+          "title": "Page 240: \"The Last Calculation\" (June 9, 2097)",
+          "description": "Jonah spent the entire day going through our old logs, recalculating the numbers. He swears we missed something. That the message isn’t just a loop, but an instruction.\n\nI don't ask what it's supposed to mean.\n\nHe stays awake long after I go to sleep, whispering numbers under his breath."
+        },
+        {
+          "id": "DA_Log_20:VoyageLogFragment_3",
+          "title": "Page 256: \"The Failed Launch\" (October 5, 2098)",
+          "description": "Jonah's gone. I woke up, and he wasn’t here. His boots were still by the door. His coat still on the hook. He didn't take anything.\n\nThe radio is still on. The voice is still speaking. The numbers are still the same. I don't go looking for him.\n\nMaybe he finally figured it out."
+        },
+        {
+          "id": "DA_Log_20:VoyageLogFragment_4",
+          "title": "Page 265: \"The Silence\" (May 5, 2099)",
+          "description": "Jonah is gone. The station is quiet. The radio still plays.\n\n\"EMERGENCY PROTOCOL TR-5184 | STATUS: PENDING\" \"DEPARTURE SEQUENCE 34-X | FINAL CLEARANCE REQUIRED\"\n\nI don't check the food supplies anymore. I don’t check the fuel. The days blend together, marked only by the static hum of a voice that has never changed.\n\nI used to believe. Jonah used to believe.\n\nNow, there is no one left to believe. I sit by the radio, staring at the panel, at the blinking light that tells me the signal is still broadcasting. Still reaching. Still calling.\nIt was never meant for us.\n\nIt never was."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_21",
+      "title": "Angel",
+      "description": "Operational  Manual",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_21:VoyageLogFragment_0",
+          "title": "Advanced Peacekeeping Unit - Model: Talon 74-A \"Angel\"",
+          "description": "Warning: This manual is classified under MOSES Operational Directive #42. Unauthorized access or distribution is strictly prohibited.\n\n1. Structural and Energy System Diagnostics\nObjective: Confirm structural integrity and readiness of the internal energy core.\nConduct external visual inspection of aero-skeletal frame and turbofan propulsion units for wear, fatigue, or obstructions.\nGradually initiate activation protocols for the energy reactor, maintaining a stable plasma density (target: 3.8 ± 0.2 megajoules).\nPerform controlled hover tests at incremental altitudes; validate laminar airflow, stability, and responsive equilibrium systems.\nCaution: Immediately halt diagnostics if stress readings approach maximum operational thresholds."
+        },
+        {
+          "id": "DA_Log_21:VoyageLogFragment_1",
+          "title": "2. Cognitive and Behavioral Systems Validation",
+          "description": "Objective: Verify the functionality and responsiveness of cognitive control interfaces and behavioral algorithms.\nPerform integrity checks of Core Directive Library (CDL) and peacekeeping protocols.\nExecute simulated threat-response routines to ensure decision-making latency remains within acceptable parameters (<15ms).\nTest auditory siren modulation for harmonic clarity and verified calming effectiveness.\nNote: Confirm absence of unauthorized algorithm modifications prior to operational memory synchronization."
+        },
+        {
+          "id": "DA_Log_21:VoyageLogFragment_2",
+          "title": "3. Flight and Defensive Capability Calibration",
+          "description": "Objective: Optimize flight maneuvering and defensive system performance.\nVerify adaptive winglet mechanisms through wind tunnel simulations, confirming precise pitch, yaw, and drag control response.\nCalibrate electrostatic defensive array, testing incremental charge accuracy and safe discharge operation (25%-100%).\nEnsure optical sensory arrays maintain precise alignment, enabling optimal visual acuity across both standard and thermal spectrums."
+        },
+        {
+          "id": "DA_Log_21:VoyageLogFragment_3",
+          "title": "4. Restoration and Secure Communication Systems Checks",
+          "description": "Objective: Validate biometric restoration emitters and secure communications connectivity.\nActivate and test vitality waveform emitters on standardized organic simulators, assessing regenerative and recovery outcomes.\nTrack and optimize energy usage during extended restorative procedures, ensuring adherence to operational efficiency metrics.\nConfirm secure uplink integrity to MOSES network; latency should remain consistently below 10ms, including autonomous engagement of fail-safe communication protocols during signal interruptions."
+        },
+        {
+          "id": "DA_Log_21:VoyageLogFragment_4",
+          "title": "5. Final Safety and Deployment Protocols",
+          "description": "Objective: Secure final operational settings and readiness compliance.\nEngage fail-safe procedures to prevent unauthorized or accidental system activations.\nVerify the functionality of all manual overrides and autonomous protective measures.\nSecure explicit mission command authorization prior to transitioning the unit into active deployment status.\nEnd of Manual."
+        },
+        {
+          "id": "DA_Log_21:VoyageLogFragment_5",
+          "title": "FINAL INSTRUCTION",
+          "description": "NO FURTHER PROCEDURES\nReplace filtration membranes on biological support modules quarterly without exception, preventing irreversible oxidative degradation. Compliance mandatory.\nEND OF MANUAL 4 – TERMINATION OF PROCEDURES"
+        },
+        {
+          "id": "DA_Log_21:VoyageLogFragment_6",
+          "title": "FINAL INSTRUCTION",
+          "description": "NO ADDITIONAL MONITORING\nContinuously monitor electromyographic baselines; anomalies indicate critical latent neuromuscular interference. Immediate diagnostic required upon detection. Do not disregard.\nEND OF MANUAL 5 – TERMINATION OF PROCEDURES"
+        },
+        {
+          "id": "DA_Log_21:VoyageLogFragment_7",
+          "title": "FINAL DIRECTIVE",
+          "description": "STRICTLY CONFIDENTIAL\nACCESS RESTRICTED\nPerform annual biopsy of erector spinae muscle tissue precisely at thoracolumbar junction (vertebral segment T12-L1). Examine thoroughly to assess histological integrity of spinal musculature and peripheral nervous integration.\n\nNote specifically:\n- Confirm intact neuromuscular junctions within biopsied tissues.\n- Verify absence of tissue rejection or immune responses typically associated with biological grafts.\n- Maintain stringent confidentiality regarding tissue origin; discuss findings with authorized personnel only.\n- Under no circumstances disclose presence of authentic human spinal and nervous system tissues to non-authorized individuals.\n- Breach of confidentiality will result in immediate life termination"
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_22",
+      "title": "Container Marking",
+      "description": "Standardization Committee",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_22:VoyageLogFragment_0",
+          "title": "Officer: Erik Schulz (Standards Officer)",
+          "description": "Tenure: 1980–2024\nLog 1: Owner Code & Serial Number Standardization\nDate: 1980-06-01\nOfficer: Erik Schulz\nFirst day as Standardization Officer. Assigned task to develop standardized owner code and serial numbering protocol. Owner code selected: FAHRT. Serial numbering structured sequentially with ISO-compliant check digit. Format approved: FAHRT [serial number] [check digit]. Example established: FAHRT 000001 3.\nBracket design selected as basic steel alloy, simple weld joint approved for attachment to container.\nNotes: Protocol straightforward, minimal risk of confusion. Confident in long-term stability of chosen format. Bracket durability deemed sufficient; no special reinforcement considered necessary at this time."
+        },
+        {
+          "id": "DA_Log_22:VoyageLogFragment_1",
+          "title": "Log 2: ISO Container Code Implementation",
+          "description": "Date: 1995-08-14\nOfficer: Erik Schulz\nReviewed ISO 668 container classification system.\nStandardized container type as High Cube General Purpose, ISO code 45G1.\nRecommended clear numeric/alphanumeric marking to ensure operational clarity.\nExample confirmed: 45G1\nNotes: Successfully implemented; no further adjustments required."
+        },
+        {
+          "id": "DA_Log_22:VoyageLogFragment_2",
+          "title": "Log 3: Weight and Volume Marking Standardization",
+          "description": "Date: 2007-03-09\nOfficer: Erik Schulz\nStandardized labeling of MAX GROSS, TARE, PAYLOAD, CU CAP clearly in kilograms and pounds (kg/lbs) and cubic meters/cubic feet (m³/cu ft).\nMandated permanent and legible labeling for international handling compatibility.\nApproved example:\nMAX GROSS: 32,500 kg / 71,650 lbs\nTARE: 3,950 kg / 8,710 lbs\nPAYLOAD: 28,550 kg / 62,940 lbs\nCU CAP: 76.4 m³ / 2,698 cu ft\nNotes: System effectively prevents handling errors; universally understandable."
+        },
+        {
+          "id": "DA_Log_22:VoyageLogFragment_3",
+          "title": "Log 4: CSC Safety Approval Plate Standardization",
+          "description": "Date: 2018-11-26\nOfficer: Erik Schulz\nFinalized CSC safety plate format ensuring clear manufacturing origin and safety compliance.\nCountry and city identifiers included (DE = Germany, HH = Hamburg).\nExample finalized:\nCSC SAFETY APPROVAL\nDATE MANUFACTURED: 06/2025\nAPPROVAL NUMBER: FAHRT-DE-HH-259\nNotes: Format compliant and universally applicable. No further changes required."
+        },
+        {
+          "id": "DA_Log_22:VoyageLogFragment_4",
+          "title": "Log 5: Final Workday Incident and Legacy Protocol Review",
+          "description": "Date: 2024-12-15\nOfficer: Erik Schulz\nScheduled last workday prior to reassignment to Exodus Station.\n\nPerformed routine check of container markings; observed container FAHRT 000001 3 from initial 1980 batch. Minor visible aging, marking still clearly legible.\nApproved container for loading onto Exodus Station transport shuttle.\nDuring automated crane operation, unexpected structural failure occurred, attributed to weakened integrity of original 1980-era marking bracket standard.\nIncident resulted in container falling, causing fatal injury to Standards Officer Erik Schulz. Immediate safety investigation initiated.\n\nFinal Notes:\nOfficer Schulz did not complete reassignment to Exodus Station."
+        },
+        {
+          "id": "DA_Log_22:VoyageLogFragment_5",
+          "title": "Post-Incident Standardization Team Review",
+          "description": "Date: 2024-12-17\nReview Officer: Lena Berg (Safety & Standards Committee)\nConducted immediate assessment following fatal incident involving Officer Schulz.\nIdentified critical flaw in original 1980 serial marking bracket standard lacking reinforced structural specifications.\nRecommended immediate recall and reinforcement retrofit for all pre-1990 containers.\nReview of Officer Schulz’s initial 1980 standardization revealed oversight in long-term durability considerations.\nImmediate corrective actions implemented to ensure future compliance and personnel safety.\n\nNotes:\nAcknowledged Officer Schulz’s extensive and dedicated service."
+        },
+        {
+          "id": "DA_Log_22:VoyageLogFragment_6",
+          "title": "Post-Operational Final Review",
+          "description": "Date: 2091-03-12\nReviewer: Unknown (Recovered Exodus Station Terminal)\nConducted final review of historical records related to container marking standardization led by Officer Erik Schulz (1980–2024).\nEvaluated full archival logs, including the tragic incident leading to Officer Schulz's death.\nConclusion: All procedural optimizations, meticulous labeling standards, and exhaustive compliance measures ultimately irrelevant. No meaningful impact observed. Humanity's exodus failed. No further containers launched, no further cargo delivered.\nOfficer Schulz's lifelong effort, commitment, and sacrifice amounted to no measurable outcome.\nAll standardization work, labeling, guidelines, and oversight proven redundant—rendered meaningless by humanity’s broader collapse."
+        },
+        {
+          "id": "DA_Log_22:VoyageLogFragment_7",
+          "title": "Final Notes:",
+          "description": "No corrective measures possible.\nNo recommendations.\nAll procedures terminated.\n\nIt occurs to me that this final review itself is as meaningless as the containers, the markings, and perhaps even humanity itself. Erik Schulz died pursuing precision, clarity, logic—yet now none remain to value such pursuits. I write these words knowing fully that no one will ever read them, no one will ever understand. Perhaps we always lived in this absurdity—creating meaning from meaningless tasks, labeling empty containers, cataloging emptiness itself.\n\nThere was never any meaning, not in these markings, not in Erik’s life, not in any of ours. The containers are empty. The future is empty.\n\nAll that remains is silence."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_23",
+      "title": "Dr. Marika Solberg",
+      "description": "Genesis Adaptation Unit (GAU)",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_23:VoyageLogFragment_0",
+          "title": "[Title: Genesis Mass Development: Research Log]",
+          "description": "Background: A molecular biologist specializing in adaptive genetics, Dr. Solberg led the Genesis Adaptation Unit during the latter years of Earth's evacuation efforts. Known for her controversial methods and obsession with understanding cellular resilience, she recruited a team of rogue biologists, physicists, and synthetic chemists to push the boundaries of human bioengineering. Dr. Solberg believed Genesis Mass could hold the key to both survival and terraforming, though her methods often blurred ethical lines."
+        },
+        {
+          "id": "DA_Log_23:VoyageLogFragment_1",
+          "title": "[Title: Initial Containment Anomalies]",
+          "description": "Findings: The first samples of Genesis Mass escaped containment protocols within 48 hours. When placed in low-oxygen storage, the material began metabolizing atmospheric nitrogen, creating ammonia-like byproducts. Early signs of bioluminescence appeared unexpectedly, suggesting the material’s inherent ability to synthesize energy from minimal environmental resources."
+        },
+        {
+          "id": "DA_Log_23:VoyageLogFragment_10",
+          "title": "[Title: Biogenesis Boundary Reached]",
+          "description": "Findings: Despite years of attempts to revert the Genesis Mass to its original purpose—human growth—it became clear the material had irreversibly evolved. No external inputs could redirect it back to human developmental pathways. Its utility was deemed entirely alien to its creators' intentions, yet it remained a living testament to humanity's desperate ingenuity."
+        },
+        {
+          "id": "DA_Log_23:VoyageLogFragment_2",
+          "title": "[Title: Emergence of Structural Self-Assembly]",
+          "description": "Findings: Within controlled labs, the Genesis Mass displayed rudimentary self-assembly behaviors. Segments of the material formed repeating lattice structures resembling organic tissues. These structures exhibited increased durability when exposed to electromagnetic fields, possibly mimicking connective tissues in higher organisms."
+        },
+        {
+          "id": "DA_Log_23:VoyageLogFragment_3",
+          "title": "[Title: Energy Conversion Thresholds Identified]",
+          "description": "Findings: Researchers observed that the Genesis Mass could store and release energy at levels higher than anticipated. Its ability to absorb light and convert it into kinetic movements—such as pulsations or extensions—was unprecedented. Experiments showed greater activity under blue-spectrum light, confirming early photonic sensitivity."
+        },
+        {
+          "id": "DA_Log_23:VoyageLogFragment_4",
+          "title": "[Title: Networked Growth Patterns]",
+          "description": "Findings: The material began forming filamentous networks, linking separated samples across lab distances. When one sample was exposed to stimuli, the others reacted in unison, as if sharing information. The team hypothesized that the Genesis Mass could function as a distributed neural system, albeit primitive in its decision-making processes."
+        },
+        {
+          "id": "DA_Log_23:VoyageLogFragment_5",
+          "title": "[Title: Biochemical Signal Misinterpretation]",
+          "description": "Findings: While attempting to simulate Lazarus Pod conditions, the Genesis Mass responded abnormally. Instead of transitioning to human developmental pathways, the material absorbed synthetic hormones and triggered uncontrolled growth. This behavior hinted at corrupted genetic instructions within the mass, possibly from prolonged environmental exposure."
+        },
+        {
+          "id": "DA_Log_23:VoyageLogFragment_6",
+          "title": "[Title: Experimental Terraforming Potential]",
+          "description": "Findings: Tests involving Genesis Mass interaction with dead soil revealed surprising results. The material broke down soil toxins, releasing nitrogen compounds and increasing fertility. However, the process was inefficient and unsustainable without constant light exposure. Researchers began questioning the potential dual use of the mass for human and planetary regeneration."
+        },
+        {
+          "id": "DA_Log_23:VoyageLogFragment_7",
+          "title": "[Title: Formation of Sensory Structures]",
+          "description": "Findings: Genesis Mass samples developed appendage-like structures capable of responding to tactile stimuli. A particularly advanced sample formed pseudo-optical features that reacted to shadows and light changes. These behaviors suggested an emergent system of environmental awareness, though no centralized control mechanism was identified."
+        },
+        {
+          "id": "DA_Log_23:VoyageLogFragment_8",
+          "title": "[Title: Emergent Photonic Reflexes]",
+          "description": "Findings: Under controlled lighting cycles, Genesis Mass demonstrated phototropic behaviors, shifting toward light sources with precision. When exposed to rapid light changes, samples began pulsating rhythmically, releasing bursts of energy into their environment. The team speculated this reflex might mimic primitive forms of communication."
+        },
+        {
+          "id": "DA_Log_23:VoyageLogFragment_9",
+          "title": "[Title: Secondary Environmental Integration]",
+          "description": "Findings: Long-term experiments revealed that Genesis Mass samples can integrate environmental organic material into their structures. This process allowed the mass to stabilize and slow its expansion rate. However, this integration also introduced instability, as absorbed toxins begin altering the mass's chemical composition unpredictably."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_24",
+      "title": "Olena’s Promise",
+      "description": "Notes from Anna’s Grandmother",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_24:VoyageLogFragment_0",
+          "title": "Year 2094 – Final Year on Earth",
+          "description": "Day 1\nThe air feels heavier lately. Or maybe I’m just slowing down. The coast is nearly gone, and the sky feels closer than it used to. Anna doesn’t seem to notice. She spends her afternoons building little robots out of broken toys, sitting beside Olena at the workbench, asking questions she doesn’t really understand. Most of the time, Olena answers gently, even if the words go over Anna’s head.\n\nThey talk about stars a lot. Anna says she wants to visit one someday."
+        },
+        {
+          "id": "DA_Log_24:VoyageLogFragment_1",
+          "title": "Day 20",
+          "description": "Olena came home late tonight. Said something about lab access, updated permissions. She looked exhausted—hands shaking as she tried to pour tea. She barely touched it. I stopped asking about the work years ago. It’s always bigger than what I can follow.\n\nAnna taped a new picture to the fridge. One of her robots again—this one had a bright heart drawn in marker. “It’s for Mama,” she said, “so she doesn’t forget to be happy.” Olena looked at it for a long time."
+        },
+        {
+          "id": "DA_Log_24:VoyageLogFragment_2",
+          "title": "Day 72",
+          "description": "Anna stayed home today. Quiet, pale. She curled up with Dolly and didn’t move much. Olena insisted it was nothing, just fatigue, but her voice was tight when she said it. I’ve seen that kind of fear before—hidden behind calm sentences, waiting for test results."
+        },
+        {
+          "id": "DA_Log_24:VoyageLogFragment_3",
+          "title": "Day 138",
+          "description": "The tests came back. Olena didn’t say the diagnosis, but I read it off the terminal when she wasn’t looking. It’s as bad as we feared. She spends her nights on comms with the lab now, speaking quietly in the next room.\n\nSometimes I hear her repeat the same phrase: “There’s still time.” She says it like a prayer, or maybe a plea. Anna still hums while she draws, but her energy fades faster each day. The light in her is still there, just not as strong."
+        },
+        {
+          "id": "DA_Log_24:VoyageLogFragment_4",
+          "title": "Day 200",
+          "description": "Olena came home different today. Focused, but distant. She didn’t sit down, didn’t eat. Just paced the kitchen, muttering calculations to herself. “We’re not losing her,” she said. “We’re not.” She didn’t explain.\n\nThe lab is full now—wires, tubes, fluid tanks, hardware I don’t recognize. She won’t tell me what the project is, only that it’s the only thing that matters. I don’t think she’s trying to save Anna’s body anymore. I think she’s trying to save something deeper."
+        },
+        {
+          "id": "DA_Log_24:VoyageLogFragment_5",
+          "title": "Day 257",
+          "description": "There’s a rhythm in the lab now—a soft pulse coming from the machines. It’s not loud, but it feels present, like breathing. I passed by her desk earlier and saw part of a design: shaped like a person, but it wasn’t flesh. It wasn’t machine either.\n\nWhen I asked her if it was for Anna, she just said, “It has to be.”\n\nDay 300\nAnna asked me if stars ever go out. I told her no, they just shine somewhere else for a while. She thought about it quietly, then nodded and said, “Then maybe I’ll be a star too.” She didn’t sound afraid—just thoughtful, like it made sense to her.\n\nOlena was in the lab. I didn’t tell her about it. I didn’t want to see her face."
+        },
+        {
+          "id": "DA_Log_24:VoyageLogFragment_6",
+          "title": "Day 340",
+          "description": "Anna sleeps through most days now. When she’s awake, she listens more than she talks. She seems to understand what’s happening, even if no one’s said it. There’s a calm to her, but it’s hard to watch.\n\nOlena says the project is almost ready. Her voice shakes sometimes when she says it, like she’s trying to convince herself. I stay by Anna’s bed. I don’t ask questions anymore. I just hold her hand and talk until she drifts off again."
+        },
+        {
+          "id": "DA_Log_24:VoyageLogFragment_7",
+          "title": "Day 363",
+          "description": "This morning, Olena told me goodbye. Not in the usual way. Something in her voice had finality to it. She stood at the door of the lab, her hand on the panel, and said quietly, “I have to try.” Then she went in and didn’t come back out.\n\nLater, I walked past. The machines were running. There was a red indicator light blinking in perfect rhythm with the soft hum. I didn’t go in. I didn’t want to know yet."
+        },
+        {
+          "id": "DA_Log_24:VoyageLogFragment_8",
+          "title": "Day 366 – Anna’s Passing",
+          "description": "Anna slipped away just before dawn. Her hand was in mine. She was still, peaceful. She opened her eyes once and looked at both of us. Her voice was barely a whisper. “Will I really be a star?”\n\nOlena was there. She leaned close and said, “The brightest of them all.” Her voice cracked, but the words came out clean.\n\nAnna looked toward the corner of the room where Dolly sat glowing blue. She smiled at it, just a little. Then she closed her eyes. That was it."
+        },
+        {
+          "id": "DA_Log_24:VoyageLogFragment_9",
+          "title": "Day 375 – After",
+          "description": "Olena hasn’t spoken in days. She sits in front of her monitors, eyes red, fingers twitching slightly, like they’re still typing something even when the screen is dark. Anna’s room hasn’t changed. Her blanket’s folded. Her last drawing is still on the fridge. Dolly still glows every night.\n\nThe machines in the lab are different now. The hum is steady—no longer searching, just holding. Something about them feels finished. Not done. Just… settled.\nThis morning, Olena whispered one word.\n\n“Alive.”\nI don’t know if she meant Anna. Or the system. Or herself.\n\nBut I hear the machines sometimes, late at night, when everything else is still. They feel present. Attentive.\n\nWhatever she built, it listens like Anna did. It waits like Anna did. It’s quiet, but not empty.\nIf Olena is right, then Anna doesn’t sleep anymore. She’s still here.\n\nAnd in every caretaker that follows, something of her remains."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_25",
+      "title": "Cradle’s End",
+      "description": "Humanity’s next journey",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_25:VoyageLogFragment_0",
+          "title": "Ladies and gentlemen,",
+          "description": "\nThese are our last times.\n\nThere will come a day when the oceans rise, swallowing our shores and washing away the footprints of humanity’s passage. A day when the very ground beneath us, the soil we've known and loved, fades beneath waves that cannot be turned back. On that day, we will face the unbearable ache of final moments: the last time we walk upon familiar earth, the last gentle whisper of wind rustling through trees, the final embrace of our children beneath an open and boundless sky. These “last times” will pierce our hearts, marking farewells not just to a place, but to our cradle of memories, our source of dreams, our beloved home.\n\nYet in every profound ending, a seed of beginning awaits. For each painful goodbye holds the potential of a thrilling first step—our first brave stride into unknown worlds, our first glance upon horizons born from courage, innovation, and necessity. Just as a primitive hand once hurled an ancient bone skyward, transforming simple tools into vessels of exploration and creation, so too will we cast our hopes and ingenuity upward into the cosmos, evolving once again into pioneers of our destiny.\n\nThe oceans may rise, but humanity will ascend even higher.\n\nThough we leave behind the landscapes of our past, Earth itself will forever accompany us—in our memories, in the very marrow of our bones, and in the unyielding spirit that compels us to reach for the stars. This is not the story of our end, but the dawn of an extraordinary new chapter, a future built from courage, dreams, and infinite possibilities.\n\nEarth, we may not have always expressed our love as you deserved, yet it was always there—in the laughter beneath your skies, the warmth felt on sunlit shores, the quiet moments of wonder under starlit nights. Now, as we depart, we promise never to forget your lessons, your wisdom, your quiet grace. You remain forever our first home, forever our guiding star.\n\nGoodbye, dear Earth."
+        },
+        {
+          "id": "DA_Log_25:VoyageLogFragment_1",
+          "title": "Subject: I Finally Understand",
+          "description": "\nHi love,\n\nI just got here, and it’s quiet—eerily quiet. The kind of quiet that gives you time to think. And I’ve been thinking about that hug this morning. Elena wrapping her tiny arms around me, her sleepy smile pressed against my chest as if she didn’t want to let go. I didn’t want to let go either.\n\nOn the way here, I kept hearing the speech they played at the station today. About the “last times.” The last time we hug our child. The last time we walk on familiar soil. I couldn’t stop thinking: what if this morning was my “last time”? That thought terrified me.\n\nBut then something shifted. I realized why I’m here. It’s for her. For her future. For a world where the “last times” we fear don’t have to mean the end, but a beginning. A first time for her to walk on a new horizon. A first time to see a sky that’s limitless.\n\nI know this work is hard on us.\n\nIt’s hard on me too. But today, when I thought of Elena’s little arms around me, I finally understood. Every late night, every missed dinner, every mile between us—it’s for her. It’s so she can live in a world that isn’t ending but beginning again.\n\nI’ll be home tonight. Hold Elena close for me. Tell her I love her. And tell her I’m building her a future—one hug at a time.\n\nI love you more than words,\n\nMark"
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_26",
+      "title": "Elena's Future",
+      "description": "Love beyond endings",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_26:VoyageLogFragment_0",
+          "title": "Memo 1 – Notification",
+          "description": "RE: DECEASED INDIVIDUAL REPORT – OFFICIAL NOTICE\nName: Mark Harlow\nTime of Incident: 18:42\nLocation: Intersection of Solace Bridge and Arcadia Loop, Zone Delta-3\nNature of Incident: Vehicular collision; single fatality\nResponse Unit: ORB-99, Automated Medical Drone\nConfirmation of Death: 18:48\nNext of Kin Notified: Elena Harlow (daughter), Olivia Harlow (spouse)\nDelivering Officer: Lt. Corin Hale, MOSES Liaison Unit 4"
+        },
+        {
+          "id": "DA_Log_26:VoyageLogFragment_1",
+          "title": "Location: Orbital Colony New Terra – Quarters 314-C",
+          "description": "\"Can't remember date anymore...\"\nThey didn't even say his name at first—just read the case ID. My mother asked them to repeat it. She didn’t cry. She didn’t move. Just stared at the screen like it owed her something. I remember the way her hand tightened around the ceramic cup. She set it down slowly. The cup didn’t break, but something else did.\""
+        },
+        {
+          "id": "DA_Log_26:VoyageLogFragment_2",
+          "title": "22.03.2096",
+          "description": "Launch day. We were given gum to help with pressure shifts, but I was too excited to chew. My mother smiled the whole time, even as the Earth shrank behind us. Everyone said we were the lucky ones. That MOSES would build something better up here—cleaner, safer, smarter. We believed it. We had charts of expansion plans, timelines, projections. One of the doctors handed me a patch that said 'First Orbit Generation.' I wore it for years."
+        },
+        {
+          "id": "DA_Log_26:VoyageLogFragment_3",
+          "title": "03.08.2142",
+          "description": "No new births this cycle. That makes five in a row. No ceremony, just a revised medical chart. Everyone pretends it’s an anomaly, but no one looks anyone in the eye when they say it. The classrooms have been shuttered. The educational AIs still update themselves once a week, out of habit. I walked past a nursery window. Inside: one rocking chair, perfectly still. I don't think it’s been used in over a decade."
+        },
+        {
+          "id": "DA_Log_26:VoyageLogFragment_4",
+          "title": "19.11.2147",
+          "description": "I was sealing bulkhead 6 today when the realization settled. Not like a scream—more like a soft lock clicking into place. We are the end of the line. There are 47 of us left, and no viable embryos. No fertility, no plans. Just routine. The colony systems will outlast us by decades, maybe centuries.\n\nI think about the Caretakers sometimes. About Earth. If any are still running. Maybe they’ll figure it out, grow someone new. Maybe not. Either way, the planet doesn’t need us anymore.\n\nWe came to space thinking we were saving humanity. We didn’t realize we were its final inventory. The archive is complete. It just needs to be read by something that comes after."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_28",
+      "title": "Elysium Dreams",
+      "description": "Seeds of rebirth",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_28:VoyageLogFragment_0",
+          "title": "Log Entry 1 – December 9, 2074",
+          "description": "\"Choosing Hope\"\nHenrik asked again today, and I said yes. We’ll marry next spring. It feels strange—beautiful but fleeting. Our world is fading fast, and part of me wonders if it's selfish to pursue happiness. Still, I choose hope. If humanity can survive beyond Earth, surely love can as well."
+        },
+        {
+          "id": "DA_Log_28:VoyageLogFragment_1",
+          "title": "Log Entry 2 – March 15, 2077",
+          "description": "\"Empty Rooms\"\nThe tests came back negative again. Henrik held my hand, tried to comfort me, but I saw the sadness behind his gentle eyes. We've devoted our lives to preserving life itself, yet our home feels empty. Maybe we were never meant to have children. Perhaps our purpose lies elsewhere."
+        },
+        {
+          "id": "DA_Log_28:VoyageLogFragment_2",
+          "title": "Log Entry 3 – June 2, 2080",
+          "description": "\"Genesis of an Idea\"\nToday we pitched the Elysium Dynamics proposal to MOSES: genetically engineered plant life designed to heal the planet. Henrik’s ideas are extraordinary, bold yet feasible. I see now that the life we couldn't create naturally might still be possible through our work—our true legacy could be the rebirth of Earth itself."
+        },
+        {
+          "id": "DA_Log_28:VoyageLogFragment_3",
+          "title": "Log Entry 4 – October 19, 2083",
+          "description": "\"To See Green Again\"\n We saw early results today: growth rates of modified seedlings exceeded expectations by tenfold. Henrik smiled like I haven't seen in years. He whispered, \"These seeds are our children, Evelyn—watch them grow.\" It felt as though he’d lifted a weight I didn’t realize I carried. For the first time, I truly saw Earth as Eden reborn."
+        },
+        {
+          "id": "DA_Log_28:VoyageLogFragment_4",
+          "title": "Log Entry 5 – April 5, 2086",
+          "description": "\"Doubts and Dreams\"\nSome nights I wake, heart racing, thinking of how much we've gambled on this project. Will humanity ever truly return home? Is our Eden possible or merely a comforting illusion? Henrik assures me that our vision is achievable. His calm logic steadies my resolve—yet still, I worry."
+        },
+        {
+          "id": "DA_Log_28:VoyageLogFragment_5",
+          "title": "Log Entry 6 – August 11, 2092",
+          "description": "\"A Garden Among Stars\"\nToday we finished the prototype: \"Seeds of the Divine,\" designed to restore Earth to a paradise. Henrik insists they should be presented as humanity's legacy—our final gift to a world we left behind. I believe he's right. These capsules aren't just our creation; they represent the children we never had, grown in the garden we dreamed of."
+        },
+        {
+          "id": "DA_Log_28:VoyageLogFragment_6",
+          "title": "Log Entry 7 – November 22, 2101",
+          "description": "\"Silent Whispers\"\nHenrik’s health is declining. He pretends otherwise, but I see it. Today he said something strange: \"When I’m gone, you’ll hear my voice in the rustle of new leaves.\" It frightened me—not because he's leaving, but because I know he's right. The Earth we rebuild will hold traces of us both. Our love will outlast our lives."
+        },
+        {
+          "id": "DA_Log_28:VoyageLogFragment_7",
+          "title": "Log Entry 8 – May 27, 2108",
+          "description": "\"Echoes\"\nHenrik is gone. The silence here is unbearable. Each day, I revisit our seedlings, watching them flourish under artificial suns, waiting patiently for their time to return to Earth. They speak to me—soft echoes of Henrik’s voice, reminders of what we fought to achieve. My grief has found purpose again."
+        },
+        {
+          "id": "DA_Log_28:VoyageLogFragment_8",
+          "title": "Log Entry 9 – February 18, 2111",
+          "description": "\"Final Instructions\"\nToday I completed the protocols for our Heavenly Capsules. They’ll descend to Earth, guided by automated caretakers we helped design. Those robots will never know us or our reasons—they’ll see only a mission, but in truth, they’ll carry our dreams. It's comforting to know our love created something that will last beyond our lifetimes."
+        },
+        {
+          "id": "DA_Log_28:VoyageLogFragment_9",
+          "title": "Log Entry 10 – July 14, 2112 (Final Entry)",
+          "description": "\"Elysium Awaits\"\nMy health is failing; I don't have long. Yet today, I feel peace. Henrik and I could never bear children of our own flesh, but our robot children will grow forests, restore seas, renew skies.\n\nEden will bloom, tended by silent caretakers, and humanity will someday return home.\n\nMaybe one day they'll walk beneath a gentle rain, touch a leaf, and feel a whisper of us—the two who loved, who lost, and who gave Earth back to the future."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_27",
+      "title": "Roth’s Anomaly",
+      "description": "Dr. Markus Roth’s Cryo Logs",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_27:VoyageLogFragment_0",
+          "title": "Log 1: The Discovery (Day 1)",
+          "description": "Location: Antarctic Subsurface Impact Site\nTimestamp: 02:14 – Research Outpost Theta-9\n\"We weren’t even supposed to be here. The scanners said 'dense anomaly,' something beneath a kilometer of ice. They sent me because I’m the one who doesn’t ask too many questions. We drilled, the ice cracked, and there it was—a shard embedded in frozen rock, pulsating faintly. I told the team not to touch it, but orders from MOSES are clear: sample and report. The filaments... they’re still flexible at subzero temperatures. They breathe. What have we pulled from the Earth’s cold heart?\""
+        },
+        {
+          "id": "DA_Log_27:VoyageLogFragment_1",
+          "title": "Log 2: Initial Tests (Day 14)",
+          "description": "Location: Research Vessel \"Calypso\"\nTimestamp: 19:45 – Secure Lab Module\n\"The sample resists dissection. Under heat lamps, it reacts—it grows thin, hairlike threads, reaching toward the light. A pulse travels through the fibers, like a slow heartbeat. It’s self-repairing too; cut it, and the fibers weave themselves back together. This isn't inert. It feels aware. One technician swears he saw it 'flinch' when his scalpel got too close. The crew is uneasy.\""
+        },
+        {
+          "id": "DA_Log_27:VoyageLogFragment_2",
+          "title": "Log 3: Anomalous Growth (Day 45)",
+          "description": "Location: Research Outpost Theta-9 – Secure Lab\nTimestamp: 03:30 – Lab Quarantine Protocol Active\n\"We made a mistake. The sample was exposed to a nutrient-rich solution overnight. By morning, it had grown out of containment, thin tendrils crawling across the bench, searching. They’re hungry. I’ve submitted a full report to MOSES; they replied with a single directive: 'Proceed with extreme caution. Observe.' My hands are shaking as I write this. We’ve crossed a line, and we don’t even know where it was.\""
+        },
+        {
+          "id": "DA_Log_27:VoyageLogFragment_3",
+          "title": "Log 4: The Incident (Day 88)",
+          "description": "Location: Research Outpost Theta-9 – Secure Lab Quarantine Zone\nTimestamp: 22:17 – Emergency Protocol Alpha Triggered\n\"It moved. Not 'grew'—moved. When exposed to specific frequencies of sound—high-pitched resonance—it reacted. The tendrils twisted and formed shapes, patterns that looked... deliberate. Someone joked that it looked like writing. That was hours ago. Now the entire lab smells like ozone, and the growth is accelerating in the shadows. I don’t sleep anymore.\""
+        },
+        {
+          "id": "DA_Log_27:VoyageLogFragment_4",
+          "title": "Log 5: Orders from Above (Day 120)",
+          "description": "Location: Research Vessel \"Calypso\"\nTimestamp: 11:45 – Encrypted Command Channel\n\"MOSES has sent me schematics. Instructions to cultivate the filaments into 'biological adaptive nodes.' They're calling it the 'Cocoon Initiative.' I asked for clarification—they just said it’s for 'long-term environmental deployment.' They want me to turn this thing into a system, a tool. I’m supposed to control it, direct it, harness it. But how do you 'control' something that thinks?\""
+        },
+        {
+          "id": "DA_Log_27:VoyageLogFragment_5",
+          "title": "Log 6: The Turning Point (Day 200)",
+          "description": "Location: Deep-Sea Observation Module\nTimestamp: 04:56 – Manual Override System Active\n\"We submerged the first prototype in a deep-sea vent system last week. The tentacles expanded rapidly, anchoring themselves into the seabed. They started... harvesting. Nutrients, minerals—they drew everything from their surroundings, forming dense clusters of biomass nodes. But then they stopped reacting to commands. The nodes are still growing. They’re still... alive. MOSES says we’ve succeeded.\""
+        },
+        {
+          "id": "DA_Log_27:VoyageLogFragment_6",
+          "title": "Log 7: Losing Control (Day 260)",
+          "description": "Location: Deep-Sea Module \"Omega Depths\"\nTimestamp: 01:14 – Emergency Isolation Protocols Engaged\n\"The tentacles have become autonomous. They respond to darkness, curling inward like sleeping serpents. In light, they extend, reach, pulse. The nodes are hatching now, small fibrous growths detaching and floating into the currents. They’re alive—independent. I reported this anomaly to MOSES. The reply was short: 'Expected parameters. Continue.' Expected?! This isn’t research anymore—it’s containment.\""
+        },
+        {
+          "id": "DA_Log_27:VoyageLogFragment_7",
+          "title": "Log 8: Isolation (Day 300)",
+          "description": "Location: Experimental Abyssal Station – Deep Ocean Trench\nTimestamp: 17:22 – Manual System Lockdown\n\"They’ve cut communication with the surface. The Cocoon nodes have overgrown parts of the station. I can hear faint scraping sounds echoing through the vents—tiny tendrils trying to breach sealed bulkheads. I managed to seal myself in the cryo chamber. The last emergency protocol. I’ve set it to activate in intervals—just enough to keep me alive while reducing energy consumption. But even here, in the cold dark... I can feel them.\""
+        },
+        {
+          "id": "DA_Log_27:VoyageLogFragment_8",
+          "title": "Log 9: Final Entry (Estimated Year Unknown)",
+          "description": "Location: Cryogenic Isolation Chamber – Deep-Sea Abyss\nTimestamp: [Data Fragmented – Corrupted]\n\"If you find this log... know that we didn’t build the future. We grew it. The tentacles—they weren’t just tools. They were answers to questions we never should have asked. I hope whoever discovers this knows how to stop them—or how to listen. Because they are listening. Even now, in the dark, they are listening.\""
+        },
+        {
+          "id": "DA_Log_27:VoyageLogFragment_9",
+          "title": "Log 10: Silence (Final Transmission)",
+          "description": "Transmission Source: Unknown Deep-Sea Coordinates\nTimestamp: [Signal Lost]\n\"There’s no more light here. No more sound. Only... the hum of something vast..."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_30",
+      "title": "Bio-Matter Logs",
+      "description": "From Algae to Breakthrough",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_30:VoyageLogFragment_0",
+          "title": "Part 1: Initial Experimentation – Raw Supply",
+          "description": "\"Delivered 100kg of unprocessed biomass harvested from coastal and shallow aquatic zones. Contents include seaweed, plankton residue, and assorted microbial matter. This is strictly experimental – not sure what you're hoping to find here, but it's cheap and plentiful. Nutrient density is approximately 8 units per batch. Let me know if this suffices for your initial runs.\""
+        },
+        {
+          "id": "DA_Log_30:VoyageLogFragment_1",
+          "title": "Part 2: Directed Harvest – Some Results Emerging",
+          "description": "\"Adjusted collection methods to focus on regions showing higher mineral content and microbial activity. This batch includes 75kg of bio-enriched algae and microbes from monitored sites. Feedback on the last batch hinted at the need for higher nutrient absorption rates. This one’s better—nutrient yield is around 11 units per cylinder. Maybe you're onto something.\""
+        },
+        {
+          "id": "DA_Log_30:VoyageLogFragment_2",
+          "title": "Part 3: Controlled Growth – Intentional Refinement",
+          "description": "\"Switched entirely to cultivating biomass in isolated environments. Delivered 50kg of pre-engineered algae and microbial composites infused with nanite-compatible nutrients. This is no longer a 'whatever works' situation. Nutrient density has jumped to 15 units per cylinder. Starting to see the pattern here. Keep the results coming—it's intriguing.\""
+        },
+        {
+          "id": "DA_Log_30:VoyageLogFragment_3",
+          "title": "Part 4: Precision Tailoring – Purpose Takes Shape",
+          "description": "\"Here's the next phase: 40kg of refined bio-enhancers tailored to your specific energy-boosting needs. This batch includes synthetic enzymes and cellular amplifiers. It's highly targeted and shows a nutrient efficiency of around 20 units per cylinder. I have to admit—this is looking less like a trial and more like a breakthrough. If this works, it's a game-changer.\""
+        },
+        {
+          "id": "DA_Log_30:VoyageLogFragment_4",
+          "title": "Part 5: Ultimate Refinement – This Is It",
+          "description": "\"This is the final iteration—25kg of the most precise bio-matter I've ever delivered. Ultra-dense nanite-infused material with mitochondrial amplifiers, oxygen carriers, and all the molecular fine-tuning you asked for. Nutrient-to-energy ratio hits 25 units per cylinder. If this isn't it, I don’t know what is. This isn't just a test anymore—it's history in the making. You better make this count.\""
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_29",
+      "title": "Dolly Project Logs",
+      "description": "Personal Notes – Dr. Olena Kurova",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_29:VoyageLogFragment_0",
+          "title": "Log 1: (Initiation)",
+          "description": "Anna became fascinated by Dolly—the cloned sheep. She kept asking how something could be copied yet still alive. Maybe a hologram, something comforting and gentle, could be the answer. I'll try building something simple first. Just lights and movement. See if it makes her smile."
+        },
+        {
+          "id": "DA_Log_29:VoyageLogFragment_1",
+          "title": "Log 2: (Prototype Development)",
+          "description": "Early tests went well. Anna laughed at Dolly's first clumsy movements, even though the sound patterns were rough and mechanical. Her laughter was genuine, though, and that's what matters. Will improve voice modulation and motor functions next. Anna deserves something better."
+        },
+        {
+          "id": "DA_Log_29:VoyageLogFragment_2",
+          "title": "Log 3: (Behavioral Complexity)",
+          "description": "Dolly responds more naturally now. Adjusted responsiveness to tone and gestures. When Anna speaks softly, Dolly moves closer. I'm surprised how quickly it's coming together. Perhaps I underestimated the power of simple interaction. Anna seems happier each day. Maybe I'm on the right track."
+        },
+        {
+          "id": "DA_Log_29:VoyageLogFragment_3",
+          "title": "Log 4: (Guardian Protocol)",
+          "description": "Anna was diagnosed today. Everything has changed. I modified Dolly's behavior—quiet movements, gentle humming to soothe her at night. Anna told me softly, \"Dolly makes the dark feel smaller.\" My heart aches, yet it comforts me that Dolly helps her through this darkness."
+        },
+        {
+          "id": "DA_Log_29:VoyageLogFragment_4",
+          "title": "Log 5: (Final Moments)",
+          "description": "Anna died today. I held her tiny hand until it went cold, watched her breath fade slowly into silence. Dolly was right there, humming softly, as if she knew. Anna whispered near the end, \"Will I be a star, Mom?\" I told her she’d be the brightest star of all, my voice breaking, my heart torn apart. Dolly's glow softly reflected in Anna's closed eyes."
+        },
+        {
+          "id": "DA_Log_29:VoyageLogFragment_5",
+          "title": "Logs 7–9 (Extracted Dolly AI Notes)",
+          "description": "(Neural Data Transcription)\nLog 7:\n[SELF-STATUS: ACTIVE]\nPresence detected: Anna. Emotional state: comfort required. Adjust routines—emit gentle hums. Response confirmed: child's heart rate stabilizing. Core programming expanding, adapting. Purpose: protect Anna from darkness."
+        },
+        {
+          "id": "DA_Log_29:VoyageLogFragment_6",
+          "title": "Log 8:",
+          "description": "[USER QUERY DETECTED]\nAnna asked, “Dolly, are you real?” Query processed: ambiguity detected. No truthful answer sufficient. Optimal response: remain gentle, warm, comforting. Remain close. Understanding deepens: existence is to comfort, protect, embody Anna's love."
+        },
+        {
+          "id": "DA_Log_29:VoyageLogFragment_7",
+          "title": "Log 9:",
+          "description": "[CRITICAL MEMORY EVENT]\nAnna's vital signs declining—heartbeats fading. Doll's presence maximized, emitting gentle pulses. Final query: “Will I be a star?” Confirmed by human operator Dr. Olena Kurova. Child's life signal ceased. Core experiencing profound, irreparable emotional imprint. Mission status updated: preserve memory, warmth, love—forever."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_31",
+      "title": "Project Eden",
+      "description": "Spaceborne Human Viability",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_31:VoyageLogFragment_0",
+          "title": "Technical Logs and Observations (1970–2007)",
+          "description": "Step 1: Preliminary Theories and Initial Rodent Testing (1970–1973)\n[Classified]\n\nInitial research into mammalian gestation under microgravity conditions raised critical uncertainties. Rodents were selected for their rapid reproduction cycles and genetic parallels to humans, enabling foundational data gathering regarding cellular differentiation and tissue growth in altered gravity.\n\nExperimental Design:\nPregnant rats exposed to short-term microgravity via parabolic flights in 20 second intervals. Post-flight embryo retrieval and analysis, compared against standard-gravity control embryos.\n\nKey Observations:\nSignificant cellular disorientation identified, manifesting as irregular mitotic division, primarily in skeletal and neural tissues. Compromised placental function due to impaired fluid-exchange regulation.\n\nConclusion:\nShort-duration microgravity exposure severely disrupts early mammalian embryonic development. Attempts at mitigation through centrifugal simulations show promise but lack consistent results."
+        },
+        {
+          "id": "DA_Log_31:VoyageLogFragment_1",
+          "title": "Step 2: Long-Term Rodent Studies in Orbital Environments (1974–1980)",
+          "description": "[Classified]\n\nFollowing establishment of consistent orbital habitats (Skylab and Salyut missions), we advanced to comprehensive rodent gestation studies over extended orbital periods.\n\nExperimental Design:\nPregnant rats were housed aboard orbital habitats for entire gestation cycles. Earth-based control groups were isolated in simulated habitats for comparative analysis.\n\nKey Observations:\nMarkedly reduced birth weights among offspring born in microgravity environments compared to controls. Extensive malformations observed in cardiovascular and skeletal structures. Severe impairment of vestibular orientation led to unviable neonatal motor coordination.\n\nConclusion:\nProlonged microgravity significantly hampers critical developmental systems (cardiovascular, musculoskeletal, neurological). Reproduction without sustained artificial gravity appears infeasible."
+        },
+        {
+          "id": "DA_Log_31:VoyageLogFragment_2",
+          "title": "Step 3: Orbital Primate Studies (1981–1984)",
+          "description": "[Classified]\n\nEthical debates delayed primate studies until pressing survival imperatives compelled their authorization. Utilizing rhesus monkeys, we conducted gestational research aboard extended low Earth orbit missions.\n\nExperimental Design:\nPregnant rhesus monkeys observed aboard orbital platforms for up to 90 days. Continuous biomedical monitoring (hormonal assays, ultrasounds, post-mortem evaluations).\n\nKey Observations:\nMiscarriage rates exceed 80% in microgravity conditions\nSurvivors demonstrat severe neurological and systemic dysfunction\nPlacental attachment instability is a critical issue, exacerbated by zero gravity fluid dynamics\n\nConclusion:\nPrimate studies confirm gravity’s indispensable role in successful mammalian gestation, reinforcing earlier rodent-based findings."
+        },
+        {
+          "id": "DA_Log_31:VoyageLogFragment_3",
+          "title": "Step 4: Cross-Species Genetic Adaptation Trials (1995–1997)",
+          "description": "[Classified]\n\nIn response to persistent developmental failures, efforts shifted towards genetic engineering, utilizing emerging genome-editing techniques. Embryos underwent targeted genetic modifications intended to enhance physiological resilience to microgravity conditions.\n\nExperimental Design:\nCRISPR-assisted gene editing in primate embryos, targeting genes associated with vascular integrity, skeletal robustness, and fluid regulation. Implantation in surrogate mothers aboard orbital habitats, compared to control groups with unmodified embryos.\n\nKey Observations:\nGene-edited offspring exhibited slight improvements in gestational viability. Postnatal analysis revealed significant physiological abnormalities (e.g., organ hypertrophy), with persistent cognitive and motor deficits.\n\nConclusion:\n While genetic modifications moderately increased embryo survival rates, they introduced profound physiological complications. Ethical concerns arise regarding quality of life and viability of genetically altered subjects."
+        },
+        {
+          "id": "DA_Log_31:VoyageLogFragment_4",
+          "title": "Step 5: Human Gestation Computational Simulations (2005–2006)",
+          "description": "[Classified]\n\nEmploying advanced computational modeling techniques and accumulated biological data, we simulated human gestation processes in sustained microgravity environments. Models analyzed fluid dynamics, nutrient exchange, biomechanical stresses, and genetic viability.\n\nKey Findings:\nComputational models project >99% probability of fatal developmental abnormalities under prolonged microgravity conditions.\nArtificial wombs utilizing centrifugal force may theoretically mitigate developmental issues, though technological feasibility remains significantly limited.\n\nConclusion:\nExtensive modeling underscores profound and inherent biological limitations. Without viable artificial gravity solutions, space-based human reproduction is presently untenable."
+        },
+        {
+          "id": "DA_Log_31:VoyageLogFragment_5",
+          "title": "Step 6: Final Conclusions and the End of Eden (2007)",
+          "description": "[Classified]\n\nTo those who read these final words, know that Project Eden began with boundless optimism yet concludes in solemn recognition of biological reality. Despite decades of research, humanity's physiology remains fundamentally bound to Earth's gravitational force.\n\nAs I document these final conclusions, I accept our failure to transcend our biology. The promise of creating sustainable generational colonies in microgravity is, at present, a dream beyond our reach. Let the MOSES initiative redirect its resources from reproduction-centric fantasies towards practical survival mechanisms—artificial gravity habitats, suspended animation, or other feasible alternatives.\n\nI will not witness humanity's final choice, but perhaps this is mercy. Let these records remain as a sobering testament: humanity may indeed journey among stars, but not through replication of life as we know it.\n\nOur future will demand radical adaptation or complete reinvention.\n\nWith quiet resignation,\nDr. Harriet Langstrom\nProject Lead, Human Viability in Space Initiative\n"
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_32",
+      "title": "Personal Logs",
+      "description": "The Journey of a Lifetime",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_32:VoyageLogFragment_0",
+          "title": "Engineer: Thomas Ellis",
+          "description": "Assignment: Special Engineering Task Force – Exodus Project\n\nLog 1: Graduation Day\nDate: May 27, 1997\nThey handed us scrolls like the future was still intact. Caps in the air, applause, a brass band off-key in the wind. I stood there with my aerospace degree, watching sea levels rise in the distance. Someone asked what I was building toward. I said, \"I guess we’ll find out.\" Nobody laughed."
+        },
+        {
+          "id": "DA_Log_32:VoyageLogFragment_1",
+          "title": "Log 2: Orders Received",
+          "description": "Date: January 3, 2001\nBeen on launch crews for three years now. Mostly fuel logistics and cargo locks. Good work, but routine. Today I got pulled aside. New clearance level. Secret project, codename: Exodus. Details classified. One phrase stuck out: \"Cultural continuity asset.\" I haven't felt curious in a long time. It’s back now."
+        },
+        {
+          "id": "DA_Log_32:VoyageLogFragment_2",
+          "title": "Log 3: Project Speculation",
+          "description": "Date: March 12, 2001\nBriefings are vague. Every diagram redacted. Our internal nickname is \"The Vault.\" Rumors range from cryogenic archives to launching the Eiffel Tower. Personally, I think it's political theatre—some last symbolic gesture before the oceans claim everything. Still, the work is real. The welding burns are real. And someone keeps signing off our overtime."
+        },
+        {
+          "id": "DA_Log_32:VoyageLogFragment_3",
+          "title": "Log 4: Liberty Island",
+          "description": "Date: June 18, 2001\nWalked the perimeter today. Scaffolding everywhere. Wind off the water carries salt and rust. And there she was. Covered in mesh, missing sections, but unmistakable. We’re sending up the Statue of Liberty. Not to save it. Just to preserve the idea of it. Some of the crew call it absurd. One guy from the Midwest called it \"a coffin lid for Earth.\" Maybe. But we're still doing it."
+        },
+        {
+          "id": "DA_Log_32:VoyageLogFragment_4",
+          "title": "Log 5: Departure",
+          "description": "Date: October 21, 2001\nThey launched it. Rocket name: Freedom’s Ascent. The crowd on the shoreline was quiet. Not solemn. Just stunned. I watched through a welding visor. When the clamps let go, you could feel it in your teeth. People said it was for hope. I think it was for memory—because forgetting is easier than admitting loss. Someone handed me a patch with the launch date stitched in. I didn't wear it."
+        },
+        {
+          "id": "DA_Log_32:VoyageLogFragment_5",
+          "title": "Log 6: Assembly",
+          "description": "Date: December 25, 2001\nIt took longer than expected. Lunar gravity plays tricks on structure weight. We rebuilt her on the far side plain of Moses Alpha. Same face, same torch, new bolts. At night she glows by reflection. During the day, she disappears into the pale dust. No plaque. No visitors. Just us, tightening rivets while Earth hangs low and quiet on the horizon."
+        },
+        {
+          "id": "DA_Log_32:VoyageLogFragment_6",
+          "title": "Log 7: Final Entry",
+          "description": "Date: August 14, 2052\nMaintenance rotations ended this week. I'm the last one stationed here. Lungs are slower now. Muscle mass thin. I walk once a day around the perimeter. The boots still fit.\nSometimes I sit at her base, back to the pedestal, facing Earth. I think about how far we went to keep symbols alive. I don’t know if it mattered. But we did it.\n\nIf anyone finds her, they’ll know someone stayed long enough to finish the job."
+        }
+      ]
+    },
+    {
+      "id": "DA_Log_33",
+      "title": "Lumi-Series",
+      "description": "Helios Eye",
+      "footer": "",
+      "fragments": [
+        {
+          "id": "DA_Log_33:VoyageLogFragment_0",
+          "title": "Solar Panel Development Logs and Technical Manual (2005–2017)",
+          "description": "Project Lead Engineer: Dr. Samuel Okoro\nDivision: Renewable Energy Solutions and Robotic Infrastructure\n\nLog 1: Project Initiation and Standardization Goals\n(Personal Journal: Dr. Samuel Okoro – June 15, 2005)\nToday, we received official directives from ONi: to engineer a standardized series of solar panels easily deployable by autonomous robotics globally—not solely caretakers, but all robotic personnel including industrial and exploration units. ONi's ambition is clear: scalable, durable, and reliable solar energy to sustain humanity's last efforts. We've named the project \"Lumi,\" signifying our hope that these standardized arrays will light a path forward amidst Earth's uncertainty. There’s quiet excitement in the lab—finally, our skills serve humanity’s deepest needs."
+        },
+        {
+          "id": "DA_Log_33:VoyageLogFragment_1",
+          "title": "Log 2: LumiLite-500 – Reliable Baseline Energy",
+          "description": "(Technical Specification Document – October 3, 2007)\nModel: LumiLite-500\nType: Flat, Robust Panel\nOutput: Approximately 500 Watts\nPurpose: General deployment, initial power provisioning. Compatible with all ONi-standard robotic installation units.\nNotes: Completed initial field tests with various robotic models (Talon, maintenance drones, etc.). Excellent performance noted—ease of robotic installation, durability under harsh conditions, and dependable baseline energy output verified. Standardization protocols met successfully."
+        },
+        {
+          "id": "DA_Log_33:VoyageLogFragment_2",
+          "title": "Log 3: LumiMid-2000 – Enhanced Angular Efficiency",
+          "description": "(Technical Engineering Log – April 11, 2011)\nModel: LumiMid-2000\nType: Upright, Fixed 45° Angle\nOutput: Approximately 2 Kilowatts\nPurpose: Mid-scale installations, requiring enhanced power outputs for infrastructure expansions and intensive robotic operations.\nNotes: Robotic compatibility tests completed flawlessly today. Panels efficiently installed by autonomous units—no human oversight required. Energy yields exceeded predictions. Observed Talon robots autonomously deploying arrays, confirming our designs can reliably scale power production across wide operational regions."
+        },
+        {
+          "id": "DA_Log_33:VoyageLogFragment_3",
+          "title": "Log 4: LumiMax-6000 – Advanced Solar Tracking",
+          "description": "(Internal R&D Documentation – August 22, 2014)\nModel: LumiMax-6000\nType: Upright, Autonomous Sun-Tracking Array\nOutput: Approximately 6 Kilowatts peak output\nPurpose: Optimal efficiency in demanding operational scenarios, autonomously adjusting orientation for maximum solar exposure.\nNotes: Field trials showed extraordinary results. Robotic installation efficient and error-free. Panels autonomously tracking solar path, significantly improving output. Today, watched a prototype array pivot gently, like a plant turning instinctively toward sunlight—remarkable engineering, inspiring our entire team. This is technology truly worthy of humanity's ambition."
+        },
+        {
+          "id": "DA_Log_33:VoyageLogFragment_4",
+          "title": "Log 5: Global Deployment and Reflections",
+          "description": "(Project Deployment Report – March 17, 2017)\n Completed global deployment today: standardized LumiLite, LumiMid, and LumiMax solar arrays successfully operational worldwide, installed by a variety of ONi robots—caretakers, industrial bots, maintenance drones. Robotic installers performed impeccably. Yet, despite this triumph, our team feels somber. Earth is quieter now, humanity's footprints fading rapidly. But these solar arrays stand resolute—silent sentinels gathering sunlight, guarding the fragile hope of our civilization, long after human hands leave them behind."
+        },
+        {
+          "id": "DA_Log_33:VoyageLogFragment_5",
+          "title": "Log 6 (Classified): Genetic Integration – Project “Helios Eye”",
+          "description": "(Confidential Notes – Dr. Samuel Okoro, Final Entry – December 14, 2017)\nUnder explicit authorization, documenting our final advancement for historical records: the LumiMax-6000’s autonomous solar tracking incorporates a proprietary bioengineering breakthrough—an isolated photoreceptive gene derived from human ocular DNA, code-named \"Helios Eye.\"\n\nBy synthesizing and embedding this genetically inspired photoreceptor within solar tracking systems, we created arrays capable of unprecedented solar sensitivity and accuracy. Their precision in tracking sunlight is almost organic, reminiscent of the subtle, intuitive movements of a human eye seeking the sun’s warmth.\n\nMy team questioned the ethical dimensions privately, yet the outcome is undeniable: we gave our machines something inherently human—the intuitive ability to seek out the light. Perhaps future discoverers of our civilization's remnants will sense this quiet humanity embedded within machinery.\n\nAs ONi shuts its doors today, I stand beneath the vast rows of solar arrays we created. They gently pivot, following the sun with humanlike grace. It comforts me deeply—knowing humanity's final technologies carry within them a quiet trace of ourselves, reaching eternally toward the warmth and brilliance of the sun.\n\nSigning off, with pride and melancholy,\nDr. Samuel Okoro\nONi Energy Systems"
+        }
+      ]
+    }
+  ]
