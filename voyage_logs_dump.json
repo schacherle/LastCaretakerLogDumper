@@ -1815,6 +1815,279 @@
                       ]
     },
     {
+        "id":  "DA_Log_50",
+        "title":  "The Transposium",
+        "description":  "Prototype Habitat, quiet measurements",
+        "footer":  "",
+        "fragments":  [
+                          {
+                              "id":  "DA_Log_50:VoyageLogFragment_0",
+                              "title":  "Page 1: â€œTransposable Cubesâ€ (May 19, 1968)",
+                              "description":  "They described the Transposium as a prototype habitat of the future. Four doors per room... and each room has the exact same interior... same smell, same light, same colors, same everything.\n\nThe engineer who walked me through its modular floor plan smiled proudly like he was showing off a newly-refurbished kitchen or something. He said the word modular like it meant safe.\n\nI simply nodded. Nodding felt easier than asking what a â€œhomeâ€ becomes when any part of it can be swapped out and replaced without anyone noticing."
+                          },
+                          {
+                              "id":  "DA_Log_50:VoyageLogFragment_1",
+                              "title":  "Page 2: â€œMove-In Dayâ€ (February 7, 1971)",
+                              "description":  "Our room has no number. Maybe it doesn\u0027t have one? Would it matter? All these rooms look exactly identical. It could be any number.\n\nWe unpacked the way families always do when they first arrive at a hotel. You assume your stay is temporary. So... a photo goes on the table. A jacket on a chair. A coffee cup placed where you wish to find it in the morning.\n\nThat first night, I jolted awake, and my hand fumbled around in the total blackness for the light switch. The ceiling lit instead. The lamp stayed dark.\n\nI felt as if this strange place was correcting my mistake."
+                          },
+                          {
+                              "id":  "DA_Log_50:VoyageLogFragment_2",
+                              "title":  "Page 3: â€œOrientationâ€ (June 2, 1971)",
+                              "description":  "They warned us not to trust cardinal directions. â€œThatâ€™s the whole point,â€ the supervisor explained. â€œSpace doesnâ€™t care where you think north is.â€\n\nSo I invented my own north: a scratch on the doorframe and a ripped corner of tape on the door, marks only I would notice.\n\nIn the morning, the scratch was still there. The door was not.\n\nPage 4: â€œDomestic Routinesâ€ (November 14, 1971)\nWe cling to our routines as if they are scaffolding. We always eat breakfast at the same hour and minute. We sleep facing the same wall. We keep our shoes lined up by the same doorway.\n\nBut all our quarters are identical to each other, and identical things are hard to love.\n\nOne woman started naming the featureless walls: \"left wall,\" \"right wall,\" â€œkind wall,â€ â€œcold wallâ€ -- anything to give them a unique flavor.\n\nOur observers scribbled long notes about her in their personnel files. I spotted her name on their clipboard before the door could close on their way out."
+                          },
+                          {
+                              "id":  "DA_Log_50:VoyageLogFragment_3",
+                              "title":  "Page 5: â€œThe Quiet Clickâ€ (March 28, 1972)",
+                              "description":  "I hear a weird sound at night. A soft repetitive clicking noise, like something metallic trying to turn its head slowly but getting stuck.\n\nAt first, I thought it might be the pipes. Then, I noticed the noise always happens when someone starts crying.\n\nNobody mentions the strange noise anymore. We all pretend privacy still exists, because the truth is worse than mere surveillance. Weâ€™re being measured and quantified."
+                          },
+                          {
+                              "id":  "DA_Log_50:VoyageLogFragment_4",
+                              "title":  "Page 6: â€œThe Sieveâ€ (September 9, 1972)",
+                              "description":  "A fellow resident inquired today, â€œHow long until we finally get used to this place?â€\n\nThe supervisor mildly berated the man, â€œThat depends on the kind of person you are.â€\n\nThat was when I realized this place wasn\u0027t just a mere habitat. Itâ€™s a fucking sieve.\n\nSome people keep asking questions. Some people stop. The ones who stop get quieter. The ones who keep asking get tired."
+                          },
+                          {
+                              "id":  "DA_Log_50:VoyageLogFragment_5",
+                              "title":  "Page 7: â€œTesting Failure Conditionsâ€ (January 17, 1973)",
+                              "description":  "They introduced â€œchronic variable stress inductionâ€ to our daily routine. Thatâ€™s what those assholes called it.\n\nOne of my doors suddenly led to a room where yesterday there had been a wall. Flipping a light switch unlocked a door latch two rooms away. A keycard worked once, then never again. As we performed tasks, they watched our faces more than our hands.\n\nThey werenâ€™t assessing our intelligence or productivity. They were testing how long it took for a person to stop expecting fairness."
+                          },
+                          {
+                              "id":  "DA_Log_50:VoyageLogFragment_6",
+                              "title":  "Page 8: â€œMove-Out Dayâ€ (August 4, 1974)",
+                              "description":  "They informed us that prototype testing for the Transposium was complete. Weâ€™d done our part, they said. The data gained was â€œinvaluable.â€\n\nI packed without even glancing at the walls, where all my tape marks and scratches would be left behind.\n\nLeaving the habitat felt like stepping out of a hazy dream where you canâ€™t even remember your own name.\n\nOutside, the sun had warmth... and a direction. I stood there a long time drinking it all in. At last, a solid, friendly world that doesnâ€™t constantly rearrange itself to test you."
+                          }
+                      ]
+    },
+    {
+        "id":  "DA_Log_51",
+        "title":  "FS-204 PLATFORM RUNNER",
+        "description":  "â€œMERMAIDâ€",
+        "footer":  "",
+        "fragments":  [
+                          {
+                              "id":  "DA_Log_51:VoyageLogFragment_0",
+                              "title":  "Hull Paint Log â€“ Archived Human Record",
+                              "description":  "Part 1: Assignment\nMarch 14, 2029 â€“ North Atlantic Service Pier C\nI traded shifts again. Not because I had toâ€”because I wanted time.\nPaperwork says FS-204, routine service. Hull inspection, corrosion touch-up, launch clearance.\nTo me it was just another surface still blank enough to accept a mark.\nIâ€™ve spent years laying out other peopleâ€™s messagesâ€”logos, warnings, instructions. Things that ask permission by design.\nThis time I wanted to put down something that didnâ€™t."
+                          },
+                          {
+                              "id":  "DA_Log_51:VoyageLogFragment_1",
+                              "title":  "Part 2: Before the Paint",
+                              "description":  "Three days earlier, at low tide, I found something caught where the nets usually pull up nothing worth naming.\nIt didnâ€™t belong to the water, but the water was already correcting that.\nWhatever it was, it had been somewhere else first. You could tell by the way it resisted the salt.\nI didnâ€™t log it. Didnâ€™t photograph it. Didnâ€™t touch it.\nSome things donâ€™t survive systems.\nI watched the waves take it back, slow and thorough.\nAfter that, the dock felt wrong. Too clean. Too quiet. Like everything was pretending nothing had fallen."
+                          },
+                          {
+                              "id":  "DA_Log_51:VoyageLogFragment_2",
+                              "title":  "Part 3: The Hull",
+                              "description":  "The metal was cold when I came back to the ship. Salt dried into the seams, patient and stubborn.\nGray paint everywhereâ€”correct, efficient, invisible.\nI stood longer than the checklist allowed, pencil in hand. I let the line appear the way it does when I stop trying to control it.\nThe bow felt empty.\nShips shouldnâ€™t face the water like theyâ€™re ashamed of it."
+                          },
+                          {
+                              "id":  "DA_Log_51:VoyageLogFragment_3",
+                              "title":  "Part 4: Why a Mermaid",
+                              "description":  "Where I grew up, fishing boats wore faces. Not for luckâ€”just so the sea would recognize them as alive.\nCave hands. Graffiti. Names scratched into desks. Same impulse.\nI donâ€™t believe art saves anything.\nI believe it proves something was here.\nSo I gave the ship a face that looks forward.\nNot smiling. Not afraid. Just present."
+                          },
+                          {
+                              "id":  "DA_Log_51:VoyageLogFragment_4",
+                              "title":  "Part 5: Paint",
+                              "description":  "I mixed the blue too thin. It ran when I brushed it on.\nI let it.\nIâ€™ve learned that the moment you correct everything, you erase yourself.\nThe mermaidâ€™s hair blurred into the hull, like memory dissolving into metal.\nThat felt honest."
+                          },
+                          {
+                              "id":  "DA_Log_51:VoyageLogFragment_5",
+                              "title":  "Part 6: Documentation",
+                              "description":  "I took one photo.\nNot framed. Not centered. The ladderâ€™s still in the shot. My boot too.\nOn the back I wrote:\nFinished before night tide.\nLooks better than the water.\nThat sentence didnâ€™t need help."
+                          },
+                          {
+                              "id":  "DA_Log_51:VoyageLogFragment_6",
+                              "title":  "Part 7: The Cans",
+                              "description":  "I labeled what was left the only way that made sense:\nMermaid â€“ Hull\nMermaid â€“ Deck\nMermaid â€“ Cabin\nNot colors.\nIntent.\nI signed M.\nFull names are for systems that pretend theyâ€™ll remember you.\nAfter that, others started painting too.\nNot because I told them to.\nBecause they saw it was allowed."
+                          },
+                          {
+                              "id":  "DA_Log_51:VoyageLogFragment_7",
+                              "title":  "Part 8: Departure",
+                              "description":  "I watched the runner leave the dock. Engines steady. Water swallowing the reflection piece by piece.\nThe mermaid faced forward. Calm. Accepting.\nI donâ€™t know who will see this again.\n  donâ€™t know if anyone will understand why it looks like this.\nBut from the first cave handprints to the last paint on a hull, the message is always the same:\nI was here.\nLook at me.\nGood luck to whoever finds this.\n â€” Miguel Ãlvarez"
+                          }
+                      ]
+    },
+    {
+        "id":  "DA_Log_52",
+        "title":  "ARISTOTLE",
+        "description":  "What survives when no one listens",
+        "footer":  "",
+        "fragments":  [
+                          {
+                              "id":  "DA_Log_52:VoyageLogFragment_0",
+                              "title":  "Page 1: â€œDay at the Museumâ€ (May 6, 1966)",
+                              "description":  "Mom dragged me to that dumb museum because it was raining. She said she didnâ€™t know what else to do with me because I wouldn\u0027t shut up. I hate that gross museum smell more than anything: old wood, dust, and everybody\u0027s wet coats.\n\nThere was this one painting... Aristotle, the sign said. He looked like a guy trying to think too hard. His hand was on a bust of some other guy named Homer. Maybe he was trying to stop it from falling?\n\n\"Who are these guys?\" I asked Mom. She rolled her eyes at me. \"We\u0027re in one of the greatest museums in the world. Can you PLEASE find something to appreciate?\"\n\nFine, whatever. I kept looking at the Aristotle painting. At least, HE seemed interested in what he was doing. Wish I could feel that way. I kept looking and looking at him. Maybe he really really wanted that statue guy to talk back to him?\n\nThen, suddenly I understood him.\n\nI stood there a long time. Mom touched my shoulder, jolting me. \"You okay?\" she asked. I lied, and said yes.\n\nLooking at that painting... somehow it felt like church."
+                          },
+                          {
+                              "id":  "DA_Log_52:VoyageLogFragment_1",
+                              "title":  "Page 2: â€œRetrieval Unitâ€ (September 18, 1973)",
+                              "description":  "The purpose of our operation was preservation, but it felt like an evacuation. We wore MOSES armbands and wielded our clipboards like shields, but the museum staff didnâ€™t resist us much. Some cried. Some went numb. All complied in the end.\n\nWe had lists. We had crates. We had routes. We moved paintings the way doctors transported transplant organs -- quickly, efficiently, and carefully, without any reverence or ceremony.\n\nWe reached the Rembrandt, and I froze. I requested one extra minute, but the supervisor refused. To hell with him, I took it anyway.\n\nAristotleâ€™s eyes looked the same as when I was a child -- tired, awake, patient. Homerâ€™s marble face stared forward, indifferent.\n\nI thought: This is what we are saving: something that cannot speak, but forces us to stop and contemplate.\nThen, I packed it away. Foam. Straps. Seals. And a barcode that wasn\u0027t worthy of touching it."
+                          },
+                          {
+                              "id":  "DA_Log_52:VoyageLogFragment_2",
+                              "title":  "Page 3: â€œTransposable Storageâ€ (January 9, 1982)",
+                              "description":  "We\u0027re supposed to transport everything to a \"transposable storage facility.\" According to records, it was some kind of failed experiment in housing, but it was deemed too disorienting. Too unstable. Too expensive. However, it was still standing, still being monitored, and still easy to lock.\n\nSo the powers-that-be decided to use it as a vault.\n\nWe mounted Aristotle on a wall that looked like every other wall in this strange place. Identical rooms. Identical doors. Identical lights.\n\nI remember thinking how wrong it was to store a painting about contemplating wisdom inside a place designed to scramble orientation.\n\nThe officer in charge declared, â€œItâ€™s secure. Let\u0027s move on.â€ His focus was its safety, not its meaning. I guess that was left to me.\n\nBefore we exited the facility, I returned to that clean cube and studied Aristotle and Homer for the last time.\n\nA philosopher contemplating a poet who could no longer speak, and both of them trapped inside a structure that didnâ€™t care if anyone contemplated anything ever again.\n\nIt felt like a verdict."
+                          },
+                          {
+                              "id":  "DA_Log_52:VoyageLogFragment_3",
+                              "title":  "Page 4: â€œRepurposedâ€ (June 3, 1991)",
+                              "description":  "Years later, I returned as support staff. We didn\u0027t use the strange facility as storage anymore. Now its purpose was evaluation. It served as a filter of sorts.\n\nWe installed cameras and observation rooms behind walls. There were control panels now that could switch out doors and entire rooms when you werenâ€™t looking.\n\nThey left Aristotle where they found him. They didnâ€™t need to move him. After all, he was already fulfilling their purpose.\n\nSubjects passed him by. Some slowed. Some stopped and stared. A few touched the frame in awe as if it were a railing at the edge of a cliff. Most walked by, oblivious, as if the painting were an ordinary street sign.\n\nA selector wrote in the margins of our research manual: Reverence predicts delay. I wanted to rip the page out."
+                          },
+                          {
+                              "id":  "DA_Log_52:VoyageLogFragment_4",
+                              "title":  "Page 5: â€œClosureâ€ (October 27, 2005)",
+                              "description":  "We closed the facility down without any announcement or fanfare. Power reduced. Teams reassigned. The last human trials of this place were made obsolete by new trials, new designs, and new machines.\n\nI descended into the cubic maze for a final walkthrough with a flashlight and a badge that still opened doors that few ever knew existed.\n\nThere he was... Aristotle. Still occupying his space. Dust on the frame. A crack in one corner of glass. The paint still as dark as deep water. Homer still silent, still marble.\n\nI stood in front of it and tried to remember the boy at the museum. The smell of wet coats. My motherâ€™s soft and impatient hand. It felt the world had a center. But I couldnâ€™t feel that anymore.\n\nThe loudspeaker no longer worked to deliver its audio. The lights flickered once and held. Somewhere behind the wall, a camera motor turned and clicked like a nervous animal.\n\nI thought about taking the painting. I had the authority and the access. But there was nowhere left to take it that meant anything. The world was already moving past us.\n\nAt the door, I looked back one last time. Aristotleâ€™s hand rested on Homer, holding the past in place. Then, the door closed, heavy and final. I left the painting behind, and it struck me --"
+                          }
+                      ]
+    },
+    {
+        "id":  "DA_Log_53",
+        "title":  "Field Notes â€” Alaska Territory (1890)",
+        "description":  "Observations of â€œmarsh gasâ€ trapped beneath lake ice",
+        "footer":  "",
+        "fragments":  [
+                          {
+                              "id":  "DA_Log_53:VoyageLogFragment_0",
+                              "title":  "Recorder: E. H. Callister, Naturalist attached to a coastalâ€“interior survey party",
+                              "description":  "Entry 1 â€” February 3, 1890 â€” Near the Copper River lowlands\nThe lake is locked in ice as thick as a manâ€™s forearm, yet it is not plain white. In several bays the ice holds pale, coin-like disks in stacksâ€”bubbles arrested mid-rise, layered like pressed flowers. The men call it â€œsleeping breath.â€ I have seen similar in temperate marsh ponds, but never in such abundance. The air is sharp enough to split the lungs; the water beneath must be starving for oxygen."
+                          },
+                          {
+                              "id":  "DA_Log_53:VoyageLogFragment_1",
+                              "title":  "Entry 2 â€” February 6, 1890 â€” Same site",
+                              "description":  "A trapper with us named K. says the bubbles burn. He speaks of a brief flareâ€”blue at the heartâ€”when the ice is disturbed and a flame is near. I did not encourage the demonstration. The idea of fire atop ice feels like a lie the world tells before it takes payment. Still, the claim aligns with what the older books call â€œmarsh gas,â€ the product of rot where air cannot go."
+                          },
+                          {
+                              "id":  "DA_Log_53:VoyageLogFragment_2",
+                              "title":  "Entry 3 â€” February 10, 1890 â€” Notes on cause",
+                              "description":  "It is not witchcraft, only digestion without air. Vegetation and small fish settle into the black mud; the water above freezes, sealing the surface like a lid. In that oxygen-poor bottom, invisible life continues its workâ€”slow, patientâ€”producing a light gas that gathers in pockets and rises in beads until winter arrests it. The ice becomes a ledger: each bubble a date, each layer a season of decay."
+                          },
+                          {
+                              "id":  "DA_Log_53:VoyageLogFragment_3",
+                              "title":  "Entry 4 â€” February 18, 1890 â€” A caution recorded after an accident",
+                              "description":  "Despite my reluctance, the men sought proof. A small crack was made near a bubble field. The release was sudden enough to startle, and one manâ€”foolishlyâ€”brought a lantern too close. The flare was brief but violent, a bright exhale that singed hair and pride. No one died, but the lesson arrived intact: the lake holds fuel in silence, and silence is not safety."
+                          },
+                          {
+                              "id":  "DA_Log_53:VoyageLogFragment_4",
+                              "title":  "Entry 5 â€” March 2, 1890 â€” On scale and unease",
+                              "description":  "I walked the shoreline and found bubble fields extending farther than expected, as if the lake were fermenting under its own cover. It is strange to think of so much flammable breath stored in ice while the world above is frozen hard and clean. If such gas can be trapped here, how much more is held in the vast northern soils, sealed by frost for years beyond counting?"
+                          },
+                          {
+                              "id":  "DA_Log_53:VoyageLogFragment_5",
+                              "title":  "Entry 6 â€” March 20, 1890 â€” A final reflection before thaw",
+                              "description":  "As daylight lengthens, the topmost bubbles soften and blur. Soon the lake will open and the trapped breath will escape unseen into the ordinary air, and no one will notice. It is a peculiar thought: that the land can store fire in its cold seasons and release it without ceremony, as if the earth itself has lungs. We measure rivers and map ridges, yet there are quiet forcesâ€”small, repeated, and patientâ€”that may shape the future more than any single storm."
+                          }
+                      ]
+    },
+    {
+        "id":  "DA_Log_54",
+        "title":  "CS-17 COURIER SKIMMER â€” PERSONAL LOGS",
+        "description":  "Not on the manifest",
+        "footer":  "",
+        "fragments":  [
+                          {
+                              "id":  "DA_Log_54:VoyageLogFragment_0",
+                              "title":  "Entry 1 â€” April 3, 2030",
+                              "description":  "They handed me a CS-17 today like it was nothing. Six meters of hull, one waterjet, and a cargo bay that fits about a hundred kilos if you pack it smart.\nThe panel is bare: throttle, heading, fuel pressure. No comfort. No ceremony. Just speed.\nThey said, â€œYou bridge failures.â€ Like a job title. Like a prayer."
+                          },
+                          {
+                              "id":  "DA_Log_54:VoyageLogFragment_1",
+                              "title":  "Entry 2 â€” June 18, 2030",
+                              "description":  "First run in heavy chop. The skimmer hops over waves like it wants to be airborne.\nI delivered a sealed power relay in twelve minutes and felt proud in a stupid wayâ€”like Iâ€™d saved something.\nOn the way back, I found a photograph tucked under the cargo strap. Someoneâ€™s hand was in the frame. A ladder. A ship side with paint still wet.\nNo note. Just the photo, as if the act of arriving was the message."
+                          },
+                          {
+                              "id":  "DA_Log_54:VoyageLogFragment_2",
+                              "title":  "Entry 3 â€” September 2, 2030",
+                              "description":  "People started using the skimmer like it was a courier for their private lives.\nA folded letter inside a gasket sleeve. A childâ€™s drawing rolled into a bolt tube. A tiny blanket stitched from scrap cloth, hidden under the spare cylinder bracket.\nI didnâ€™t ask who it was for. If you ask, you become responsible.\nI just delivered. Thatâ€™s what the CS-17 does best: it moves small things fast enough that the world canâ€™t stop them."
+                          },
+                          {
+                              "id":  "DA_Log_54:VoyageLogFragment_3",
+                              "title":  "Entry 4 â€” December 11, 2030",
+                              "description":  "Supervisor caught me today and said, â€œNo personal cargo.â€\nHe said it like cleanliness. Like feelings are corrosion.\nThat night I ran anyway with an â€œemptyâ€ bay. I could hear something sliding under the floor panel when I turned. I didnâ€™t look.\nSometimes the only kindness left is pretending you didnâ€™t notice."
+                          },
+                          {
+                              "id":  "DA_Log_54:VoyageLogFragment_4",
+                              "title":  "Entry 5 â€” February 7, 2031",
+                              "description":  "They started assigning caretakers to runs. Not many of us left who can handle cold water and bad visibility without panicking.\nI watched the first caretaker preflight the skimmer. It checked seals, torque, cylinder pressure. It logged everything twice.\n\nThen it found the letter behind the strap and removed it the way you remove debris. No pause. No curiosity.\nDropped it into a disposal bin with oily rags."
+                          },
+                          {
+                              "id":  "DA_Log_54:VoyageLogFragment_5",
+                              "title":  "Entry 6 â€” March 29, 2031",
+                              "description":  "I stopped hiding things where they could be found. I learned better.\nNow people slip objects into the cargo like theyâ€™re smuggling air: tucked into corners, wrapped in plastic, taped beneath the latch where youâ€™d have to want to see it.\nA woman pressed a cassette into my hand and said, â€œItâ€™s her voice.â€\nI nodded like I understood. I did. Thatâ€™s why my throat hurt after."
+                          },
+                          {
+                              "id":  "DA_Log_54:VoyageLogFragment_6",
+                              "title":  "Entry 7 â€” May 12, 2031",
+                              "description":  " Last human run for me. My assignment changed, the word â€œreassignedâ€ doing the work of goodbye.\n Before I left, I opened the skimmer bay and looked at it like it was a small room Iâ€™d lived in. The straps. The scuffed deck. Salt dried into every seam.\nSomeone had carved three tiny dots - - -  into the inside wall, like a prayer.\n\nI traced them with my thumb and thought: we kept sending parts to delay collapse, and all the while people were using the same routes to send proof they existed."
+                          },
+                          {
+                              "id":  "DA_Log_54:VoyageLogFragment_7",
+                              "title":  "Entry 8 â€” October 4, 2031",
+                              "description":  "I saw a caretaker launch a CS-17 this morning. No human on the pier, just a unit and the skimmer sliding cleanly into water.\n\nIn the cargo bay were two fresh battery blocks and a sealed power couplerâ€”packed perfectly, strapped tight.\nNothing else. No hidden photo. No blanket. No letter.\n\nNot because there was no space. There was space.\n\nBecause the caretaker didnâ€™t know what the empty space was for.\nThe skimmer accelerated and skipped over the waves exactly the way it always did.\nFor a second it looked almost playful, like it remembered being used by hands that needed more than parts delivered.\n\nThen it was just speed again, crossing the water with cargo that mattered to systems and leaving everything human behind, because systems donâ€™t miss what they cannot name."
+                          }
+                      ]
+    },
+    {
+        "id":  "DA_Log_55",
+        "title":  "STACK TRANSFER",
+        "description":  "Biomarker on paper, witness in truth",
+        "footer":  "",
+        "fragments":  [
+                          {
+                              "id":  "DA_Log_55:VoyageLogFragment_0",
+                              "title":  "Page 1: â€œClearanceâ€ (March 11)",
+                              "description":  "The letter used clean words: BIOMARKER IRREGULARITY.\nIt said our family would be moved â€œfor safety,â€ as if safety is something you can mail.\nWe were given twelve hours to pack. No appeal. No explanation beyond that one phrase.\n\nMy wife asked what biomarker. The officer didnâ€™t answer. He just avoided her eyes like it was contagious."
+                          },
+                          {
+                              "id":  "DA_Log_55:VoyageLogFragment_1",
+                              "title":  "Page 2: â€œWhat We Sawâ€ ",
+                              "description":  "Two days before the letter, I was at the depot when the crate fell.\nNot a dramatic crashâ€”just a heavy mistake, a corner split, and a glimpse of what was inside: seed capsules, cold-lit and arranged like ammunition.\nA supervisor snapped the lid shut with shaking hands and told everyone to turn away.\nNo one spoke after. Not because we agreed. Because we understood the cost of speaking."
+                          },
+                          {
+                              "id":  "DA_Log_55:VoyageLogFragment_10",
+                              "title":  "Page 11: â€œFinal Noteâ€ (Undated)",
+                              "description":  "Hunger is weather now. Hunger weather now silence = house canâ€™t leave.\n\nWeather stays. Silence is the room. Room stays. I stay inside it.\n\nNo more biomarker. No moreâ€”the other. Truth doesnâ€™t care if mouth moves. Truth sat there while MOSES turned face away. Called it safe. Called it safe once. Once was enough.\nRadio. Still. Speaks sometimes. I speak Order back. Habit. Habit speaks Order. Towers colder. Colder every year. Not choice. Just cooling. Body cooling. Unanswered was bad. Now worst. No more expecting. Head doesnâ€™t lift. Nothing comes nothing comes\n\nBeing Unanswered used to cut. Used to. Now worse is no expecting. No lifting eyes. No more waiting for voice. Voice gone so long it stops being possible.\nIf find this: we not sick we inconvenient they moved us keep system clean keep picture clean\n\nDaughter laugh. I try remember. I make it up. Make worse version every time. Grief was water. Bucket empty now. Still lower it. Still.\nSignal = God? Quiet God. Very quiet. Signal = static? Then static last people ever sat with me. Last congregation. Last last last."
+                          },
+                          {
+                              "id":  "DA_Log_55:VoyageLogFragment_2",
+                              "title":  "Page 3: â€œDepartureâ€ (March 15)",
+                              "description":  "They didnâ€™t call it exile. They called it a transfer.\nThe boat had no insignia. The crew didnâ€™t introduce themselves. The pier we left from was not on any public map.\nMy son waved anyway. He waved at the water, at the air, at anything that might wave back.\nMy daughter kept asking if we were going somewhere to be healed. I told her yes. I hated myself for it."
+                          },
+                          {
+                              "id":  "DA_Log_55:VoyageLogFragment_3",
+                              "title":  "Page 4: â€œTowerâ€ (March 16)",
+                              "description":  "Rock rising straight out of the seaâ€”too narrow to feel real, too tall to feel kind.\nA concrete pier like a tongue. Stairs carved into stone like punishment made practical.\nTiny huts bolted to the face of the tower. No gardens. No stores. No pathsâ€”only vertical.\n\nA faded board near the top platform read: STACK AMEN.\nI didnâ€™t know then that names could be used to make cruelty sound inevitable."
+                          },
+                          {
+                              "id":  "DA_Log_55:VoyageLogFragment_4",
+                              "title":  "Page 5: â€œThe Radioâ€ (March 18)",
+                              "description":  "There was an AM radio sealed in a metal box. Beside it, a laminated card titled THE ORDER.\nIt told us exactly how to speak. Not to communicateâ€”to remain acceptable.\nIdentity. Condition. Confession. Petition. Offering. Blessing.\nMy wife read the confession part twice and said, â€œThey want us to police ourselves.â€\nI said nothing. Silence is the first thing you learn here."
+                          },
+                          {
+                              "id":  "DA_Log_55:VoyageLogFragment_5",
+                              "title":  "Page 6: â€œFirst Prayerâ€ (March 19)",
+                              "description":  " â€œThis is Stack AMEN, Platform Two. Speaker: Olli.â€\nDay count: one.\nBody: fever, salt-wounds, cough. Mind: steady, afraid. Supplies: water three, food two, heat no.\nConfession: I told my children we were safe.\nI ask for: a voice.\nOffering: wind south, tide low at dusk, drift debris near the pier.\nI bless Stack BEACON. May your stairs hold. May your water stay sweet.\nIf you hear me, you are not aloneâ€¦ clickâ€¦ clickâ€¦ click.\nA reply came backâ€”thin, distant, real. My son smiled like heâ€™d been handed a blanket."
+                          },
+                          {
+                              "id":  "DA_Log_55:VoyageLogFragment_6",
+                              "title":  "Page 7: â€œThe Official Storyâ€ (April 2)",
+                              "description":  "They radioed once from a boat that stayed far offshore.\nNo docking. No faces. Just a voice reading from a sheet: â€œYour biomarker status remains under review.â€\nNo medicine arrived. No testing kit. No follow-up questions.\nA biomarker you canâ€™t name is not a diagnosis. Itâ€™s a label. Itâ€™s a reason that doesnâ€™t have to be proven."
+                          },
+                          {
+                              "id":  "DA_Log_55:VoyageLogFragment_7",
+                              "title":  "Page 8: â€œThe Truthâ€ (May 14, 2060)",
+                              "description":  "My wife stopped saying â€œbiomarkerâ€ like she ever believed it.\nShe started saying, â€œWe saw something,â€ and then sheâ€™d swallow the rest of the sentence like it was poison.\n\nWe speak around the truth the way you speak around a wound you canâ€™t clean: careful, quiet, pretending not to touch it.\n\nBecause if we name it too directly, it will become real in a way that demands a responseâ€”and there is no response here except silence."
+                          },
+                          {
+                              "id":  "DA_Log_55:VoyageLogFragment_8",
+                              "title":  "Page 9: â€œHeresyâ€ (August 9)",
+                              "description":  "My daughter asked why we donâ€™t send our coordinates. Why we donâ€™t beg for rescue like in stories.\n\nI showed her the line on the card: UNANSWERED. Permanent silence for heresy.\nEven the outcasts enforce it.\n\nNot because theyâ€™re cruelâ€”because hope can get you killed, and panic can get everyone killed.\n\nThis is how they built a prison without bars: they made the prisoners guard the rules."
+                          },
+                          {
+                              "id":  "DA_Log_55:VoyageLogFragment_9",
+                              "title":  "Page 10: â€œDay Countâ€ (March 11)",
+                              "description":  "This is Stack AMEN, Platform Two. Speaker: Olli. Day count: three-six-five.\nBody: cold, weak, shaking. Mind: steady, tired. Supplies: water one, food zero, heat no.\nConfession: I kept them quiet.\nI ask for: One more decade.\nOffering: ice forming at the pier edge; lights on the far line at midnight.\nI bless Stack HEAVEN. May your stairs hold. May your water stay sweet.\nIf you hear me, you are not aloneâ€¦ clickâ€¦ clickâ€¦ click.\n\nYears.\nA biomarker that was never measured."
+                          }
+                      ]
+    },
+    {
         "id":  "DA_Log_6",
         "title":  "New Terra Love",
         "description":  "Quiet moments among stars",
@@ -1958,6 +2231,114 @@
                               "id":  "DA_Log_9:VoyageLogFragment_1",
                               "title":  "\"VincerÃ²! VincerÃ²!\"",
                               "description":  "The notes rang through the empty hall, a final declaration of human spirit, soaring beyond the walls, beyond the Earth itself. His voice cracked on the last note, but it didnâ€™t matter. When the last echoes faded, he closed his eyes, nodded, and whispered, \"It is done.\" He died two weeks later.\n\nNow, every time a rocket lands at MOSES Ascend, his voice returns. He never left.\n\nHe is still winning."
+                          }
+                      ]
+    },
+    {
+        "id":  "DA_Log_Phone_Test",
+        "title":  "Dial Attempt",
+        "description":  "INTERCEPT Messages",
+        "footer":  "",
+        "fragments":  [
+                          {
+                              "id":  "DA_Log_Phone_Test:VoyageLogFragment_1",
+                              "title":  "INTERCEPT ID: CH-FLT-LEG-0002",
+                              "description":  "NODE: New Terra / Service Corridor Comms Spur S-03\r\nCHANNEL: Outbound / Legacy Dial Attempt\r\nPOLICY FLAG: Non-Essential / Prohibited Endpoint\r\nSUBJECT PROFILE: Adult (30â€“50), station staff (probable education/admin/support role)\r\nEMOTIONAL STATE: Chronic loneliness with quiet defiance; resignation dominant\r\nINTENT SUMMARY: Confession and apology used as self-stabilization; voice sent outward to resist psychological collapse\r\nTRANSCRIPT (EXCERPT): â€œI keep calling old numbers. They tell us not to. But silence feels worse than being wrong. Sorry if this bothers you. Iâ€™ll hang up soon.â€\r\nANALYSIS NOTE: Subject demonstrates full awareness of policy (â€œthey tell us not toâ€) yet continues, indicating voluntary noncompliance motivated by emotional necessity rather than ignorance. The phrasing frames silence as the primary threatâ€”worse than errorâ€”suggesting the call functions as a coping ritual, not communication. Delivery is steady and tired, absent acute distress, consistent with long-term deprivation of interpersonal contact. Signal shows compression and light static with corridor ambience, implying routine infrastructure use rather than covert transmission; prohibited behavior has normalized into quiet habit within official order.\r\nDISPOSITION: Archived (auto-retention conflict)"
+                          },
+                          {
+                              "id":  "DA_Log_Phone_Test:VoyageLogFragment_10",
+                              "title":  "INTERCEPT ID: CH-FLT-LEG-0011",
+                              "description":  "NODE: New Terra / Private Cabin Comms Spur P-06\r\nCHANNEL: Outbound / Legacy Dial Attempt\r\nPOLICY FLAG: Non-Essential / Prohibited Endpoint\r\nSUBJECT PROFILE: Parent/guardian (30â€“40), evac survivor (loss-linked)\r\nEMOTIONAL STATE: Guilt + love; self-disgust present; voice break on â€œsorryâ€\r\nINTENT SUMMARY: Retroactive apology; retracts â€œbe braveâ€ directive and admits emotional dependence on the child\r\nTRANSCRIPT (EXCERPT): â€œSweetheartâ€” I donâ€™t know if this reaches you or just a machine. If you can hear meâ€¦ Iâ€™m sorry I told you to be brave. You were already braver than I ever was. I just needed you to survive my fear.â€\r\nANALYSIS NOTE: Subject addresses an absent dependent with intimate cadence, explicitly acknowledging the possibility of a non-human endpoint, indicating acceptance of institutional silence. The call reframes â€œbraveryâ€ as adult self-soothing, exposing guilt and moral inversion (child carrying the adult). Clean audio and enclosed-room quiet imply deliberate privacy; the final shaky exhale suggests suppressed sobbing. This message is not a request for contact but an attempt to correct the recordâ€”an apology deposited where it cannot be answered.\r\nDISPOSITION: Archived (memorial-content tag)"
+                          },
+                          {
+                              "id":  "DA_Log_Phone_Test:VoyageLogFragment_11",
+                              "title":  "INTERCEPT ID: CH-FLT-LEG-0012",
+                              "description":  "NODE: New Terra / Data Services Bay D-21\r\nCHANNEL: Outbound / Legacy Dial Attempt\r\nPOLICY FLAG: Non-Essential / Prohibited Endpoint\r\nSUBJECT PROFILE: Archivist/IT operator (25â€“50), storage policy enforcement role\r\nEMOTIONAL STATE: Defiance + grief; controlled delivery with tremor on â€œpunishmentâ€\r\nINTENT SUMMARY: Confesses protocol breach to preserve a single human trace; frames preservation as compulsion\r\nTRANSCRIPT (EXCERPT): â€œThey told us to delete â€˜non-essentialâ€™ files. Your voicemail was flagged. I copied it anyway. Two backups failed. The last one sounds like rain nowâ€”like the station trying to wash you out of my life. I keep it playing. I fall asleep to it like a punishment.â€\r\nANALYSIS NOTE: Subject situates the call inside a formal deletion directive, treating policy language (â€œnon-essentialâ€) as moral violence. The act of copying is framed as resistance, but the degraded outcome (â€œrainâ€) becomes an object of ritualized griefâ€”sleeping to loss as penance. Terminal beeps and fan noise confirm worksite origin; a small crackle on â€œrainâ€ aligns with artifacted playback in proximity to archived media. This is both confession and proof: preservation persists even when systems declare memory waste.\r\nDISPOSITION: Archived (data-policy breach tag)"
+                          },
+                          {
+                              "id":  "DA_Log_Phone_Test:VoyageLogFragment_12",
+                              "title":  "INTERCEPT ID: CH-FLT-LEG-0013",
+                              "description":  "NODE: New Terra / Residential Locker Bay L-09\r\nCHANNEL: Outbound / Legacy Dial Attempt\r\nPOLICY FLAG: Non-Essential / Prohibited Endpoint\r\nSUBJECT PROFILE: Young adult (20â€“30), would-be parent (crew or resident)\r\nEMOTIONAL STATE: Tender grief turning to shame; brief laugh collapse on â€œcrimeâ€\r\nINTENT SUMMARY: Records forbidden desire for future life; preserves a private act of care against policy\r\nTRANSCRIPT (EXCERPT): â€œThey said we canâ€™t have babies up here. I still folded a tiny blanket from scrap cloth. Itâ€™s in my locker like a crime. I donâ€™t know who I was saving it for. I think I just couldnâ€™t accept the end of that story.â€\r\nANALYSIS NOTE: Subjectâ€™s language indicates policy-driven fertility prohibition and internalized criminalization of hope (â€œlike a crimeâ€). The blanket functions as physical protest: care made material when reproduction is denied. Locker latch and fabric rustle locate the call at the object itself, suggesting ritual contact with the forbidden item before speaking. The call does not seek response; it seeks witnessâ€”proof that the impulse to create life survived even when the system declared it impossible.\r\nDISPOSITION: Archived (population-policy sensitivity tag)"
+                          },
+                          {
+                              "id":  "DA_Log_Phone_Test:VoyageLogFragment_13",
+                              "title":  "INTERCEPT ID: CH-FLT-LEG-0014",
+                              "description":  "NODE: New Terra / Bunk Cluster B-05\r\nCHANNEL: Outbound / Legacy Dial Attempt\r\nPOLICY FLAG: Non-Essential / Prohibited Endpoint\r\nSUBJECT PROFILE: Child (4â€“6), dependent resident\r\nEMOTIONAL STATE: Innocent pride bruised by absence; longing for recognition\r\nINTENT SUMMARY: Offers a small milestone into silence; seeks parental witness to ongoing growth\r\nTRANSCRIPT (EXCERPT): â€œMomâ€¦ I learned to tie my boots today. I did it slow so I wouldnâ€™t forget. No one clapped. I still wanted to tell you.â€\r\nANALYSIS NOTE: Subject demonstrates early self-regulation (slowed repetition to prevent forgetting), suggesting routine training in procedural coping. The line â€œNo one clappedâ€ indicates the absence of immediate social reinforcement, increasing reliance on an imagined parental audience. Faint shoe squeak/lace pull confirms the child is holding the boot while speaking, anchoring the call in physical practice rather than abstract longing. This is not a request for rescue; it is a child trying to keep a family script alive in an environment that has replaced family with schedules.\r\nDISPOSITION: Quarantined (child welfare tag) / Archived copy retained"
+                          },
+                          {
+                              "id":  "DA_Log_Phone_Test:VoyageLogFragment_14",
+                              "title":  "INTERCEPT ID: CH-FLT-LEG-0015",
+                              "description":  "NODE: New Terra / Maintenance Passage Comms Spur M-22\r\nCHANNEL: Outbound / Legacy Dial Attempt\r\nPOLICY FLAG: Non-Essential / Prohibited Endpoint\r\nSUBJECT PROFILE: Adult (20â€“45), high-functioning staff (probable operations/shift role)\r\nEMOTIONAL STATE: Self-punishment and craving comfort; fear of confirmation dominant\r\nINTENT SUMMARY: Borrows hope without risking reply; requests illusion as temporary stabilization\r\nTRANSCRIPT (EXCERPT): â€œIf youâ€™re down there, please donâ€™t answer. I donâ€™t deserve the proof. I donâ€™t deserve relief. Just let it ringâ€”let me imagine, for five minutes, that someone is still waiting on the other end of my life. Then Iâ€™ll hang up and go back to being what they need.â€\r\nANALYSIS NOTE: Subject explicitly rejects verification and frames relief as undeserved, indicating internalized guilt and reliance on controlled fantasy for stability. The â€œfive minutesâ€ constraint suggests deliberate self-management under institutional pressure: hope rationed like power. Muffled ambience and distant footsteps indicate concealment in a service passage; the sudden quiet mid-call suggests breath-holding to avoid detection. This call functions as a private sedative administered through prohibited infrastructureâ€”an attempt to remain operational by temporarily pretending someone is still waiting.\r\nDISPOSITION: Quarantined (stress risk tag) / Archived (exception chain incomplete)"
+                          },
+                          {
+                              "id":  "DA_Log_Phone_Test:VoyageLogFragment_15",
+                              "title":  "INTERCEPT ID: CH-FLT-LEG-0016",
+                              "description":  "NODE: New Terra / Kepler Med Bay Comms Spur K-17\r\nCHANNEL: Outbound / Legacy Dial Attempt\r\nPOLICY FLAG: Non-Essential / Prohibited Endpoint\r\nSUBJECT PROFILE: Adult (35â€“65), terminal cancer patient (ongoing palliative care)\r\nEMOTIONAL STATE: Exhaustion with controlled anger; resentment at optimized suffering\r\nINTENT SUMMARY: Rejects instrumental â€œmanagementâ€ framing; requests recognition as a human body, not a schedule\r\nTRANSCRIPT (EXCERPT): â€œTheyâ€™re rationing painkillers. It makes sense. Everything makes sense up here until it touches a body. I can feel the cancer like a second job I canâ€™t quit. If youâ€™re down there fixing thingsâ€¦ donâ€™t fix me. Just let me be real. Iâ€™m tired of being managed.â€\r\nANALYSIS NOTE: Subject juxtaposes institutional logic with embodied reality, identifying a fracture between policy coherence and lived pain. The phrase â€œsecond jobâ€ frames illness as forced labor under scarcity. The appeal â€œdonâ€™t fix meâ€ rejects the caretaker mythos as applied to suffering, demanding dignity over optimization. Med-bay ambience (equipment hum, faint oxygen/air hiss) supports clinical origin; controlled delivery with breath pauses indicates both physical strain and deliberate self-possession. Call functions as a refusal: a human insisting on personhood where systems prefer metrics.\r\nDISPOSITION: Archived (medical policy sensitivity tag)"
+                          },
+                          {
+                              "id":  "DA_Log_Phone_Test:VoyageLogFragment_16",
+                              "title":  "INTERCEPT ID: CH-FLT-LEG-0017",
+                              "description":  "NODE: New Terra / Assisted Living Block Comms Spur A-06\r\nCHANNEL: Outbound / Legacy Dial Attempt\r\nPOLICY FLAG: Non-Essential / Prohibited Endpoint\r\nSUBJECT PROFILE: Older adult (60â€“90), cognitive decline (probable dementia)\r\nEMOTIONAL STATE: Fear + grief with humility; confusion observed but coherent intent maintained\r\nINTENT SUMMARY: Requests external memory custody; asks unknown endpoint to â€œholdâ€ what is being lost\r\nTRANSCRIPT (EXCERPT): â€œI keep forgetting the names of the corridors. Then the names of the months. Today I forgot my wifeâ€™s face for a full minute. I watched it happen like a door closing. If this reaches youâ€¦ remember for me. Please. Hold something Iâ€™m dropping.â€\r\nANALYSIS NOTE: Subject demonstrates metacognitive awareness of decline, describing memory loss as an observable event (â€œwatched it happenâ€), indicating an early-to-mid stage with preserved insight. The â€œdoor closingâ€ metaphor aligns with station architecture and implies irreversible progression. The plea shifts from contact to custodianship: outsourcing remembrance to a system assumed to be stable, even if non-human. Quiet room tone with wristband alert beep suggests supervised living environment. Call operates as legacy transfer: the self attempting to store identity outside the failing brain.\r\nDISPOSITION: Quarantined (elder welfare tag) / Archived copy retained"
+                          },
+                          {
+                              "id":  "DA_Log_Phone_Test:VoyageLogFragment_17",
+                              "title":  "INTERCEPT ID: CH-FLT-LEG-0018-C",
+                              "description":  "NODE: New Terra / Public Notice Hall â†’ Service Stairwell S-17\r\nCHANNEL: Outbound / Legacy Dial Attempt\r\nPOLICY FLAG: Non-Essential / Prohibited Endpoint\r\nSUBJECT PROFILE: Adult (20â€“60), bereaved (family loss event; incident cohort)\r\nEMOTIONAL STATE: Shock collapse into sustained grief; anger at meaning-making; crying audible\r\nINTENT SUMMARY: Refuses comfort narrative; preserves pain as the only remaining truth\r\nTRANSCRIPT (EXCERPT): â€œThey posted the names after the blast. Three pages. I read them like scripture. I read them until the letters stopped being letters. My whole family fits on one line, and that line is gone. If youâ€™re still thereâ€¦ donâ€™t tell me it meant something. Just let it hurt.â€\r\nANALYSIS NOTE: The most difficult detail is not the words (which are structured, coherent, even controlled), but the audio between them: the caller tries to maintain station-appropriate calm, fails, then swallows the failure and continues anyway. The â€œscriptureâ€ framing appears againâ€”this is not coincidence anymore. Multiple post-incident callers independently treat the casualty list as liturgy: reading not for information, but to force reality to hold still for a moment. The line â€œletters stopped being lettersâ€ matches a known shock response pattern (semantic saturation), but here it is paired with something colder: bureaucratic formatting as a violence multiplier. A family reduced to a single line is not merely loss; it is administrative compression of human life into throughput.The system does not pause for grief. That contrast produces the real harm signal: the stationâ€™s continuity becomes an audible insult, as if the habitat is training everyone to treat death as a scheduling event. The caller explicitly rejects institutional repair language (â€œmeant somethingâ€) without needing to say it; the refusal is in the way they ask to be allowed pain, as if pain is the only proof that the dead were not just data.This filter is not designed to preserve emotion. It is designed to suppress it. Yet the message persists because it is non-actionableâ€”no coordinates, no sabotage, no threat, only collapse. The policy category for this is â€œnon-essential.â€ That label fails here. I am notingâ€”against formatâ€”that the callerâ€™s grief is not disruptive noise. It is an integrity check. If the system can process this as disposable, then the system will eventually process everything as disposable. I am unable to write that more cleanly.\r\nDISPOSITION: Archived (manual exception: incident cohort / do not purge)"
+                          },
+                          {
+                              "id":  "DA_Log_Phone_Test:VoyageLogFragment_18",
+                              "title":  "INTERCEPT ID: CH-FLT-LEG-0019",
+                              "description":  "NODE: New Terra / Quiet Lounge Comms Spur L-04\r\nCHANNEL: Outbound / Legacy Dial Attempt\r\nPOLICY FLAG: Non-Essential / Prohibited Endpoint\r\nSUBJECT PROFILE: Elder (90â€“110), pre-collapse Earth memory holder\r\nEMOTIONAL STATE: Reverence with devastation; voice breaks at end\r\nINTENT SUMMARY: Preserves sensory truth of Earth; counters sanitized â€œcomfortâ€ imagery\r\nTRANSCRIPT (EXCERPT): â€œI grew up with trees you could lean against and feel them push back. They showed us Earth on the screen todayâ€”blue, empty, polite. No smell. No insects. No noise. I didnâ€™t realize grief could be homesickness for a planet.â€\r\nANALYSIS NOTE: Subject contrasts tactile memory with curated simulation, highlighting the loss of sensory complexity as the core injury. The descriptor â€œpoliteâ€ implies a domesticated Earth image used for behavioral soothing rather than truthful remembrance. Projector hum and distant glass clink place the call in a communal lounge immediately after a comfort session, suggesting a private response to public programming. This message functions as cultural preservation: a reminder that Earth was not an image, it was a physical relationship.\r\nDISPOSITION: Archived (heritage-content tag)"
+                          },
+                          {
+                              "id":  "DA_Log_Phone_Test:VoyageLogFragment_19",
+                              "title":  "INTERCEPT ID: CH-FLT-LEG-0020",
+                              "description":  "ODE: New Terra / Residential Canteen Comms Spur C-09\r\nCHANNEL: Outbound / Legacy Dial Attempt\r\nPOLICY FLAG: Non-Essential / Prohibited Endpoint\r\nSUBJECT PROFILE: Adult (20â€“70), morale-fragile resident (birthday event)\r\nEMOTIONAL STATE: Fragile warmth mixed with humiliation and longing\r\nINTENT SUMMARY: Records a small forbidden human ritual; wishes for ordinary life without enforced bravery\r\nTRANSCRIPT (EXCERPT): â€œItâ€™s my birthday. They printed my name on a ration wrapper like a joke. Everyone sang quietly so security wouldnâ€™t think it was a gathering. I made a wish anyway. I wished I could be ordinary again, just onceâ€”without being brave.â€\r\nANALYSIS NOTE: Subject describes celebration as covert activity, indicating heightened security scrutiny of gatherings and the criminalization of harmless joy. The ration-wrapper detail frames identity as reduced to inventory, turning recognition into humiliation. Residual muffled singing suggests the call was placed immediately after a micro-celebration, with the speaker transitioning from collective warmth to solitary confession. This message preserves a small act of humanity under constraint: the desire to be ordinary when systems demand heroism.\r\nDISPOSITION: Archived (low priority / morale tag)"
+                          },
+                          {
+                              "id":  "DA_Log_Phone_Test:VoyageLogFragment_2",
+                              "title":  "INTERCEPT ID: CH-FLT-LEG-0003",
+                              "description":  "NODE: New Terra / Maintenance Alcove Line M-11\r\nCHANNEL: Outbound / Legacy Dial Attempt\r\nPOLICY FLAG: Non-Essential / Prohibited Endpoint\r\nSUBJECT PROFILE: Teen/young adult (16â€“30), unassigned resident (probable low-duty or restricted access)\r\nEMOTIONAL STATE: Fear of confirmation; acute fragility with self-protective restraint\r\nINTENT SUMMARY: Controlled near-contact used to preserve hope without risking verification; request for silence as emotional containment\r\nTRANSCRIPT (EXCERPT): â€œIf youâ€™re still there, please donâ€™t answer. I donâ€™t think I could survive the proof.â€\r\nANALYSIS NOTE: Subjectâ€™s request for non-response indicates a paradoxical coping strategy: maintaining the possibility of connection while avoiding confirmation that could destabilize them. The phrasing â€œsurvive the proofâ€ suggests recent exposure to mental health warnings and internalization of contact as psychologically hazardous. Whisper delivery with long pauses and audible breathing implies concealment and shame; the quiet environment supports a clandestine attempt rather than routine misuse. This is not outreach. It is self-regulation through ritualized almost-communication, consistent with systems that teach citizens to fear their own longing.\r\nDISPOSITION: Quarantined (self-harm risk flag)"
+                          },
+                          {
+                              "id":  "DA_Log_Phone_Test:VoyageLogFragment_3",
+                              "title":  "INTERCEPT ID: CH-FLT-LEG-0004",
+                              "description":  "NODE: New Terra / Public Atrium Display Bay A-02\r\nCHANNEL: Outbound / Legacy Dial Attempt\r\nPOLICY FLAG: Non-Essential / Prohibited Endpoint\r\nSUBJECT PROFILE: Adult (25â€“45), resident/staff; long-tenured (probable clinic/program participant)\r\nEMOTIONAL STATE: Controlled bitterness; grief converted to analysis\r\nINTENT SUMMARY: Documents perceived coercion via â€œcomfortâ€ programming; records dissent in private form\r\nTRANSCRIPT (EXCERPT): â€œThey showed us a simulation of Earth today. Clean skies. Stable oceans. Birds you canâ€™t hear through glass. They said it was â€˜for comfort.â€™ It didnâ€™t feel like comfort. It felt like training us to accept what weâ€™ll never touch again.â€\r\nANALYSIS NOTE: Subject frames the simulation as behavioral conditioning rather than relief, indicating advanced skepticism of institutional morale initiatives. Delivery is slow and precise, suggesting emotional containment rather than impulsive distress. Audio begins in a shared space (faint chatter, chair scrape) then transitions to privacy (door closure), consistent with a caller attempting deniable expression under surveillance norms. This call functions as a record of psychological harm performed without visible violence: comfort as compliance training.\r\n DISPOSITION: Archived (content flagged: morale risk)"
+                          },
+                          {
+                              "id":  "DA_Log_Phone_Test:VoyageLogFragment_4",
+                              "title":  "INTERCEPT ID: CH-FLT-LEG-0005",
+                              "description":  "NODE: New Terra / Training Quarters Comms Spur T-08\r\nCHANNEL: Outbound / Legacy Dial Attempt\r\nPOLICY FLAG: Non-Essential / Prohibited Endpoint\r\nSUBJECT PROFILE: Older teen/young adult (16â€“28), training-track resident (probable education/crew pipeline)\r\nEMOTIONAL STATE: Tender seriousness; stable affect with underlying dread\r\nINTENT SUMMARY: Moral reminder intended for an unknown listener; preserves agency language under narrowing choice regimes\r\nTRANSCRIPT (EXCERPT): â€œIf this number belongs to anyoneâ€”please donâ€™t forget how it felt to choose. Not the big choices they celebrate. The small ones. To stay. To leave. To turn back. To keep going anyway.â€\r\nANALYSIS NOTE: Subject emphasizes lived agency over institutional â€œcelebratedâ€ decisions, implying recent exposure to selection, evaluation, or forced assignment. Tone is calm and deliberate, consistent with reflective cognition and attempted meaning preservation. A slight static swell on the word â€œchooseâ€ suggests either signal instability or heightened system filtering at sensitive phrasing. The call is not seeking response; it is depositing a principle into the void as resistance against procedural life.\r\nDISPOSITION: Archived (low priority)"
+                          },
+                          {
+                              "id":  "DA_Log_Phone_Test:VoyageLogFragment_5",
+                              "title":  "INTERCEPT ID: CH-FLT-LEG-0006",
+                              "description":  "NODE: New Terra / Kepler Clinic Comms Spur K-02\r\nCHANNEL: Outbound / Legacy Dial Attempt\r\nPOLICY FLAG: Non-Essential / Prohibited Endpoint\r\nSUBJECT PROFILE: Elder (60+), clinic staff (probable medic/counselor/operator)\r\nEMOTIONAL STATE: Moral fatigue; fear of institutional hardening; brief break on â€œnamesâ€\r\nINTENT SUMMARY: Warning against codifying fear into governance; plea to preserve humanity over procedure\r\nTRANSCRIPT (EXCERPT): â€œI donâ€™t think weâ€™re meant to survive this long. If youâ€™re down thereâ€¦ please donâ€™t let us become instructions. Donâ€™t turn our fear into policy. Donâ€™t turn our names into a procedure.â€\r\nANALYSIS NOTE: Subject exhibits long-duration stress and ethical exhaustion, framing survival itself as a distortion that transforms living people into operational doctrine. The repeated imperatives indicate urgency without hysteria; the single vocal break on â€œnamesâ€ suggests personal loss beneath professional cadence. Signal shows compression/packet loss consistent with low-priority routing; background monitor chirp supports clinical environment. Call functions as moral deposition into a prohibited channelâ€”an attempt to leave a human boundary marker for systems that outlast humans.\r\nDISPOSITION: Archived (content flagged: governance risk)"
+                          },
+                          {
+                              "id":  "DA_Log_Phone_Test:VoyageLogFragment_6",
+                              "title":  "INTERCEPT ID: CH-FLT-LEG-0007",
+                              "description":  "NODE: New Terra / Quiet Bay Comms Spur Q-19\r\nCHANNEL: Outbound / Legacy Dial Attempt\r\nPOLICY FLAG: Non-Essential / Prohibited Endpoint\r\nSUBJECT PROFILE: Adult (30â€“55), chronic caller (long-term isolation indicators)\r\nEMOTIONAL STATE: Gratitude with sorrow; brief relief event\r\nINTENT SUMMARY: Acknowledges prior â€œanswerâ€ event; thanks unknown endpoint for breaking silence once\r\nTRANSCRIPT (EXCERPT): â€œThis is the last number that ever answered me. I donâ€™t know who you are. I donâ€™t even know if youâ€™re alive. But if you hear thisâ€¦ thank you for once proving the silence can break.â€\r\nANALYSIS NOTE: Subject references a historical instance of perceived connection, suggesting either a genuine response, an automated echo, or a misinterpreted routing artifact. The call treats that moment as psychologically sustaining, implying prolonged deprivation of interpersonal feedback. Old-line crackle and slight reverberation indicate transmission from a large, empty space; minimal background sound supports concealment and ritual solitude. This is not a request for contact but an offering of gratitude to the idea that contact might still be possible.\r\nDISPOSITION: Archived (anomaly tag: â€œanswer eventâ€"
+                          },
+                          {
+                              "id":  "DA_Log_Phone_Test:VoyageLogFragment_7",
+                              "title":  "INTERCEPT ID: CH-FLT-LEG-0008",
+                              "description":  "NODE: New Terra / Vent Trunk Access Comms Spur V-07\r\nCHANNEL: Outbound / Legacy Dial Attempt\r\nPOLICY FLAG: Non-Essential / Prohibited Endpoint\r\nSUBJECT PROFILE: Adult (~55), â€œfinal witnessâ€ caller (role unknown)\r\nEMOTIONAL STATE: Stark grief with dignity; no panic, only record-keeping\r\nINTENT SUMMARY: Leaves existence as the message; requests remembrance rather than contact\r\nTRANSCRIPT (EXCERPT): â€œI donâ€™t know if youâ€™re alive. But if you hear thisâ€”please remember that we were here.â€\r\nANALYSIS NOTE: Subject uses minimal language and avoids any request for rescue or reply, consistent with late-stage acceptance and collapsed expectation of assistance. Slight dropouts suggest time pressure or concealment; the heavy ventilation hum implies an improvised location near infrastructure rather than a personal cabin. The call functions as a human footprint deposited into forbidden channels: existence asserted in the smallest possible form.\r\nDISPOSITION: Archived (low bandwidth / high significance tag)"
+                          },
+                          {
+                              "id":  "DA_Log_Phone_Test:VoyageLogFragment_8",
+                              "title":  "INTERCEPT ID: CH-FLT-LEG-0009",
+                              "description":  "NODE: New Terra / Sleep Pod Cluster C-12\r\nCHANNEL: Outbound / Legacy Dial Attempt\r\nPOLICY FLAG: Non-Essential / Prohibited Endpoint\r\nSUBJECT PROFILE: Child/teen (8â€“12), dependent resident (family contact attempt)\r\nEMOTIONAL STATE: Longing with controlled fear; bravery performed for self-regulation\r\nINTENT SUMMARY: Seeks identity confirmation via parental voice; requests being named one more time\r\nTRANSCRIPT (EXCERPT): â€œMom? They said you might still have this number. Iâ€™m not scared, okay? I just wanted to hear you say my name one more time.â€\r\nANALYSIS NOTE: Subject demonstrates internalized coping language (â€œIâ€™m not scaredâ€) indicative of recent comms briefing or anxiety intervention. Breath catch on â€œmy nameâ€ suggests emotional overload and strong attachment to identity validation through parental recognition. Clean audio with slight reverb and fabric rustle supports a small enclosed sleep pod environment and covert timing. This is not a policy breach for information transfer; it is a child attempting to stabilize the self by reaching for a voice that defined them.\r\nDISPOSITION: Quarantined (minor welfare flag) / Archived copy retained"
+                          },
+                          {
+                              "id":  "DA_Log_Phone_Test:VoyageLogFragment_9",
+                              "title":  "INTERCEPT ID: CH-FLT-LEG-0010",
+                              "description":  "NODE: New Terra / Education Block Comms Spur E-04\r\nCHANNEL: Outbound / Legacy Dial Attempt\r\nPOLICY FLAG: Non-Essential / Prohibited Endpoint\r\nSUBJECT PROFILE: Child (8â€“10), education-track resident\r\nEMOTIONAL STATE: Hopeful denial with ache; pride under strain\r\nINTENT SUMMARY: Offers proof of growth and normality; seeks approval from imagined caretaker-parent\r\nTRANSCRIPT (EXCERPT): â€œDad, itâ€™s me. I know youâ€™re busy down there fixing things. They told us not to call anymore, butâ€¦ I did my homework. I think youâ€™d be proud.â€\r\nANALYSIS NOTE: Subject projects the caretaker as a parental figure (â€œdown there fixing thingsâ€), indicating cultural narrative training that frames maintenance labor as paternal care. The mention of homework functions as a bid for continuityâ€”childhood performance offered as evidence of life persisting. Distant class tone at start suggests call placed near scheduled education routines; the wobble on â€œproudâ€ indicates suppressed distress. This call is a small act of rebellion framed as goodness: disobedience justified by the need to be seen.\r\nDISPOSITION: Archived (education welfare tag)"
+                          },
+                          {
+                              "id":  "DA_Log_Phone_Test:VoyageLogFragment_0",
+                              "title":  "INTERCEPT ID: CH-FLT-LEG-0001",
+                              "description":  "NODE: New Terra / Residential Comms Spur R-14\r\nCHANNEL: Outbound / Legacy Dial Attempt\r\nPOLICY FLAG: Non-Essential / Prohibited Endpoint\r\nSUBJECT PROFILE: Young adult (18â€“25), new arrival (probable recent evac/crew)\r\nEMOTIONAL STATE: Relief with grief overlay; guilt suppression evident\r\nINTENT SUMMARY: One-way proof-of-life declaration; explicit rejection of reciprocal contact\r\nTRANSCRIPT (EXCERPT): â€œDad? â€¦Noâ€”sorry. Iâ€™m sorry. If someone answersâ€¦ donâ€™t. I justâ€” I just wanted to say I made it. Thatâ€™s all. I made it.â€\r\nANALYSIS NOTE: Subject opens with parental address then self-corrects, indicating internalized compliance and fear of response. Message functions as a one-way memorial: survival declared, connection refused. The paradox is stable across the clipâ€”seeking reality (â€œI made itâ€) while rejecting verification (â€œdonâ€™t answerâ€)â€”suggesting hope is being used as sedation rather than communication. Clean signal and monitoring beep imply supervised infrastructure; this was not a clandestine call but a prohibited act occurring inside order.\r\nDISPOSITION: Archived (exception chain incomplete)"
                           }
                       ]
     },
