@@ -199,6 +199,56 @@ local function dumpVoyageMapLocations()
     end
 end
 
+-- Lookup table mapping BP_Maze_RoomNumber_C instance IDs to their room label and number.
+-- Data sourced from voyage_maze_numbers_dump.json.
+local maze_room_data = {
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF3909CB502_64fd9582c515c2dc_1234426662"] = { room = "B3"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF3909CB502_64fd9582c515c2dc_1243881663"] = { room = "C3"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF3909CB502_64fd9582c515c2dc_1247787664"] = { room = "E2"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF3909CB502_64fd9582c515c2dc_1287405665"] = { room = "G1"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF3909CB502_64fd9582c515c2dc_1287408666"] = { room = "H1"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF3909CB502_64fd9582c515c2dc_1314575667"] = { room = "G3"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF3909CB502_64fd9582c515c2dc_1314579669"] = { room = "E4"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF3909CB502_64fd9582c515c2dc_1346505670"] = { room = "C4"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF3909CB502_64fd9582c515c2dc_1368127671"] = { room = "E1"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF3909CB502_64fd9582c515c2dc_1439821676"] = { room = "E3"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF3909CB502_64fd9582c515c2dc_1447221677"] = { room = "F1"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF3909CB502_64fd9582c515c2dc_1452373678"] = { room = "D1"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF3909CB502_64fd9582c515c2dc_1610597680"] = { room = "C1"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF3909CB502_64fd9582c515c2dc_1610600681"] = { room = "D2"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF3909CB502_64fd9582c515c2dc_1631718683"] = { room = "C2"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF3909CB502_64fd9582c515c2dc_1637197684"] = { room = "B1"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF3909CB502_64fd9582c515c2dc_1648634685"] = { room = "F2"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF390A3B502_64fd9582c515c2dc_1881279947"] = { room = "B2"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF390A6B502_64fd9582c515c2dc_1216033503"] = { room = "G2"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF3909CB502_64fd9582c515c2dc_1314578668"] = { room = "A1"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF3909CB502_64fd9582c515c2dc_1385192673"] = { room = "A3"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF3909CB502_64fd9582c515c2dc_1616968682"] = { room = "F3"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF390A6B502_64fd9582c515c2dc_1950753544"] = { room = "A2"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF390E5B502_64fd9582c515c2dc_1975299502"] = { room = "X1"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF390E5B502_64fd9582c515c2dc_1988757503"] = { room = "X2"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF390E5B502_64fd9582c515c2dc_1990989504"] = { room = "X3"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF390E5B502_64fd9582c515c2dc_1999012505"] = { room = "X4"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF390E5B502_64fd9582c515c2dc_1999015506"] = { room = "X5"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF390E5B502_64fd9582c515c2dc_1999016507"] = { room = "X6"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF390E5B502_64fd9582c515c2dc_2000328508"] = { room = "X7"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF390E5B502_64fd9582c515c2dc_2000331509"] = { room = "X8"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF390E5B502_64fd9582c515c2dc_2000333510"] = { room = "X9"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF3904DC002_1bbf791c380ff3a9_1939940165"] = { room = "997"},
+    ["BP_Maze_RoomNumber_C_UAID_C87F54CEF390E0B502_64fd9582c515c2dc_1214822351"] = { room = "998"},
+}
+
+--- Returns the room label for a given BP_Maze_RoomNumber_C instance ID.
+--- @param id string  The full instance ID (last path segment after the final dot)
+--- @return string room  e.g. "A1", or nil if not found
+local function GetMazeRoomInfo(id)
+    local entry = maze_room_data[id]
+    if entry then
+        return entry.room
+    end
+    return nil
+end
+
 local function dumpVoyageMazeRoomNumbers()
     print("[T1KTLCVoyageLogDumper] Dumping voyage maze room numbers...\n")
     -- local voyageLocations = FindAllOf("VoyageLocation")
@@ -222,6 +272,8 @@ local function dumpVoyageMazeRoomNumbers()
         end
         local id = pathParts[#pathParts]
 
+        local room = GetMazeRoomInfo(class)
+
         local d = {}
         for i, decal in ipairs({ cmp.Decal_0, cmp.Decal_1, cmp.Decal_2 }) do
             local val = "None"
@@ -238,6 +290,7 @@ local function dumpVoyageMazeRoomNumbers()
             class = class,
             id = id,
             num = ""..d[1]..d[2]..d[3],
+            room = room,
             -- useRandom = cmp.UseRandomNumber,
             -- description = cmp.Text:ToString(),
             -- parent = parent,
@@ -248,7 +301,7 @@ local function dumpVoyageMazeRoomNumbers()
 
     local file = io.open("voyage_maze_numbers_dump.json", "w")
     if file then
-        file:write(toJSON(dump, "  ", {"id", "num", "class"}))
+        file:write(toJSON(dump, "  ", {"id", "num", "room", "class"}))
         file:close()
         print("[T1KTLCVoyageLogDumper] Voyage maze room numbers dumped to voyage_maze_numbers_dump.json\n")
     else
