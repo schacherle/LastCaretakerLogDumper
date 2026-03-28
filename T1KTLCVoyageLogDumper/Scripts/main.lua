@@ -151,14 +151,6 @@ local function dumpVoyageLogs()
     end
 end
 
--- Register key bind for Control + F3
--- RegisterKeyBind(Key.F3, { ModifierKey.CONTROL }, function()
-RegisterKeyBind(Key.F3, { }, function()
-    ExecuteInGameThread(function()
-        dumpVoyageLogs()
-    end)
-end)
-
 local function dumpVoyageMapLocations()
     print("[T1KTLCVoyageLogDumper] Dumping voyage map locations...\n")
     local voyageLocations = FindAllOf("VoyageLocation")
@@ -195,30 +187,6 @@ local function dumpVoyageMapLocations()
         })
     end
 
-    -- for _, log in ipairs(voyageLocations) do
-    --     local logId = log:GetFName():ToString()
-    --     local fragments = {}
-        
-    --     -- Find matching fragments for this log
-    --     for _, frag in ipairs(comps) do
-    --         if frag.parent == logId then
-    --             table.insert(fragments, {
-    --                 id = frag.id,
-    --                 title = frag.title,
-    --                 description = frag.description,
-    --             })
-    --         end
-    --     end
-        
-    --     table.insert(dump, {
-    --         id = logId,
-    --         title = log.Name:ToString(),
-    --         description = log.Description:ToString(),
-    --         footer = log.DescriptionFooter:ToString(),
-    --         fragments = fragments,
-    --     })
-    -- end
-
     -- DumpObject(voyageComponents[1])
 
     local file = io.open("voyage_location_dump.json", "w")
@@ -231,9 +199,81 @@ local function dumpVoyageMapLocations()
     end
 end
 
+local function dumpVoyageMazeRoomNumbers()
+    print("[T1KTLCVoyageLogDumper] Dumping voyage maze room numbers...\n")
+    -- local voyageLocations = FindAllOf("VoyageLocation")
+    local roomNumbers = FindAllOf("BP_Maze_RoomNumber_C")
+    local dump = {}
+    print(string.format("[T1KTLCVoyageLogDumper] Found %d room numbers\n", #roomNumbers))
+
+    -- BP_Maze_RoomNumber_C /Game/Maps/VoyageWorld2/_Generated_/5TF4A0F0ZHMO6BIX2MHR52922.VoyageWorld2:PersistentLevel.BP_Maze_RoomNumber_C_UAID_C87F54CEF3909CB502_64fd9582c515c2dc_1314578668
+
+    for _, cmp in ipairs(roomNumbers) do
+        local path = cmp:GetFullName()
+        --split path by . and take last part
+        local pathParts = {}
+        for part in string.gmatch(path, "[^%.]+") do
+            table.insert(pathParts, part)
+        end
+        local class = pathParts[#pathParts]
+        pathParts = {}
+        for part in string.gmatch(class, "[^%_]+") do
+            table.insert(pathParts, part)
+        end
+        local id = pathParts[#pathParts]
+
+        local d = {}
+        for i, decal in ipairs({ cmp.Decal_0, cmp.Decal_1, cmp.Decal_2 }) do
+            local val = "None"
+            if decal and decal.DecalMaterial then
+                local matName = decal.DecalMaterial:GetFullName()
+                -- print(string.format("Decal %d material: %s", i, matName))
+                -- Extract the number from the material name using pattern matching
+                val = string.match(matName, "MI_Decal_Number_(%d+)") or val 
+            end
+            d[i] = val
+        end
+
+        table.insert(dump, {
+            class = class,
+            id = id,
+            num = ""..d[1]..d[2]..d[3],
+            -- useRandom = cmp.UseRandomNumber,
+            -- description = cmp.Text:ToString(),
+            -- parent = parent,
+        })
+    end
+
+    -- DumpObject(voyageComponents[1])
+
+    local file = io.open("voyage_maze_numbers_dump.json", "w")
+    if file then
+        file:write(toJSON(dump, "  ", {"id", "num", "class"}))
+        file:close()
+        print("[T1KTLCVoyageLogDumper] Voyage maze room numbers dumped to voyage_maze_numbers_dump.json\n")
+    else
+        print("[T1KTLCVoyageLogDumper] Failed to open file for writing\n")
+    end
+end
+
+
+-- Register key bind for Control + F3
+-- RegisterKeyBind(Key.F3, { ModifierKey.CONTROL }, function()
+
 -- Register key bind for F2
 RegisterKeyBind(Key.F2, { }, function()
     ExecuteInGameThread(function()
+        dumpVoyageLogs()
         dumpVoyageMapLocations()
     end)
 end)
+
+-- Register key bind for F3
+RegisterKeyBind(Key.F3, { }, function()
+    ExecuteInGameThread(function()
+        dumpVoyageMazeRoomNumbers()
+    end)
+end)
+
+
+
