@@ -25,8 +25,10 @@ This mod allows you to dump all voyage logs and their associated fragments from 
 ## Usage
 
 1. Launch *The Last Caretaker*
-2. Press **F3** to dump the voyage logs
-3. The data will be exported to `voyage_logs_dump.json` in the game's directory
+2. Press **F2** to dump the voyage logs and locations
+    * Press **F3** to dump the Maze Room Numbers (must be at the maze)
+3. The data will be exported to `voyage_logs_dump.json` and `voyage_location_dump.json` in the game's directory
+    * Optional, run `sort_logs_by_id.ps1` so that the order of the logs is the same for version tracking.
 4. Check the console output for confirmation messages
 
 ## Output Format
@@ -62,15 +64,15 @@ T1KTLCVoyageLogDumper/
 
 ## How It Works
 
-1. **Data Collection**: The mod uses UE4SS's `FindAllOf()` function to locate all `VoyageLogData` and `VoyageLogFragment` objects in the game
+1. **Data Collection**: The mod uses UE4SS's `FindAllOf()` function to locate all `VoyageLogData` and `VoyageLogFragment` and `VoyageLocatorComponent` objects in the game
 2. **Fragment Association**: Fragments are matched to their parent logs based on naming patterns
 3. **JSON Conversion**: A custom JSON serializer converts the Lua tables to properly formatted JSON
-4. **File Export**: The data is written to `voyage_logs_dump.json` in the current directory
+4. **File Export**: The data is written to `voyage_logs_dump.json` and `voyage_location_dump.json` in the current directory
 
 ## Requirements
 
 - The Last Caretaker (game)
-- [UE4SS](https://github.com/UE4SS-RE/RE-UE4SS) v3.0.0 or later
+- [UE4SS specifically for TLC](https://www.nexusmods.com/thelastcaretaker/mods/4)
 
 ## License
 
