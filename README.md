@@ -27,9 +27,11 @@ This mod allows you to dump all voyage logs and their associated fragments from 
 1. Launch *The Last Caretaker*
 2. Press **F2** to dump the voyage logs and locations
     * Press **F3** to dump the Maze Room Numbers (must be at the maze)
-3. The data will be exported to `voyage_logs_dump.json` and `voyage_location_dump.json` in the game's directory
+3. If **F2** Used, data will be exported to `voyage_logs_dump.json` and `voyage_location_dump.json` in the game's directory
     * Optional, run `sort_logs_by_id.ps1` so that the order of the logs is the same for version tracking.
-4. Check the console output for confirmation messages
+4. If **F3** Used, data will be in `voyage_maze_numbers_dump.json`
+    * Run `update_transposium_numbers.ps1` to add a new sheet to `Transposium_Numbers.xlsx`
+5. Check the console output for confirmation messages
 
 ## Output Format
 
