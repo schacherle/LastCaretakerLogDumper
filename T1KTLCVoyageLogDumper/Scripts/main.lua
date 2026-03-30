@@ -299,6 +299,12 @@ local function dumpVoyageMazeRoomNumbers()
 
     -- DumpObject(voyageComponents[1])
 
+    table.sort(dump, function(a, b)
+        local idA = tonumber(a.id) or a.id
+        local idB = tonumber(b.id) or b.id
+        return idA < idB
+    end)
+
     local file = io.open("voyage_maze_numbers_dump.json", "w")
     if file then
         file:write(toJSON(dump, "  ", {"id", "num", "room", "class"}))
