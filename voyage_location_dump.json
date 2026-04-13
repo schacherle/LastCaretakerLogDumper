@@ -484,6 +484,17 @@
       "lat": -1.9961927676747
     },
     {
+      "id": "GrowthContainer16",
+      "title": "NDNs Node 210.-2",
+      "group": "GrowthContainer16",
+      "x": 2095710.6092536,
+      "y": -16674.450853162,
+      "z": 448.18793438673,
+      "class": "VoyageLocatorActor_UAID_7C10C945F1BF5BA802_06459845d1e7e6b5_2084728651",
+      "lon": 210.09623848521,
+      "lat": -1.9953619891485
+    },
+    {
       "id": "GrowthContainer02",
       "title": "NDNs Node 30,-2",
       "group": "GrowthContainer02",
@@ -517,6 +528,17 @@
       "lat": -1.9913995308321
     },
     {
+      "id": "GrowthContainer14",
+      "title": "NDNs Node 70,-142",
+      "group": "GrowthContainer14",
+      "x": 694639.79706186,
+      "y": -1416919.1610462,
+      "z": 669.7393491056,
+      "class": "VoyageLocatorActor_UAID_7C10C945F1BF5BA802_4ac9b6f8ce4076e8_2084728651",
+      "lon": 69.915549244198,
+      "lat": -142.04584749672
+    },
+    {
       "id": "GrowthContainer05",
       "title": "NDNs Node 110,-2",
       "group": "GrowthContainer05",
@@ -526,6 +548,17 @@
       "class": "VoyageLocatorActor_UAID_7C10C945F1BF5BA802_5806dac6cdbe71f3_2135675652",
       "lon": 110.02030553237,
       "lat": -2.0013000825161
+    },
+    {
+      "id": "GrowthContainer15",
+      "title": "NDNs Node 70,138",
+      "group": "GrowthContainer15",
+      "x": 695142.5341746,
+      "y": 1383304.6123702,
+      "z": 414.8200252431,
+      "class": "VoyageLocatorActor_UAID_7C10C945F1BF5BA802_94bf4228586fdba4_1827946649",
+      "lon": 69.965849367759,
+      "lat": 138.02855388613
     },
     {
       "id": "Maze1",
@@ -548,6 +581,17 @@
       "class": "VoyageLocatorActor_UAID_7C10C945F1BF5FA802_f5b9c2f2579953d0_1933498396",
       "lon": 150.0,
       "lat": -2.0205607694624
+    },
+    {
+      "id": "GrowthContainer13",
+      "title": "NDNs Node -70,-2",
+      "group": "GrowthContainer13",
+      "x": -704494.16842272,
+      "y": -16562.814374212,
+      "z": 387.13776718425,
+      "class": "VoyageLocatorActor_UAID_7C10C945F1BF60A802_04f29860a0b6c1ea_1808273758",
+      "lon": -70.071353570038,
+      "lat": -1.9841962672119
     },
     {
       "id": "GrowthContainer07",
@@ -953,17 +997,6 @@
       "y": 0.0,
       "z": 0.0,
       "class": "BP_FirstPersonCharacter_New_C1",
-      "lon": 0.41507526455253,
-      "lat": -0.32760711704793
-    },
-    {
-      "id": "Mainboat",
-      "title": "Boat",
-      "group": "Player",
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0,
-      "class": "BP_Boat_Barge_C868LevelInstanceActor_3",
       "lon": 0.41507526455253,
       "lat": -0.32760711704793
     }
