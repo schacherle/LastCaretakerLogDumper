@@ -30,8 +30,10 @@ if (-not (Test-Path $JsonFile)) {
 $roomData = Get-Content $JsonFile -Raw -Encoding UTF8 | ConvertFrom-Json
 
 $roomMap = @{}
-foreach ($entry in $roomData) {
-    $roomMap[$entry.room] = $entry.num
+foreach ($entry in $roomData.data) {
+    if (-not [string]::IsNullOrEmpty($entry.room)) {
+        $roomMap[$entry.room] = $entry.num
+    }
 }
 
 Write-Host "Loaded $($roomMap.Count) room entries from JSON."
@@ -78,6 +80,10 @@ if ($null -eq $dimension) {
                 $cell.Value = $roomMap[$val]
                 $replacedCount++
                 Write-Verbose "  [$row,$col] '$val' -> '$($roomMap[$val])'"
+            } elseif ($val -eq 'GAME VERSION') {
+                $cell.Value = "$NewSheetName $($roomData.build_number)"
+                $replacedCount++
+                Write-Verbose "  [$row,$col] 'GAME VERSION' -> '$($roomData.build_number)'"
             }
         }
     }
@@ -88,7 +94,6 @@ Write-Host "Replaced $replacedCount cell(s) with num values."
 # ---------------------------------------------------------------------------
 # 5. Save and close
 # ---------------------------------------------------------------------------
-$pkg.Save()
 Close-ExcelPackage -ExcelPackage $pkg
 
 Write-Host "Saved '$ExcelFile' successfully."

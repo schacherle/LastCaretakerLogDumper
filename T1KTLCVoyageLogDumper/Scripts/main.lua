@@ -88,6 +88,20 @@ print("[T1KTLCVoyageLogDumper] Mod loaded\n")
 
 require("jsonshim")
 
+
+local function GetBuildNumber()
+    local allText = FindAllOf("TextBlock")
+    for _, tb in ipairs(allText) do
+        if tb:GetFName():ToString() == "BuildNumberText" and tb:GetFullName():find("PlayingWidget") and tb:GetFullName():find("/Engine") then
+            print(string.format("Found BuildNumberText: %s\n", tb:GetFullName()))
+            print(string.format("Current build number text: %s\n", tb.Text:ToString()))
+            return tb.Text:ToString()
+        end
+    end
+    print("[T1KTLCVoyageLogDumper] BuildNumberText not found\n")
+    return nil
+end
+
 local function dumpVoyageLogs()
     print("[T1KTLCVoyageLogDumper] Dumping voyage logs...\n")
     local voyageLogs = FindAllOf("VoyageLogData")
@@ -141,9 +155,12 @@ local function dumpVoyageLogs()
 
     -- DumpObject(voyageComponents[1])
 
+    local buildNumber = GetBuildNumber() or "unknown"
+    local output = { build_number = buildNumber, data = dump }
+
     local file = io.open("voyage_logs_dump.json", "w")
     if file then
-        file:write(toJSON(dump, "  ", {"id", "title", "description", "footer", "fragments", "parent"}))
+        file:write(toJSON(output, "  ", {"build_number", "data", "id", "title", "description", "footer", "fragments", "parent"}))
         file:close()
         print("[T1KTLCVoyageLogDumper] Voyage logs dumped to voyage_logs_dump.json\n")
     else
@@ -189,9 +206,12 @@ local function dumpVoyageMapLocations()
 
     -- DumpObject(voyageComponents[1])
 
+    local buildNumber = GetBuildNumber() or "unknown"
+    local output = { build_number = buildNumber, data = comps }
+
     local file = io.open("voyage_location_dump.json", "w")
     if file then
-        file:write(toJSON(comps, "  ", {"id", "title", "group", "x", "y", "z","class"}))
+        file:write(toJSON(output, "  ", {"build_number", "data", "id", "title", "group", "x", "y", "z", "class"}))
         file:close()
         print("[T1KTLCVoyageLogDumper] Voyage locations dumped to voyage_location_dump.json\n")
     else
@@ -305,9 +325,12 @@ local function dumpVoyageMazeRoomNumbers()
         return idA < idB
     end)
 
+    local buildNumber = GetBuildNumber() or "unknown"
+    local output = { build_number = buildNumber, data = dump }
+
     local file = io.open("voyage_maze_numbers_dump.json", "w")
     if file then
-        file:write(toJSON(dump, "  ", {"id", "num", "room", "class"}))
+        file:write(toJSON(output, "  ", {"build_number", "data", "id", "num", "room", "class"}))
         file:close()
         print("[T1KTLCVoyageLogDumper] Voyage maze room numbers dumped to voyage_maze_numbers_dump.json\n")
     else
@@ -333,6 +356,4 @@ RegisterKeyBind(Key.F3, { }, function()
         dumpVoyageMazeRoomNumbers()
     end)
 end)
-
-
 
