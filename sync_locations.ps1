@@ -2,8 +2,9 @@ $dumpPath      = '.\voyage_location_dump.json'
 $locationsPath = '..\lastcaretakermap\src\data\locations.json'
 $missingPath   = '.\missing_locations.json'
 
-$dump    = Get-Content $dumpPath -Raw | ConvertFrom-Json
+$root    = Get-Content $dumpPath -Raw | ConvertFrom-Json
 $locData = Get-Content $locationsPath -Raw | ConvertFrom-Json
+$dump = $root.data
 
 # All arrays that may contain locations with a gameid
 $arrayNames = @('locations', 'hiddenLocations', 'lastListenerLocations', 'caves')
