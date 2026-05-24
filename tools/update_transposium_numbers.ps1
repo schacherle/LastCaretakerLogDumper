@@ -6,8 +6,8 @@
 # Requires: ImportExcel module  (Install-Module ImportExcel -Scope CurrentUser)
 # Usage:    .\update_transposium_numbers.ps1
 
-$ExcelFile     = Join-Path $PSScriptRoot "Transposium_Numbers.xlsx"
-$JsonFile      = Join-Path $PSScriptRoot "voyage_maze_numbers_dump.json"
+$ExcelFile     = Join-Path $PSScriptRoot "../Transposium_Numbers.xlsx"
+$JsonFile      = Join-Path $PSScriptRoot "../voyage_maze_numbers_dump.json"
 $TemplateName  = "Room Template"
 $NewSheetName  = Get-Date -Format "yyyy-MM-dd HH-mm-ss"
 
