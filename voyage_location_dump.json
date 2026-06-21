@@ -1,5 +1,5 @@
 {
-    "build_number": "Early Access - 0.7.5.610707",
+    "build_number": "Early Access - 0.8.0.612029",
     "data": [
       {
         "id": "UnlistedTower",
@@ -62,7 +62,7 @@
         "group": "SanctuaryDock12",
         "x": 887149.48930109,
         "y": 271982.28465284,
-        "z": 4318.168461,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_7C10C945F1BF0DA202_d865a11be967584f_1809540604",
         "lon": 89.176632344956,
         "lat": 26.875674379254
@@ -431,6 +431,17 @@
         "lat": -20.097870944178
       },
       {
+        "id": "Cave10",
+        "title": "The Forth Chamber",
+        "group": "Cave10",
+        "x": 1090472.5514951,
+        "y": -331019.37642056,
+        "z": -15115.097433306,
+        "class": "VoyageLocatorActor_UAID_7C10C945F1BF30A602_c13a728917a9fd5a_1579182517",
+        "lon": 109.51962054293,
+        "lat": -33.435694612499
+      },
+      {
         "id": "Cave04-55,-82",
         "title": "North Lantern",
         "group": "Cave04-55,-82",
@@ -480,7 +491,7 @@
         "group": "GrowthContainer01",
         "x": 545611.42042398,
         "y": -16682.757095246,
-        "z": 441.54471466509,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_7C10C945F1BF59A802_7793348deef755a8_2087375406",
         "lon": 55.004882080354,
         "lat": -1.9961927676747
@@ -491,7 +502,7 @@
         "group": "GrowthContainer16",
         "x": 2095710.6092536,
         "y": -16674.450853162,
-        "z": 448.18793438673,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_7C10C945F1BF5BA802_06459845d1e7e6b5_2084728651",
         "lon": 210.09623848521,
         "lat": -1.9953619891485
@@ -502,7 +513,7 @@
         "group": "GrowthContainer02",
         "x": 296034.28195185,
         "y": -16646.82228586,
-        "z": 407.25632960232,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_7C10C945F1BF5BA802_1ea515a8a3751892_1827946649",
         "lon": 30.034056205325,
         "lat": -1.9925986191202
@@ -513,7 +524,7 @@
         "group": "GrowthContainer04",
         "x": 845354.16623852,
         "y": -16623.40624054,
-        "z": 497.46591839245,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_7C10C945F1BF5BA802_1ec8eaf46ed6e873_2084728651",
         "lon": 84.994904238868,
         "lat": -1.9902565795525
@@ -524,7 +535,7 @@
         "group": "GrowthContainer03",
         "x": -104096.06372284,
         "y": -16634.833630295,
-        "z": 429.86633532885,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_7C10C945F1BF5BA802_27d6b6d21e4991eb_1883413650",
         "lon": -10.0,
         "lat": -1.9913995308321
@@ -535,7 +546,7 @@
         "group": "GrowthContainer14",
         "x": 694639.79706186,
         "y": -1416919.1610462,
-        "z": 669.7393491056,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_7C10C945F1BF5BA802_4ac9b6f8ce4076e8_2084728651",
         "lon": 69.915549244198,
         "lat": -142.04584749672
@@ -546,7 +557,7 @@
         "group": "GrowthContainer05",
         "x": 1095476.7723232,
         "y": -16733.820756782,
-        "z": 353.1260421739,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_7C10C945F1BF5BA802_5806dac6cdbe71f3_2135675652",
         "lon": 110.02030553237,
         "lat": -2.0013000825161
@@ -557,7 +568,7 @@
         "group": "GrowthContainer15",
         "x": 695142.5341746,
         "y": 1383304.6123702,
-        "z": 414.8200252431,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_7C10C945F1BF5BA802_94bf4228586fdba4_1827946649",
         "lon": 69.965849367759,
         "lat": 138.02855388613
@@ -579,7 +590,7 @@
         "group": "GrowthContainer06",
         "x": 1495063.7860711,
         "y": -16926.391849368,
-        "z": 683.11605333541,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_7C10C945F1BF5FA802_f5b9c2f2579953d0_1933498396",
         "lon": 150.0,
         "lat": -2.0205607694624
@@ -590,7 +601,7 @@
         "group": "GrowthContainer13",
         "x": -704494.16842272,
         "y": -16562.814374212,
-        "z": 387.13776718425,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_7C10C945F1BF60A802_04f29860a0b6c1ea_1808273758",
         "lon": -70.071353570038,
         "lat": -1.9841962672119
@@ -601,7 +612,7 @@
         "group": "GrowthContainer07",
         "x": 695606.68111178,
         "y": -166621.95089079,
-        "z": 522.70982019536,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_7C10C945F1BF60A802_1815bd21e8e48964_1977764982",
         "lon": 70.012288446353,
         "lat": -16.99289779703
@@ -612,7 +623,7 @@
         "group": "GrowthContainer11",
         "x": 695312.33305742,
         "y": 383013.10447412,
-        "z": 483.32653918109,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_7C10C945F1BF60A802_e6fd6838b8bdba0d_1808273758",
         "lon": 69.982838176761,
         "lat": 37.980819150792
@@ -623,7 +634,7 @@
         "group": "GrowthContainer08",
         "x": 695749.95512462,
         "y": -416454.76491902,
-        "z": 1076.0414706483,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_7C10C945F1BF61A802_04072e15c7fd3680_1320105555",
         "lon": 70.02662337482,
         "lat": -41.980820726268
@@ -634,7 +645,7 @@
         "group": "GrowthContainer09",
         "x": 695687.08813581,
         "y": -816572.22171484,
-        "z": 880.82215475509,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_7C10C945F1BF61A802_3db58d60e2c38756_1510478817",
         "lon": 70.020333373098,
         "lat": -82.0
@@ -645,7 +656,7 @@
         "group": "GrowthContainer12",
         "x": 695386.51822651,
         "y": 783130.57702177,
-        "z": 427.44160838402,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_7C10C945F1BF61A802_8dc2980d167cc7a6_1182292361",
         "lon": 69.990260591134,
         "lat": 78.0
@@ -656,7 +667,7 @@
         "group": "GrowthContainer10",
         "x": 695504.92162631,
         "y": 133264.42817258,
-        "z": 417.75970973988,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_7C10C945F1BF61A802_ee000f5a246a49c6_1757962196",
         "lon": 70.002107151671,
         "lat": 13.001311557378
@@ -810,7 +821,7 @@
         "group": "Cluster1",
         "x": 1151952.4563206,
         "y": 115032.64611817,
-        "z": 424.89417825479,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_C87F5407A527924602_6ca04bae274bdee4_1781840994",
         "lon": 115.6708409937,
         "lat": 11.177794632229
@@ -843,7 +854,7 @@
         "group": "Cluster1",
         "x": 609768.462322,
         "y": -257542.958431,
-        "z": 1512.492493,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_C87F5407A527934602_5f81477c61bfc72b_1381489411",
         "lon": 61.423956887044,
         "lat": -26.086687729712
@@ -865,7 +876,7 @@
         "group": "Cluster1",
         "x": 1206056.6150196,
         "y": 291266.73008922,
-        "z": 1034.9925000002,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_C87F5407A527934602_c44bdfaf37a19360_1207281285",
         "lon": 121.08409933241,
         "lat": 28.804477199539
@@ -887,7 +898,7 @@
         "group": "Cluster1",
         "x": 1257928.2821383,
         "y": 481172.68688815,
-        "z": 5399.181225,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_C87F5407A527954602_9d6ba793503a278e_1154020486",
         "lon": 126.27399122475,
         "lat": 47.798601052936
@@ -898,7 +909,7 @@
         "group": "SanctuaryDock37",
         "x": 115317.71534734,
         "y": 82661.989302824,
-        "z": 4318.168461,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_C87F5407A527AE4502_1bbf791c380ff3a9_1522247538",
         "lon": 11.952905243183,
         "lat": 7.9401275514775
@@ -942,7 +953,7 @@
         "group": "NavigationBeacon32",
         "x": 1090243.7232055,
         "y": 356788.48145998,
-        "z": 1342.1135753446,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_C87F5407A527BA4502_5aed558b5751e4d3_2082901198",
         "lon": 109.49672569203,
         "lat": 35.357869634434
@@ -979,6 +990,50 @@
         "class": "VoyageLocatorActor_UAID_C87F5407A5520BC402_8f04c4dbd228d63d_1699974632",
         "lon": 169.33752540911,
         "lat": -1.5253295949439
+      },
+      {
+        "id": "Statue_Spire_C",
+        "title": "The Spire of Industry",
+        "group": "Statue_Spire_C",
+        "x": 818668.69484098,
+        "y": -932616.10037233,
+        "z": 5.2007850172231e-05,
+        "class": "VoyageLocatorActor_UAID_C87F5407A5522DE302_42516017909fb05f_1607451440",
+        "lon": 82.324955125178,
+        "lat": -93.606543790422
+      },
+      {
+        "id": "SubmergedLab",
+        "title": "Research Outpost Theta-9",
+        "group": "SubmergedLab",
+        "x": 525097.79297885,
+        "y": -336401.67166767,
+        "z": -22059.018118154,
+        "class": "VoyageLocatorActor_UAID_C87F5407A5522DE302_e02461fead0d8893_1307463347",
+        "lon": 52.952441611914,
+        "lat": -33.974024132344
+      },
+      {
+        "id": "Statue_Spire_A",
+        "title": "The Spire of Command",
+        "group": "Statue_Spire_A",
+        "x": 201261.01482747,
+        "y": 461688.92864463,
+        "z": 0.0,
+        "class": "VoyageLocatorActor_UAID_C87F5407A5522DE302_e87c1c8256bd5e6c_1651049441",
+        "lon": 20.551750392149,
+        "lat": 45.849863248998
+      },
+      {
+        "id": "EdenPishon",
+        "title": "Pishon",
+        "group": "EdenPishon",
+        "x": 1256622.5527687,
+        "y": -21586.385743128,
+        "z": -8.4081239037914e-07,
+        "class": "VoyageLocatorActor_UAID_C87F5407A55279E302_e059fbbd5cb0e164_1472054508",
+        "lon": 126.14334968871,
+        "lat": -2.4866467346745
       },
       {
         "id": "GyrocopyterPlatformG",
@@ -1080,6 +1135,17 @@
         "lat": 47.305712319026
       },
       {
+        "id": "Statue_Spire_B",
+        "title": "The Spire of Exodus",
+        "group": "Statue_Spire_B",
+        "x": 1828891.2500721,
+        "y": -373585.04758821,
+        "z": 0.0,
+        "class": "VoyageLocatorActor_UAID_C87F5407A552E2E102_c38f7c0a9c9112e2_1968771284",
+        "lon": 183.40028468514,
+        "lat": -37.69305253686
+      },
+      {
         "id": "Platform_Omega",
         "title": "Platform Omega",
         "group": "Platform_Omega",
@@ -1096,7 +1162,7 @@
         "group": "Proving_Deck",
         "x": 965138.13667029,
         "y": 587567.37247321,
-        "z": 204.52444772332,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_C87F5407A552F1C402_8083e75b42477121_1239219882",
         "lon": 96.979594369471,
         "lat": 58.440046268293
@@ -1111,6 +1177,17 @@
         "class": "VoyageLocatorActor_UAID_C87F54CEF3906BD802_f7766d1b9f4ff2d7_1666088682",
         "lon": 73.89380524225,
         "lat": -74.488834182547
+      },
+      {
+        "id": "Mainboat",
+        "title": "Boat",
+        "group": "Player",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "class": "BP_Boat_Barge_C_UAID_C87F5407A527426302_1401670003",
+        "lon": 0.41507526455253,
+        "lat": -0.32760711704793
       },
       {
         "id": "You",
