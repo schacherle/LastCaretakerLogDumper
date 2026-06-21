@@ -1,5 +1,5 @@
 {
-    "build_number": "Early Access - 0.7.5.610599",
+    "build_number": "Early Access - 0.7.5.610707",
     "data": [
       {
         "id": "UnlistedTower",
@@ -1074,7 +1074,7 @@
         "group": "SiloA",
         "x": 880933.94440539,
         "y": 476244.71509376,
-        "z": 3079.9394763186,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_C87F5407A5528FD602_cbb4d8867c79ecc1_1114596065",
         "lon": 88.554751309461,
         "lat": 47.305712319026
@@ -1102,12 +1102,12 @@
         "lat": 58.440046268293
       },
       {
-        "id": "SiloA",
-        "title": "MCV-12 Eternal Flame",
-        "group": "SiloA",
+        "id": "SiloB",
+        "title": "MCV-17 Dead Breath",
+        "group": "SiloB",
         "x": 734401.46746365,
         "y": -741474.51559012,
-        "z": 4568.4214805156,
+        "z": 0.0,
         "class": "VoyageLocatorActor_UAID_C87F54CEF3906BD802_f7766d1b9f4ff2d7_1666088682",
         "lon": 73.89380524225,
         "lat": -74.488834182547
