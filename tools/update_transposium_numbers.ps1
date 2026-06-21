@@ -67,12 +67,15 @@ Write-Host "Created sheet '$NewSheetName' from '$TemplateName'."
 # ---------------------------------------------------------------------------
 $replacedCount = 0
 $dimension     = $newSheet.Dimension
+$maxColumnU    = 21
 
 if ($null -eq $dimension) {
     Write-Warning "New sheet appears to be empty — nothing to replace."
 } else {
+    $endColumn = [Math]::Min($dimension.End.Column, $maxColumnU)
+
     for ($row = $dimension.Start.Row; $row -le $dimension.End.Row; $row++) {
-        for ($col = $dimension.Start.Column; $col -le $dimension.End.Column; $col++) {
+        for ($col = $dimension.Start.Column; $col -le $endColumn; $col++) {
             $cell = $newSheet.Cells[$row, $col]
             $val  = $cell.Text   # read display text so formulas/strings both match
 
