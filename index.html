@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Last Caretaker Archive — Voyage Logs &amp; Quest Subtitles</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <h1>Last Caretaker Archive</h1>
+  <p class="tagline">Browse and compare voyage logs &amp; quest subtitles across every dumped game build.</p>
+  <nav class="tabs" id="mode-tabs">
+    <button class="tab active" data-mode="browse">Browse</button>
+    <button class="tab" data-mode="compare">Compare</button>
+  </nav>
+</header>
+
+<main>
+
+  <section id="panel-browse" class="panel active">
+    <div class="controls">
+      <label class="control">
+        <span>Version</span>
+        <select id="browse-version"></select>
+      </label>
+      <span id="browse-build" class="build-badge"></span>
+    </div>
+
+    <div class="content-tabs" data-scope="browse">
+      <button class="content-tab active" data-content="logs">Voyage Logs</button>
+      <button class="content-tab" data-content="subtitles">Quest Subtitles</button>
+    </div>
+
+    <div id="browse-logs" class="content-view active">
+      <input type="search" class="filter" id="logs-filter" placeholder="Filter logs by title or id…">
+      <div id="logs-list" class="list"></div>
+    </div>
+
+    <div id="browse-subtitles" class="content-view">
+      <input type="search" class="filter" id="subs-filter" placeholder="Filter subtitles by name or text…">
+      <div id="subs-list" class="list"></div>
+    </div>
+  </section>
+
+  <section id="panel-compare" class="panel">
+    <div class="controls">
+      <label class="control">
+        <span>From</span>
+        <select id="compare-from"></select>
+      </label>
+      <label class="control">
+        <span>To</span>
+        <select id="compare-to"></select>
+      </label>
+    </div>
+
+    <div class="content-tabs" data-scope="compare">
+      <button class="content-tab active" data-content="logs">Voyage Logs</button>
+      <button class="content-tab" data-content="subtitles">Quest Subtitles</button>
+    </div>
+
+    <div id="compare-logs" class="content-view active"></div>
+    <div id="compare-subtitles" class="content-view"></div>
+  </section>
+
+  <div id="status" class="status hidden"></div>
+
+</main>
+
+<footer class="site-footer">
+  Data is fetched live from the
+  <a href="https://github.com/schacherle/LastCaretakerLogDumper" target="_blank" rel="noopener">repository's commit history</a>
+  — nothing is stored on this page. Fan-made archive, not affiliated with the developers of <em>The Last Caretaker</em>.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/diff@5.2.0/dist/diff.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
