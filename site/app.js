@@ -137,8 +137,15 @@ function renderLogCard(log) {
       </div>`
     )
     .join("");
+  const count = (log.fragments || []).length;
   return `<details class="card">
-    <summary><span class="summary-title">${escapeHtml(log.title) || "<em>(untitled)</em>"}</span><span class="id-tag">${escapeHtml(log.id)}</span></summary>
+    <summary>
+      <span class="summary-title">${escapeHtml(log.title) || "<em>(untitled)</em>"}</span>
+      <span class="summary-meta">
+        <span class="frag-count">${count} ${count === 1 ? "page" : "pages"}</span>
+        <span class="id-tag">${escapeHtml(log.id)}</span>
+      </span>
+    </summary>
     <div class="card-body">
       ${log.description ? `<p>${escapeHtml(log.description)}</p>` : ""}
       ${fragments}
@@ -149,7 +156,7 @@ function renderLogCard(log) {
 
 function renderSubRow(sub) {
   return `<div class="sub-row">
-    <div class="sub-row-head"><span>${escapeHtml(sub.Name)}</span><span>${formatDuration(sub.Duration)}</span></div>
+    <div class="sub-row-head"><span><span class="prompt">&gt;</span>${escapeHtml(sub.Name)}</span><span>${formatDuration(sub.Duration)}</span></div>
     <p>${escapeHtml(sub.Subtitle)}</p>
   </div>`;
 }
