@@ -5,9 +5,11 @@
 // hardcoded -- the same app.js works unmodified on any fork's Pages deployment. Falls
 // back to this repo for local testing (file://, localhost) where that pattern doesn't apply.
 function detectRepo() {
+  const override = new URLSearchParams(location.search).get("repo");
+  if (override) return override;
   const m = /^([^.]+)\.github\.io$/.exec(location.hostname);
   const repoName = m && location.pathname.split("/").filter(Boolean)[0];
-  return repoName ? `${m[1]}/${repoName}` : "schacherle/LastCaretakerLogDumper";
+  return m && repoName ? `${m[1]}/${repoName}` : null;
 }
 
 const REPO = detectRepo();
@@ -869,6 +871,11 @@ function wireDeviceControls() {
 // ---------- bootstrap ----------
 
 async function init() {
+  if (!REPO) {
+    setStatus("Could not determine which repo to load from this URL -- pass ?repo=owner/name (e.g. for local testing).", true);
+    return;
+  }
+
   wireModeTabs();
   wireBrowseContentTabs();
   wireCompareContentTabs();
