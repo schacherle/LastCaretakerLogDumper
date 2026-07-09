@@ -339,6 +339,170 @@ local function dumpVoyageMazeRoomNumbers()
 end
 
 
+--[[
+    Sample Data (hologram collectible) dumping.
+
+    VoyageSampleDataAsset uses Unreal's unversioned property serialization, so its
+    property names aren't recoverable from the static .uasset/.uexp files (only the
+    unversioned VALUES are -- that's how the site/sampledata/data.json text catalog
+    was originally built, by reverse engineering byte offsets, not by reading property
+    names). dumpVoyageSampleDataDebug() below dumps one instance's real property names
+    via UE4SS's DumpObject so dumpVoyageSampleDataText() can be filled in correctly --
+    run F5 once, find the output in UE4SS.log, and use it to fix the property names
+    referenced in dumpVoyageSampleDataText() (currently marked TODO).
+
+    dumpVoyageSampleDataImages() doesn't have this problem: the texture asset paths
+    were already recovered from the static files (/Game/Textures/UI/SampleDatas/...),
+    so it loads each texture directly by path -- no VoyageSampleDataAsset property
+    access needed. It draws each texture onto a small RGBA8 render target via
+    UCanvas:K2_DrawTexture and exports that with UKismetRenderingLibrary:ExportRenderTarget,
+    which writes PNG for any non-RTF_RGBA16f render target format (confirmed against
+    Epic's KismetRenderingLibrary.cpp).
+]]
+
+-- Numeric IDs of "field memory" Sample Data records that ship with unique art.
+-- (No. 22 "Bed on Wheels" has text but no unique texture in the retail build.)
+local sampleDataFieldIds = {
+    "13", "14", "15", "16", "17", "18", "21", "23", "24", "25",
+    "27", "29", "34", "35", "41", "42", "43", "45", "46", "50",
+    "51", "52", "53", "54", "56", "57", "59", "60", "62", "63",
+    "85", "87", "88", "89", "90", "91", "92", "93", "94", "95",
+    "96", "97", "98", "99", "104", "118", "119", "120", "121", "122",
+    "123", "124", "125", "126", "127", "128", "129", "130", "131",
+}
+
+-- Numeric IDs of "cave painting" Sample Data records (all 44 have art).
+local sampleDataCaveIds = {
+    "502", "504", "505", "506", "510", "511", "512", "514", "517", "518",
+    "521", "522", "527", "531", "537", "547", "559", "568", "575", "584",
+    "589", "591", "596", "598", "603", "604", "605", "606", "617", "624",
+    "628", "635", "641", "647", "660", "666", "676", "683", "687", "694",
+    "701", "702", "703", "704",
+}
+
+local function debugDumpSampleDataAsset()
+    local assets = FindAllOf("VoyageSampleDataAsset")
+    if not assets or #assets == 0 then
+        print("[T1KTLCVoyageLogDumper] No VoyageSampleDataAsset instances found\n")
+        return
+    end
+    print(string.format(
+        "[T1KTLCVoyageLogDumper] Dumping first of %d VoyageSampleDataAsset instances (see UE4SS.log)...\n",
+        #assets))
+    -- There's no global DumpObject() in this UE4SS build (that's a console-command-only
+    -- helper implemented by ConsoleCommandsMod, not a Lua API) -- so walk the class's
+    -- properties directly via ForEachProperty instead.
+    assets[1]:GetClass():ForEachProperty(function(Property)
+        print(string.format("[T1KTLCVoyageLogDumper]   %s\n", Property:GetFullName()))
+    end)
+end
+
+-- Property names confirmed via debugDumpSampleDataAsset()'s F5 output.
+local function dumpVoyageSampleDataText()
+    print("[T1KTLCVoyageLogDumper] Dumping sample data text...\n")
+    local assets = FindAllOf("VoyageSampleDataAsset")
+    local dump = {}
+    for _, asset in ipairs(assets) do
+        table.insert(dump, {
+            id = asset:GetFName():ToString(),
+            title = asset.UncollectedHeader and asset.UncollectedHeader:ToString() or nil,
+            uncollectedDescription = asset.UncollectedDescription and asset.UncollectedDescription:ToString() or nil,
+            sentDescription = asset.SentDescription and asset.SentDescription:ToString() or nil,
+        })
+    end
+
+    local file = io.open("voyage_sampledata_text_dump.json", "w")
+    if file then
+        file:write(toJSON(dump, "  ", { "id", "title", "uncollectedDescription", "sentDescription" }))
+        file:close()
+        print("[T1KTLCVoyageLogDumper] Sample data text dumped to voyage_sampledata_text_dump.json\n")
+    else
+        print("[T1KTLCVoyageLogDumper] Failed to open file for writing\n")
+    end
+end
+
+-- Draws `texturePath` (loaded by its known /Game/... path) onto a small RGBA8 render
+-- target and exports it as `outDir/outName.png`. Returns true on success.
+local function exportSampleDataTexture(krl, worldContext, texturePath, outDir, outName)
+    -- LoadAsset takes "PackagePath.ObjectName", not just the package path -- without
+    -- the ".ObjectName" suffix it silently fails to load anything.
+    LoadAsset(texturePath .. "." .. outName)
+    local tex = FindObject("Texture2D", outName)
+    if not tex or not tex:IsValid() then
+        print(string.format("[T1KTLCVoyageLogDumper] Could not load texture %s\n", texturePath))
+        return false
+    end
+
+    -- Texture2D doesn't reflect SizeX/SizeY as plain properties. "GetSizeX"/"GetSizeY"
+    -- are only the Blueprint DisplayName metadata -- the actual reflected UFunctions
+    -- (and what UE4SS looks up by) are Blueprint_GetSizeX/Blueprint_GetSizeY.
+    local sizeX, sizeY = tex:Blueprint_GetSizeX(), tex:Blueprint_GetSizeY()
+
+    -- ETextureRenderTargetFormat.RTF_RGBA8_SRGB = 3 -- anything but RTF_RGBA16f (6)
+    -- makes ExportRenderTarget write PNG instead of HDR/EXR.
+    local rt = krl:CreateRenderTarget2D(worldContext, sizeX, sizeY, 3, { R = 0, G = 0, B = 0, A = 0 }, false, false)
+    if not rt or not rt:IsValid() then
+        print(string.format("[T1KTLCVoyageLogDumper] Failed to create render target for %s\n", texturePath))
+        return false
+    end
+
+    -- Canvas/Size/Context are Blueprint "out" params -- UE4SS fills the tables we pass
+    -- in-place rather than returning them, so each needs its own table.
+    local canvasOut, sizeOut, contextOut = {}, {}, {}
+    krl:BeginDrawCanvasToRenderTarget(worldContext, rt, canvasOut, sizeOut, contextOut)
+    local canvas = canvasOut.Canvas
+    if not canvas or not canvas:IsValid() then
+        print(string.format("[T1KTLCVoyageLogDumper] Failed to get canvas for %s\n", texturePath))
+        return false
+    end
+
+    canvas:K2_DrawTexture(
+        tex,
+        { X = 0, Y = 0 },
+        { X = sizeX, Y = sizeY },
+        { X = 0, Y = 0 },
+        { X = 1, Y = 1 },
+        { R = 1, G = 1, B = 1, A = 1 },
+        0,   -- EBlendMode.BLEND_Opaque
+        0.0, -- Rotation
+        { X = 0.5, Y = 0.5 }
+    )
+
+    krl:EndDrawCanvasToRenderTarget(worldContext, contextOut)
+    krl:ExportRenderTarget(worldContext, rt, outDir, outName .. ".png")
+    return true
+end
+
+local function dumpVoyageSampleDataImages()
+    print("[T1KTLCVoyageLogDumper] Dumping sample data thumbnails...\n")
+    local krl = StaticFindObject("/Script/Engine.Default__KismetRenderingLibrary")
+    local worldContext = FindFirstOf("PlayerController")
+    if not krl or not krl:IsValid() or not worldContext or not worldContext:IsValid() then
+        print("[T1KTLCVoyageLogDumper] Could not find KismetRenderingLibrary or PlayerController\n")
+        return
+    end
+
+    local outDir = "sampledata_images\\"
+    local ok, total = 0, 0
+
+    for _, id in ipairs(sampleDataFieldIds) do
+        total = total + 1
+        local name = "SampleData_" .. id
+        if exportSampleDataTexture(krl, worldContext, "/Game/Textures/UI/SampleDatas/" .. name, outDir, name) then
+            ok = ok + 1
+        end
+    end
+    for _, id in ipairs(sampleDataCaveIds) do
+        total = total + 1
+        local name = "SampleData_CavePainting_" .. id
+        if exportSampleDataTexture(krl, worldContext, "/Game/Textures/UI/SampleDatas/" .. name, outDir, name) then
+            ok = ok + 1
+        end
+    end
+
+    print(string.format("[T1KTLCVoyageLogDumper] Exported %d/%d sample data thumbnails to %s\n", ok, total, outDir))
+end
+
 -- Register key bind for Control + F3
 -- RegisterKeyBind(Key.F3, { ModifierKey.CONTROL }, function()
 
@@ -354,6 +518,28 @@ end)
 RegisterKeyBind(Key.F3, { }, function()
     ExecuteInGameThread(function()
         dumpVoyageMazeRoomNumbers()
+    end)
+end)
+
+-- Register key bind for F4: export Sample Data hologram thumbnails as PNGs
+RegisterKeyBind(Key.F4, { }, function()
+    ExecuteInGameThread(function()
+        dumpVoyageSampleDataImages()
+    end)
+end)
+
+-- Register key bind for F5: dump one VoyageSampleDataAsset's real property names to
+-- UE4SS.log (diagnostic; property names are now confirmed and used below)
+RegisterKeyBind(Key.F5, { }, function()
+    ExecuteInGameThread(function()
+        debugDumpSampleDataAsset()
+    end)
+end)
+
+-- Register key bind for F6: export Sample Data hologram title/description text
+RegisterKeyBind(Key.F6, { }, function()
+    ExecuteInGameThread(function()
+        dumpVoyageSampleDataText()
     end)
 end)
 

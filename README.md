@@ -12,6 +12,8 @@ This mod allows you to dump all voyage logs and their associated fragments from 
 - **Extract Log Fragments**: Captures all `VoyageLogFragment` objects and associates them with their parent logs
 - **JSON Export**: Exports data in a clean, readable JSON format with proper indentation
 - **Key Binding**: Simple F3 key press to trigger the dump
+- **Sample Data Thumbnails**: Exports the hologram Sample Data collectibles' thumbnails as PNGs (F4)
+- **Sample Data Text**: Exports the hologram Sample Data collectibles' title/description text as JSON (F6)
 
 ## Installation
 
@@ -32,6 +34,14 @@ This mod allows you to dump all voyage logs and their associated fragments from 
 4. If **F3** Used, data will be in `voyage_maze_numbers_dump.json`
     * Run `update_transposium_numbers.ps1` to add a new sheet to `Transposium_Numbers.xlsx`
 5. Check the console output for confirmation messages
+6. Press **F4** to export the Sample Data hologram thumbnails as PNGs to `sampledata_images\` in
+   the game's directory (renders each texture into a small render target and exports that, since
+   there's no direct "export texture as PNG" call in the engine)
+7. Press **F5** to dump a `VoyageSampleDataAsset` instance's real property names to
+   `UE4SS.log` -- a diagnostic step, since that class's property names aren't recoverable
+   from the game files directly (unversioned property serialization)
+8. Press **F6** to export the Sample Data hologram title/description text to
+   `voyage_sampledata_text_dump.json` in the game's directory
 
 ## Output Format
 
