@@ -21,20 +21,22 @@
     </nav>
 
     <div class="toolbar-controls" id="browse-controls">
-      <div class="content-tabs" id="browse-content-tabs">
-        <button class="content-tab active" data-content="logs">Voyage Logs</button>
-        <button class="content-tab" data-content="subtitles">Quest Subtitles</button>
-        <button class="content-tab" data-content="sampledata">Sample Data</button>
+      <div class="toolbar-row">
+        <div class="content-tabs" id="browse-content-tabs">
+          <button class="content-tab active" data-content="logs">Voyage Logs</button>
+          <button class="content-tab" data-content="subtitles">Quest Subtitles</button>
+          <button class="content-tab" data-content="sampledata">Sample Data</button>
+        </div>
+        <label class="control" id="version-control">
+          <span>Version</span>
+          <select id="browse-version"></select>
+        </label>
       </div>
       <div class="content-tabs hidden" id="sampledata-content-tabs">
         <button class="content-tab active" data-content="all">All</button>
         <button class="content-tab" data-content="field">Hologram</button>
         <button class="content-tab" data-content="cave">Painting</button>
       </div>
-      <label class="control" id="version-control">
-        <span>Version</span>
-        <select id="browse-version"></select>
-      </label>
     </div>
 
     <div class="toolbar-controls hidden" id="compare-controls">
