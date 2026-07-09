@@ -901,11 +901,6 @@ async function init() {
   document.getElementById("compare-to").addEventListener("change", loadCompare);
 
   await loadBrowseVersion(document.getElementById("browse-version").value);
-
-  const requestedMode = new URLSearchParams(location.search).get("mode");
-  if (requestedMode === "sampledata") {
-    document.querySelector('#browse-content-tabs .content-tab[data-content="sampledata"]').click();
-  }
 }
 
 document.addEventListener("DOMContentLoaded", init);
