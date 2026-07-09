@@ -12,8 +12,7 @@ This mod allows you to dump all voyage logs and their associated fragments from 
 - **Extract Log Fragments**: Captures all `VoyageLogFragment` objects and associates them with their parent logs
 - **JSON Export**: Exports data in a clean, readable JSON format with proper indentation
 - **Key Binding**: Simple F3 key press to trigger the dump
-- **Sample Data Thumbnails**: Exports the hologram Sample Data collectibles' thumbnails as PNGs (F4)
-- **Sample Data Text**: Exports the hologram Sample Data collectibles' title/description text as JSON (F6)
+- **Sample Data Export**: Exports the hologram Sample Data collectibles' thumbnails as PNGs and their title/description text as JSON (F4)
 
 ## Installation
 
@@ -36,12 +35,8 @@ This mod allows you to dump all voyage logs and their associated fragments from 
 5. Check the console output for confirmation messages
 6. Press **F4** to export the Sample Data hologram thumbnails as PNGs to `sampledata_images\` in
    the game's directory (renders each texture into a small render target and exports that, since
-   there's no direct "export texture as PNG" call in the engine)
-7. Press **F5** to dump a `VoyageSampleDataAsset` instance's real property names to
-   `UE4SS.log` -- a diagnostic step, since that class's property names aren't recoverable
-   from the game files directly (unversioned property serialization)
-8. Press **F6** to export the Sample Data hologram title/description text to
-   `voyage_sampledata_text_dump.json` in the game's directory
+   there's no direct "export texture as PNG" call in the engine), and their title/description text
+   to `voyage_sampledata_text_dump.json` in the same directory
 
 ## Output Format
 
@@ -65,6 +60,19 @@ The generated JSON file contains an array of voyage logs with the following stru
 ]
 ```
 
+`voyage_sampledata_text_dump.json` contains an array of Sample Data hologram records:
+
+```json
+[
+  {
+    "id": "DA_SampleData_13",
+    "title": "Sample Title",
+    "uncollectedDescription": "Description shown before the sample is collected",
+    "sentDescription": "Description shown after the sample is sent"
+  }
+]
+```
+
 ## Project Structure
 
 ```
@@ -80,6 +88,8 @@ T1KTLCVoyageLogDumper/
 2. **Fragment Association**: Fragments are matched to their parent logs based on naming patterns
 3. **JSON Conversion**: A custom JSON serializer converts the Lua tables to properly formatted JSON
 4. **File Export**: The data is written to `voyage_logs_dump.json` and `voyage_location_dump.json` in the current directory
+5. **Sample Data Thumbnails**: Each Sample Data texture is loaded by its known asset path, drawn onto a small render target via `UCanvas:K2_DrawTexture`, and exported as PNG with `UKismetRenderingLibrary:ExportRenderTarget` -- there's no direct "export texture as PNG" call in the engine
+6. **Sample Data Text**: Since `VoyageSampleDataAsset` uses Unreal's unversioned property serialization, its property names aren't recoverable from the static game files -- they were confirmed live via UE4SS's property reflection (`ForEachProperty`) and are read directly off each asset instance
 
 ## Requirements
 

@@ -344,20 +344,18 @@ end
 
     VoyageSampleDataAsset uses Unreal's unversioned property serialization, so its
     property names aren't recoverable from the static .uasset/.uexp files (only the
-    unversioned VALUES are -- that's how the site/sampledata/data.json text catalog
-    was originally built, by reverse engineering byte offsets, not by reading property
-    names). dumpVoyageSampleDataDebug() below dumps one instance's real property names
-    via UE4SS's DumpObject so dumpVoyageSampleDataText() can be filled in correctly --
-    run F5 once, find the output in UE4SS.log, and use it to fix the property names
-    referenced in dumpVoyageSampleDataText() (currently marked TODO).
+    unversioned VALUES are). The real property names below (UncollectedHeader/
+    UncollectedDescription/SentDescription) were confirmed live via UE4SS's
+    ForEachProperty reflection.
 
-    dumpVoyageSampleDataImages() doesn't have this problem: the texture asset paths
-    were already recovered from the static files (/Game/Textures/UI/SampleDatas/...),
-    so it loads each texture directly by path -- no VoyageSampleDataAsset property
-    access needed. It draws each texture onto a small RGBA8 render target via
-    UCanvas:K2_DrawTexture and exports that with UKismetRenderingLibrary:ExportRenderTarget,
-    which writes PNG for any non-RTF_RGBA16f render target format (confirmed against
-    Epic's KismetRenderingLibrary.cpp).
+    dumpVoyageSampleDataImages() doesn't have the property-name problem: the texture
+    asset paths were already recovered from the static files
+    (/Game/Textures/UI/SampleDatas/...), so it loads each texture directly by path --
+    no VoyageSampleDataAsset property access needed. It draws each texture onto a
+    small RGBA8 render target via UCanvas:K2_DrawTexture and exports that with
+    UKismetRenderingLibrary:ExportRenderTarget, which writes PNG for any
+    non-RTF_RGBA16f render target format (confirmed against Epic's
+    KismetRenderingLibrary.cpp).
 ]]
 
 -- Numeric IDs of "field memory" Sample Data records that ship with unique art.
@@ -380,24 +378,6 @@ local sampleDataCaveIds = {
     "701", "702", "703", "704",
 }
 
-local function debugDumpSampleDataAsset()
-    local assets = FindAllOf("VoyageSampleDataAsset")
-    if not assets or #assets == 0 then
-        print("[T1KTLCVoyageLogDumper] No VoyageSampleDataAsset instances found\n")
-        return
-    end
-    print(string.format(
-        "[T1KTLCVoyageLogDumper] Dumping first of %d VoyageSampleDataAsset instances (see UE4SS.log)...\n",
-        #assets))
-    -- There's no global DumpObject() in this UE4SS build (that's a console-command-only
-    -- helper implemented by ConsoleCommandsMod, not a Lua API) -- so walk the class's
-    -- properties directly via ForEachProperty instead.
-    assets[1]:GetClass():ForEachProperty(function(Property)
-        print(string.format("[T1KTLCVoyageLogDumper]   %s\n", Property:GetFullName()))
-    end)
-end
-
--- Property names confirmed via debugDumpSampleDataAsset()'s F5 output.
 local function dumpVoyageSampleDataText()
     print("[T1KTLCVoyageLogDumper] Dumping sample data text...\n")
     local assets = FindAllOf("VoyageSampleDataAsset")
@@ -521,24 +501,11 @@ RegisterKeyBind(Key.F3, { }, function()
     end)
 end)
 
--- Register key bind for F4: export Sample Data hologram thumbnails as PNGs
+-- Register key bind for F4: export Sample Data hologram thumbnails as PNGs and
+-- their title/description text as JSON
 RegisterKeyBind(Key.F4, { }, function()
     ExecuteInGameThread(function()
         dumpVoyageSampleDataImages()
-    end)
-end)
-
--- Register key bind for F5: dump one VoyageSampleDataAsset's real property names to
--- UE4SS.log (diagnostic; property names are now confirmed and used below)
-RegisterKeyBind(Key.F5, { }, function()
-    ExecuteInGameThread(function()
-        debugDumpSampleDataAsset()
-    end)
-end)
-
--- Register key bind for F6: export Sample Data hologram title/description text
-RegisterKeyBind(Key.F6, { }, function()
-    ExecuteInGameThread(function()
         dumpVoyageSampleDataText()
     end)
 end)
