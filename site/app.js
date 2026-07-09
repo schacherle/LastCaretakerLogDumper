@@ -4,6 +4,7 @@ const REPO = "schacherle/LastCaretakerLogDumper";
 const PATHS = {
   logs: "voyage_logs_dump.json",
   subtitles: "voyage_quest_subtitles_dump.json",
+  sampleText: "voyage_sampledata_text_dump.json",
 };
 
 const fileCache = new Map(); // `${sha}:${path}` -> parsed json | null (missing)
@@ -16,7 +17,7 @@ let filteredSubGroups = [];
 
 let currentMode = "browse"; // "browse" | "compare"
 let browseScope = "logs"; // "logs" | "subtitles" | "sampledata"
-let compareScope = "logs"; // "logs" | "subtitles"
+let compareScope = "logs"; // "logs" | "subtitles" | "sampledata"
 let selectedLogIdx = -1;
 let selectedSubIdx = -1; // indexes filteredSubGroups
 
@@ -100,7 +101,7 @@ function normalizeLogs(json) {
   return { buildNumber: json.build_number || null, logs: json.data || [] };
 }
 
-function normalizeSubtitles(json) {
+function normalizeArrayJson(json) {
   if (!json) return [];
   if (Array.isArray(json)) return json;
   return json.data || [];
@@ -160,12 +161,13 @@ async function fetchCommitsForPath(path) {
 }
 
 async function buildVersionList() {
-  const [logCommits, subCommits] = await Promise.all([
+  const [logCommits, subCommits, sampleTextCommits] = await Promise.all([
     fetchCommitsForPath(PATHS.logs),
     fetchCommitsForPath(PATHS.subtitles),
+    fetchCommitsForPath(PATHS.sampleText),
   ]);
   const bySha = new Map();
-  for (const c of [...logCommits, ...subCommits]) {
+  for (const c of [...logCommits, ...subCommits, ...sampleTextCommits]) {
     if (!bySha.has(c.sha)) bySha.set(c.sha, c);
   }
   return [...bySha.values()].sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -302,7 +304,7 @@ async function loadBrowseVersion(sha) {
     ]);
     const { logs } = normalizeLogs(logsJson);
     currentBrowseLogs = logs;
-    currentBrowseSubs = normalizeSubtitles(subsJson);
+    currentBrowseSubs = normalizeArrayJson(subsJson);
     selectedLogIdx = -1;
     selectedSubIdx = -1;
 
@@ -551,20 +553,66 @@ function renderSubsDiff(fromSubs, toSubs) {
   container.innerHTML = html;
 }
 
+function renderSampleTextDiffCard(kind, item) {
+  if (kind === "added") {
+    return `<div class="diff-card added"><span class="diff-tag added">Added</span><span class="id-tag">${escapeHtml(item.id)}</span>
+      <div class="fragment-title" style="margin-top:.4rem">${escapeHtml(item.title)}</div>
+      <p>${escapeHtml(item.sentDescription)}</p></div>`;
+  }
+  if (kind === "removed") {
+    return `<div class="diff-card removed"><span class="diff-tag removed">Removed</span><span class="id-tag">${escapeHtml(item.id)}</span>
+      <div class="fragment-title" style="margin-top:.4rem">${escapeHtml(item.title)}</div></div>`;
+  }
+  const titleChanged = item.from.title !== item.to.title;
+  const uncollectedChanged = item.from.uncollectedDescription !== item.to.uncollectedDescription;
+  const sentChanged = item.from.sentDescription !== item.to.sentDescription;
+  return `<div class="diff-card changed"><span class="diff-tag changed">Changed</span><span class="id-tag">${escapeHtml(item.to.id)}</span>
+    <div class="fragment-title" style="margin-top:.4rem">${titleChanged ? renderWordDiff(item.from.title, item.to.title) : escapeHtml(item.to.title)}</div>
+    ${uncollectedChanged ? `<p>${renderWordDiff(item.from.uncollectedDescription, item.to.uncollectedDescription)}</p>` : ""}
+    ${sentChanged ? `<p>${renderWordDiff(item.from.sentDescription, item.to.sentDescription)}</p>` : ""}
+  </div>`;
+}
+
+function renderSampleTextDiff(fromItems, toItems) {
+  const { added, removed, changed } = diffByKey(fromItems, toItems, (s) => s.id);
+  const container = document.getElementById("compare-sampledata");
+  if (!added.length && !removed.length && !changed.length) {
+    container.innerHTML = `<p class="empty-note">No differences in sample data text between these versions.</p>`;
+    return;
+  }
+  let html = "";
+  if (added.length) {
+    html += `<div class="section-heading">Added (${added.length})</div>`;
+    html += added.map((s) => renderSampleTextDiffCard("added", s)).join("");
+  }
+  if (changed.length) {
+    html += `<div class="section-heading">Changed (${changed.length})</div>`;
+    html += changed.map((c) => renderSampleTextDiffCard("changed", c)).join("");
+  }
+  if (removed.length) {
+    html += `<div class="section-heading">Removed (${removed.length})</div>`;
+    html += removed.map((s) => renderSampleTextDiffCard("removed", s)).join("");
+  }
+  container.innerHTML = html;
+}
+
 async function loadCompare() {
   const fromSha = document.getElementById("compare-from").value;
   const toSha = document.getElementById("compare-to").value;
   if (!fromSha || !toSha) return;
   setStatus("Comparing versions…");
   try {
-    const [fromLogsJson, toLogsJson, fromSubsJson, toSubsJson] = await Promise.all([
+    const [fromLogsJson, toLogsJson, fromSubsJson, toSubsJson, fromSampleJson, toSampleJson] = await Promise.all([
       fetchFileAtSha(PATHS.logs, fromSha),
       fetchFileAtSha(PATHS.logs, toSha),
       fetchFileAtSha(PATHS.subtitles, fromSha),
       fetchFileAtSha(PATHS.subtitles, toSha),
+      fetchFileAtSha(PATHS.sampleText, fromSha),
+      fetchFileAtSha(PATHS.sampleText, toSha),
     ]);
     renderLogsDiff(normalizeLogs(fromLogsJson).logs, normalizeLogs(toLogsJson).logs);
-    renderSubsDiff(normalizeSubtitles(fromSubsJson), normalizeSubtitles(toSubsJson));
+    renderSubsDiff(normalizeArrayJson(fromSubsJson), normalizeArrayJson(toSubsJson));
+    renderSampleTextDiff(normalizeArrayJson(fromSampleJson), normalizeArrayJson(toSampleJson));
     setStatus("");
   } catch (err) {
     console.error(err);
@@ -601,6 +649,7 @@ function setMode(mode) {
 }
 
 const SCOPE_TITLES = { logs: "DATA LOGS", subtitles: "QUEST SUBTITLES", sampledata: "SAMPLE DATA" };
+const COMPARE_SCOPE_TITLES = { logs: "VOYAGE LOGS", subtitles: "QUEST SUBTITLES", sampledata: "SAMPLE DATA" };
 
 function wireBrowseContentTabs() {
   const buttons = document.querySelectorAll("#browse-content-tabs .content-tab");
@@ -642,7 +691,8 @@ function wireCompareContentTabs() {
       compareScope = btn.dataset.content;
       document.getElementById("compare-logs").classList.toggle("active", compareScope === "logs");
       document.getElementById("compare-subtitles").classList.toggle("active", compareScope === "subtitles");
-      label.textContent = compareScope === "logs" ? "VOYAGE LOGS" : "QUEST SUBTITLES";
+      document.getElementById("compare-sampledata").classList.toggle("active", compareScope === "sampledata");
+      label.textContent = COMPARE_SCOPE_TITLES[compareScope];
     });
   });
 }

@@ -218,6 +218,9 @@ select:focus {
 .panel { display: none; }
 .panel.active { display: block; }
 
+.content-view { display: none; }
+.content-view.active { display: block; }
+
 .screens {
   display: flex;
   gap: 0.9rem;
