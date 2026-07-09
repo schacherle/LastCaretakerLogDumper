@@ -11,12 +11,6 @@
 </head>
 <body>
 
-<header class="site-header">
-  <h1>Last Caretaker Archive</h1>
-  <p class="tagline">Browse and compare voyage logs &amp; quest subtitles across every dumped game build.</p>
-  <p class="tagline"><a href="sampledata/">→ Sample Data hologram archive (104 recovered scans)</a></p>
-</header>
-
 <main>
 <div class="device" id="device">
 
@@ -24,6 +18,7 @@
     <nav class="tabs" id="mode-tabs">
       <button class="tab active" data-mode="browse">Browse</button>
       <button class="tab" data-mode="compare">Compare</button>
+      <button class="tab" data-mode="sampledata">Sample Data</button>
     </nav>
 
     <div class="toolbar-controls" id="browse-controls">
@@ -51,6 +46,15 @@
         <span>To</span>
         <select id="compare-to"></select>
       </label>
+    </div>
+
+    <div class="toolbar-controls hidden" id="sampledata-controls">
+      <div class="content-tabs" id="sampledata-content-tabs">
+        <button class="content-tab active" data-content="all">All</button>
+        <button class="content-tab" data-content="field">Hologram</button>
+        <button class="content-tab" data-content="cave">Painting</button>
+      </div>
+      <span id="sampledata-count" class="build-badge"></span>
     </div>
   </div>
 
@@ -80,6 +84,24 @@
         <div class="screen-scroll">
           <div id="compare-logs" class="content-view active"></div>
           <div id="compare-subtitles" class="content-view"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="panel-sampledata" class="panel">
+    <div class="screens">
+      <div class="screen list-screen">
+        <div class="screen-title">SAMPLE DATA</div>
+        <div class="screen-scroll">
+          <div id="sampledata-list" class="entry-list"></div>
+        </div>
+      </div>
+      <div class="screen detail-screen">
+        <div class="screen-scroll">
+          <div id="sampledata-detail-pane" class="detail-pane">
+            <p class="empty-note">Select a record from the list.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -125,12 +147,6 @@
 
 </div>
 </main>
-
-<footer class="site-footer">
-  Data is fetched live from the
-  <a href="https://github.com/schacherle/LastCaretakerLogDumper" target="_blank" rel="noopener">repository's commit history</a>
-  — nothing is stored on this page. Fan-made archive, not affiliated with the developers of <em>The Last Caretaker</em>.
-</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/diff@5.2.0/dist/diff.min.js"></script>
 <script src="app.js"></script>

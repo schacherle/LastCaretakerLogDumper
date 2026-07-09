@@ -14,11 +14,18 @@ let currentBrowseSubs = [];
 let filteredLogs = [];
 let filteredSubs = [];
 
-let currentMode = "browse"; // "browse" | "compare"
+let currentMode = "browse"; // "browse" | "compare" | "sampledata"
 let browseScope = "logs"; // "logs" | "subtitles"
 let compareScope = "logs"; // "logs" | "subtitles"
 let selectedLogIdx = -1;
 let selectedSubIdx = -1;
+
+let sampleData = []; // loaded once from sampledata/data.json
+let sampleDataLoaded = false;
+let filteredSamples = [];
+let sampleScope = "all"; // "all" | "field" | "cave"
+let selectedSampleIdx = -1;
+const unlockedSamples = new Set();
 
 let displayOn = true;
 let brt = 100, con = 100, sat = 100;
@@ -258,6 +265,110 @@ async function loadBrowseVersion(sha) {
   }
 }
 
+// ---------- sample data ----------
+
+function sampleCode(it) {
+  return it.collection === "cave"
+    ? `CAVE-${String(it.id.replace("CavePainting_", "")).padStart(3, "0")}`
+    : `SD-${String(it.id).padStart(3, "0")}`;
+}
+
+function sampleSiteLabel(it) {
+  return it.collection === "cave" ? "Orbit archive" : it.site || "—";
+}
+
+async function loadSampleData() {
+  if (sampleDataLoaded) return;
+  setStatus("Loading sample data…");
+  try {
+    const res = await fetch("sampledata/data.json");
+    if (!res.ok) throw new Error(`Failed to load sample data (${res.status})`);
+    sampleData = await res.json();
+    sampleDataLoaded = true;
+    setStatus("");
+  } catch (err) {
+    console.error(err);
+    setStatus(err.message, true);
+  }
+  renderSampleList(document.getElementById("filter-input").value);
+}
+
+function renderSampleList(filterText) {
+  const term = (filterText || "").toLowerCase();
+  filteredSamples = sampleData.filter((it) => {
+    const matchesScope = sampleScope === "all" || it.collection === sampleScope;
+    const hay = `${it.title} ${it.short} ${it.site || ""}`.toLowerCase();
+    const matchesTerm = !term || hay.includes(term);
+    return matchesScope && matchesTerm;
+  });
+  if (selectedSampleIdx >= filteredSamples.length) selectedSampleIdx = filteredSamples.length ? 0 : -1;
+  if (selectedSampleIdx === -1 && filteredSamples.length) selectedSampleIdx = 0;
+
+  const countEl = document.getElementById("sampledata-count");
+  if (countEl) countEl.textContent = `${filteredSamples.length}/${sampleData.length}`;
+
+  const container = document.getElementById("sampledata-list");
+  container.innerHTML = filteredSamples.length
+    ? filteredSamples
+        .map((it, i) => entryRowHtml(i, it.title, sampleCode(it), i === selectedSampleIdx))
+        .join("")
+    : `<p class="empty-note">No sample data matches your filter.</p>`;
+
+  renderSampleDetail();
+}
+
+function renderSampleDetail() {
+  const pane = document.getElementById("sampledata-detail-pane");
+  const it = filteredSamples[selectedSampleIdx];
+  if (!it) {
+    pane.innerHTML = `<p class="empty-note">Select a record from the list.</p>`;
+    return;
+  }
+
+  const media = it.img
+    ? `<div class="framebuffer"><img src="sampledata/${it.img}" alt="${escapeHtml(it.title)}" loading="lazy"><div class="framebuffer-cap">FRAMEBUFFER // ${sampleCode(it)}.CAP</div></div>`
+    : `<div class="fb-missing">[ NO CAPTURE ON RECORD ]<br>scan exists in log only — image was never recovered</div>`;
+
+  const isUnlocked = unlockedSamples.has(it.id);
+  let lockHtml;
+  if (!it.unlock) {
+    lockHtml = `<div class="lock-block">
+      <div class="lock-line">&gt; memory status: <span class="muted">N/A</span></div>
+      <p class="unlock-empty">No deeper memory was reconstructed from this scan.</p>
+    </div>`;
+  } else if (isUnlocked) {
+    lockHtml = `<div class="lock-block">
+      <div class="lock-line">&gt; decrypting payload...... <span class="ok-tag">[OK]</span></div>
+      <div class="section-label">Unlocked memory</div>
+      <p class="unlock-text">${escapeHtml(it.unlock)}</p>
+    </div>`;
+  } else {
+    lockHtml = `<div class="lock-block">
+      <div class="lock-line">&gt; memory status: <span class="locked-tag">LOCKED</span></div>
+      <button class="device-btn unlock-btn" type="button" id="inline-unlock">Unlock memory</button>
+    </div>`;
+  }
+
+  pane.innerHTML = `
+    <div class="detail-head-1">${escapeHtml(it.title)} ${selectedSampleIdx + 1}/${filteredSamples.length}</div>
+    <div class="detail-head-2">${sampleCode(it)} · ${escapeHtml(sampleSiteLabel(it))}</div>
+    ${media}
+    <div class="section-label">Field reading</div>
+    <p>${escapeHtml(it.short)}</p>
+    ${lockHtml}
+  `;
+
+  const btn = document.getElementById("inline-unlock");
+  if (btn) btn.addEventListener("click", () => unlockSample(it.id));
+}
+
+function unlockSample(id) {
+  const it = sampleData.find((s) => s.id === id);
+  if (!it || !it.unlock) return;
+  unlockedSamples.add(id);
+  renderSampleDetail();
+}
+
 // ---------- diffing ----------
 
 function renderWordDiff(oldText, newText) {
@@ -416,26 +527,33 @@ async function loadCompare() {
 function wireModeTabs() {
   const tabs = document.querySelectorAll("#mode-tabs .tab");
   tabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      tabs.forEach((t) => t.classList.remove("active"));
-      tab.classList.add("active");
-      currentMode = tab.dataset.mode;
-      document.getElementById("panel-browse").classList.toggle("active", currentMode === "browse");
-      document.getElementById("panel-compare").classList.toggle("active", currentMode === "compare");
-      document.getElementById("browse-controls").classList.toggle("hidden", currentMode !== "browse");
-      document.getElementById("compare-controls").classList.toggle("hidden", currentMode !== "compare");
-      const filterInput = document.getElementById("filter-input");
-      const terminalBar = document.getElementById("terminal-bar");
-      if (currentMode === "compare") {
-        terminalBar.classList.add("disabled");
-        filterInput.placeholder = "filtering not available in compare mode";
-      } else {
-        terminalBar.classList.remove("disabled");
-        filterInput.placeholder = "type to filter…";
-      }
-      if (currentMode === "compare") loadCompare();
-    });
+    tab.addEventListener("click", () => setMode(tab.dataset.mode));
   });
+}
+
+function setMode(mode) {
+  currentMode = mode;
+  document.querySelectorAll("#mode-tabs .tab").forEach((t) => t.classList.toggle("active", t.dataset.mode === mode));
+  document.getElementById("panel-browse").classList.toggle("active", currentMode === "browse");
+  document.getElementById("panel-compare").classList.toggle("active", currentMode === "compare");
+  document.getElementById("panel-sampledata").classList.toggle("active", currentMode === "sampledata");
+  document.getElementById("browse-controls").classList.toggle("hidden", currentMode !== "browse");
+  document.getElementById("compare-controls").classList.toggle("hidden", currentMode !== "compare");
+  document.getElementById("sampledata-controls").classList.toggle("hidden", currentMode !== "sampledata");
+  const filterInput = document.getElementById("filter-input");
+  const terminalBar = document.getElementById("terminal-bar");
+  if (currentMode === "compare") {
+    terminalBar.classList.add("disabled");
+    filterInput.placeholder = "filtering not available in compare mode";
+  } else if (currentMode === "sampledata") {
+    terminalBar.classList.remove("disabled");
+    filterInput.placeholder = "type to filter sample data…";
+  } else {
+    terminalBar.classList.remove("disabled");
+    filterInput.placeholder = "type to filter…";
+  }
+  if (currentMode === "compare") loadCompare();
+  if (currentMode === "sampledata") loadSampleData();
 }
 
 function wireBrowseContentTabs() {
@@ -471,6 +589,19 @@ function wireCompareContentTabs() {
   });
 }
 
+function wireSampleContentTabs() {
+  const buttons = document.querySelectorAll("#sampledata-content-tabs .content-tab");
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      buttons.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      sampleScope = btn.dataset.content;
+      document.getElementById("filter-input").value = "";
+      renderSampleList("");
+    });
+  });
+}
+
 function wireEntryListClicks() {
   document.getElementById("logs-list").addEventListener("click", (e) => {
     const row = e.target.closest(".entry");
@@ -484,30 +615,45 @@ function wireEntryListClicks() {
     selectedSubIdx = Number(row.dataset.idx);
     renderBrowseSubs(document.getElementById("filter-input").value);
   });
+  document.getElementById("sampledata-list").addEventListener("click", (e) => {
+    const row = e.target.closest(".entry");
+    if (!row) return;
+    selectedSampleIdx = Number(row.dataset.idx);
+    renderSampleList(document.getElementById("filter-input").value);
+  });
 }
 
 function wireFilterInput() {
   document.getElementById("filter-input").addEventListener("input", (e) => {
-    if (currentMode !== "browse") return;
-    if (browseScope === "logs") renderBrowseLogs(e.target.value);
-    else renderBrowseSubs(e.target.value);
+    if (currentMode === "browse") {
+      if (browseScope === "logs") renderBrowseLogs(e.target.value);
+      else renderBrowseSubs(e.target.value);
+    } else if (currentMode === "sampledata") {
+      renderSampleList(e.target.value);
+    }
   });
 }
 
 // ---------- device controls ----------
 
 function moveSelection(delta) {
-  if (currentMode !== "browse") return;
-  if (browseScope === "logs") {
-    if (!filteredLogs.length) return;
-    selectedLogIdx = (selectedLogIdx + delta + filteredLogs.length) % filteredLogs.length;
-    renderBrowseLogs(document.getElementById("filter-input").value);
-    document.querySelector("#logs-list .entry.selected")?.scrollIntoView({ block: "nearest" });
-  } else {
-    if (!filteredSubs.length) return;
-    selectedSubIdx = (selectedSubIdx + delta + filteredSubs.length) % filteredSubs.length;
-    renderBrowseSubs(document.getElementById("filter-input").value);
-    document.querySelector("#subs-list .entry.selected")?.scrollIntoView({ block: "nearest" });
+  if (currentMode === "browse") {
+    if (browseScope === "logs") {
+      if (!filteredLogs.length) return;
+      selectedLogIdx = (selectedLogIdx + delta + filteredLogs.length) % filteredLogs.length;
+      renderBrowseLogs(document.getElementById("filter-input").value);
+      document.querySelector("#logs-list .entry.selected")?.scrollIntoView({ block: "nearest" });
+    } else {
+      if (!filteredSubs.length) return;
+      selectedSubIdx = (selectedSubIdx + delta + filteredSubs.length) % filteredSubs.length;
+      renderBrowseSubs(document.getElementById("filter-input").value);
+      document.querySelector("#subs-list .entry.selected")?.scrollIntoView({ block: "nearest" });
+    }
+  } else if (currentMode === "sampledata") {
+    if (!filteredSamples.length) return;
+    selectedSampleIdx = (selectedSampleIdx + delta + filteredSamples.length) % filteredSamples.length;
+    renderSampleList(document.getElementById("filter-input").value);
+    document.querySelector("#sampledata-list .entry.selected")?.scrollIntoView({ block: "nearest" });
   }
 }
 
@@ -520,14 +666,27 @@ function stepVersion(delta) {
   select.dispatchEvent(new Event("change"));
 }
 
+function scrollSampleDetail(delta) {
+  document.querySelector("#panel-sampledata .detail-screen .screen-scroll")?.scrollBy({ top: delta, behavior: "smooth" });
+}
+
 function wireDeviceControls() {
   document.getElementById("btn-up").addEventListener("click", () => moveSelection(-1));
   document.getElementById("btn-down").addEventListener("click", () => moveSelection(1));
-  document.getElementById("btn-prev").addEventListener("click", () => stepVersion(1)); // older
-  document.getElementById("btn-next").addEventListener("click", () => stepVersion(-1)); // newer
+  document.getElementById("btn-prev").addEventListener("click", () => {
+    if (currentMode === "sampledata") scrollSampleDetail(-120);
+    else stepVersion(1); // older
+  });
+  document.getElementById("btn-next").addEventListener("click", () => {
+    if (currentMode === "sampledata") scrollSampleDetail(120);
+    else stepVersion(-1); // newer
+  });
   document.getElementById("btn-exe").addEventListener("click", () => {
     if (currentMode === "compare") {
       loadCompare();
+    } else if (currentMode === "sampledata") {
+      const it = filteredSamples[selectedSampleIdx];
+      if (it) unlockSample(it.id);
     } else {
       document.getElementById("filter-input").focus();
     }
@@ -539,6 +698,8 @@ function wireDeviceControls() {
     if (currentMode === "browse") {
       if (browseScope === "logs") renderBrowseLogs("");
       else renderBrowseSubs("");
+    } else if (currentMode === "sampledata") {
+      renderSampleList("");
     }
   });
 
@@ -580,9 +741,13 @@ async function init() {
   wireModeTabs();
   wireBrowseContentTabs();
   wireCompareContentTabs();
+  wireSampleContentTabs();
   wireEntryListClicks();
   wireFilterInput();
   wireDeviceControls();
+
+  const requestedMode = new URLSearchParams(location.search).get("mode");
+  if (requestedMode === "sampledata") setMode("sampledata");
 
   setStatus("Loading commit history…");
   try {
