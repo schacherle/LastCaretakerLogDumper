@@ -80,7 +80,18 @@ T1KTLCVoyageLogDumper/
 ├── Scripts/
 │   ├── main.lua         # Main mod logic and key binding
 │   └── jsonshim.lua     # JSON serialization utility
+site/                    # Web archive/diff viewer for the dumped data (see below)
 ```
+
+## Web Archive
+
+The `site/` folder is a static, browsable archive of the dumped data (voyage logs,
+quest subtitles, and Sample Data) with a version picker and a diff view for comparing
+any two commits. It fetches everything straight from this repo's commit history via
+GitHub's API/raw content (`raw.githubusercontent.com` and `api.github.com`) -- there's
+no build step or server, so hosting it just means enabling GitHub Pages for this repo
+(Settings → Pages → Deploy from a branch → `gh-pages`), and pushes to `main` touching
+`site/**` will deploy automatically via `.github/workflows/deploy.yml`.
 
 ## How It Works
 
