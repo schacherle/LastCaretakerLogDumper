@@ -210,7 +210,6 @@ select:focus {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   border-radius: 3px;
-  align-self: flex-end;
 }
 .build-badge.hidden { display: none; }
 
@@ -240,12 +239,12 @@ select:focus {
 }
 
 .list-screen {
-  flex: 0 0 40%;
-  min-width: 240px;
+  flex: 0 0 32%;
+  min-width: 220px;
 }
 
 .detail-screen {
-  flex: 1 1 60%;
+  flex: 1 1 68%;
   min-width: 0;
 }
 
@@ -254,7 +253,7 @@ select:focus {
 }
 
 .screen-scroll {
-  max-height: 60vh;
+  max-height: 68vh;
   overflow-y: auto;
   padding-right: 0.3rem;
 }

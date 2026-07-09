@@ -12,13 +12,13 @@ let versions = []; // [{ sha, message, date }], newest first
 let currentBrowseLogs = [];
 let currentBrowseSubs = [];
 let filteredLogs = [];
-let filteredSubs = [];
+let filteredSubGroups = [];
 
-let currentMode = "browse"; // "browse" | "compare" | "sampledata"
-let browseScope = "logs"; // "logs" | "subtitles"
+let currentMode = "browse"; // "browse" | "compare"
+let browseScope = "logs"; // "logs" | "subtitles" | "sampledata"
 let compareScope = "logs"; // "logs" | "subtitles"
 let selectedLogIdx = -1;
-let selectedSubIdx = -1;
+let selectedSubIdx = -1; // indexes filteredSubGroups
 
 let sampleData = []; // loaded once from sampledata/data.json
 let sampleDataLoaded = false;
@@ -106,6 +106,45 @@ function normalizeSubtitles(json) {
   return json.data || [];
 }
 
+// Subtitle names encode "<storyline>-<part>", e.g. "CU3_3-1" .. "CU3_3-6" are six
+// lines of the same storyline (CU3 = Concurrent Update 3, "3" = story index).
+// Part suffixes aren't always plain integers (e.g. "-1a", "-2_Anna_B"), so only the
+// leading digits are used for ordering within a group.
+const SUBTITLE_PART_RE = /^(.*)-(\d.*)$/;
+
+function subtitleGroupKey(name) {
+  const m = SUBTITLE_PART_RE.exec(name || "");
+  return m ? m[1] : (name || "");
+}
+
+function subtitlePartLabel(name) {
+  const m = SUBTITLE_PART_RE.exec(name || "");
+  return m ? m[2] : "";
+}
+
+function subtitlePartNumber(name) {
+  const n = parseInt(subtitlePartLabel(name), 10);
+  return Number.isNaN(n) ? 0 : n;
+}
+
+function groupSubtitles(subs) {
+  const order = [];
+  const byKey = new Map();
+  for (const s of subs) {
+    const key = subtitleGroupKey(s.Name);
+    if (!byKey.has(key)) {
+      byKey.set(key, []);
+      order.push(key);
+    }
+    byKey.get(key).push(s);
+  }
+  return order.map((key) => {
+    const items = byKey.get(key).slice().sort((a, b) => subtitlePartNumber(a.Name) - subtitlePartNumber(b.Name));
+    const totalDuration = items.reduce((sum, s) => sum + (s.Duration || 0), 0);
+    return { key, items, totalDuration };
+  });
+}
+
 // ---------- commit history ----------
 
 async function fetchCommitsForPath(path) {
@@ -176,15 +215,25 @@ function renderBrowseLogs(filterText) {
 
 function renderBrowseSubs(filterText) {
   const term = (filterText || "").toLowerCase();
-  filteredSubs = currentBrowseSubs.filter(
-    (s) => !term || (s.Name || "").toLowerCase().includes(term) || (s.Subtitle || "").toLowerCase().includes(term)
-  );
-  if (selectedSubIdx >= filteredSubs.length) selectedSubIdx = filteredSubs.length ? 0 : -1;
-  if (selectedSubIdx === -1 && filteredSubs.length) selectedSubIdx = 0;
+  const groups = groupSubtitles(currentBrowseSubs);
+  filteredSubGroups = !term
+    ? groups
+    : groups.filter(
+        (g) =>
+          g.key.toLowerCase().includes(term) ||
+          g.items.some((s) => (s.Name || "").toLowerCase().includes(term) || (s.Subtitle || "").toLowerCase().includes(term))
+      );
+  if (selectedSubIdx >= filteredSubGroups.length) selectedSubIdx = filteredSubGroups.length ? 0 : -1;
+  if (selectedSubIdx === -1 && filteredSubGroups.length) selectedSubIdx = 0;
 
   const container = document.getElementById("subs-list");
-  container.innerHTML = filteredSubs.length
-    ? filteredSubs.map((s, i) => entryRowHtml(i, s.Name, formatDuration(s.Duration), i === selectedSubIdx)).join("")
+  container.innerHTML = filteredSubGroups.length
+    ? filteredSubGroups
+        .map((g, i) => {
+          const count = g.items.length;
+          return entryRowHtml(i, g.key, `${count} ${count === 1 ? "LINE" : "LINES"}`, i === selectedSubIdx);
+        })
+        .join("")
     : `<p class="empty-note">No subtitles match your filter.</p>`;
 
   if (browseScope === "subtitles") renderDetail();
@@ -218,21 +267,30 @@ function renderLogDetail() {
 
 function renderSubDetail() {
   const pane = document.getElementById("detail-pane");
-  const sub = filteredSubs[selectedSubIdx];
-  if (!sub) {
+  const group = filteredSubGroups[selectedSubIdx];
+  if (!group) {
     pane.innerHTML = `<p class="empty-note">Select an entry from the list.</p>`;
     return;
   }
+  const lines = group.items
+    .map(
+      (s) => `<div class="fragment">
+        <div class="fragment-title">Part ${escapeHtml(subtitlePartLabel(s.Name)) || "?"} <span class="muted">${formatDuration(s.Duration)}</span></div>
+        <p>${escapeHtml(s.Subtitle)}</p>
+      </div>`
+    )
+    .join("");
+  const count = group.items.length;
   pane.innerHTML = `
-    <div class="detail-head-1">${escapeHtml(sub.Name)} ${selectedSubIdx + 1}/${filteredSubs.length}</div>
-    <div class="detail-head-2">${formatDuration(sub.Duration)}</div>
-    <p>${escapeHtml(sub.Subtitle)}</p>
+    <div class="detail-head-1">${escapeHtml(group.key)} ${selectedSubIdx + 1}/${filteredSubGroups.length}</div>
+    <div class="detail-head-2">${count} ${count === 1 ? "line" : "lines"} · ${formatDuration(group.totalDuration)}</div>
+    ${lines}
   `;
 }
 
 function renderDetail() {
   if (browseScope === "logs") renderLogDetail();
-  else renderSubDetail();
+  else if (browseScope === "subtitles") renderSubDetail();
 }
 
 async function loadBrowseVersion(sha) {
@@ -242,19 +300,11 @@ async function loadBrowseVersion(sha) {
       fetchFileAtSha(PATHS.logs, sha),
       fetchFileAtSha(PATHS.subtitles, sha),
     ]);
-    const { buildNumber, logs } = normalizeLogs(logsJson);
+    const { logs } = normalizeLogs(logsJson);
     currentBrowseLogs = logs;
     currentBrowseSubs = normalizeSubtitles(subsJson);
     selectedLogIdx = -1;
     selectedSubIdx = -1;
-
-    const badge = document.getElementById("browse-build");
-    if (buildNumber) {
-      badge.textContent = `Build ${buildNumber}`;
-      badge.classList.remove("hidden");
-    } else {
-      badge.classList.add("hidden");
-    }
 
     renderBrowseLogs(document.getElementById("filter-input").value);
     renderBrowseSubs(document.getElementById("filter-input").value);
@@ -536,25 +586,21 @@ function setMode(mode) {
   document.querySelectorAll("#mode-tabs .tab").forEach((t) => t.classList.toggle("active", t.dataset.mode === mode));
   document.getElementById("panel-browse").classList.toggle("active", currentMode === "browse");
   document.getElementById("panel-compare").classList.toggle("active", currentMode === "compare");
-  document.getElementById("panel-sampledata").classList.toggle("active", currentMode === "sampledata");
   document.getElementById("browse-controls").classList.toggle("hidden", currentMode !== "browse");
   document.getElementById("compare-controls").classList.toggle("hidden", currentMode !== "compare");
-  document.getElementById("sampledata-controls").classList.toggle("hidden", currentMode !== "sampledata");
   const filterInput = document.getElementById("filter-input");
   const terminalBar = document.getElementById("terminal-bar");
   if (currentMode === "compare") {
     terminalBar.classList.add("disabled");
     filterInput.placeholder = "filtering not available in compare mode";
-  } else if (currentMode === "sampledata") {
-    terminalBar.classList.remove("disabled");
-    filterInput.placeholder = "type to filter sample data…";
   } else {
     terminalBar.classList.remove("disabled");
-    filterInput.placeholder = "type to filter…";
+    filterInput.placeholder = browseScope === "sampledata" ? "type to filter sample data…" : "type to filter…";
   }
   if (currentMode === "compare") loadCompare();
-  if (currentMode === "sampledata") loadSampleData();
 }
+
+const SCOPE_TITLES = { logs: "DATA LOGS", subtitles: "QUEST SUBTITLES", sampledata: "SAMPLE DATA" };
 
 function wireBrowseContentTabs() {
   const buttons = document.querySelectorAll("#browse-content-tabs .content-tab");
@@ -564,12 +610,24 @@ function wireBrowseContentTabs() {
       buttons.forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
       browseScope = btn.dataset.content;
+
       document.getElementById("logs-list").classList.toggle("hidden", browseScope !== "logs");
       document.getElementById("subs-list").classList.toggle("hidden", browseScope !== "subtitles");
-      title.textContent = browseScope === "logs" ? "DATA LOGS" : "QUEST SUBTITLES";
-      document.getElementById("filter-input").value = "";
+      document.getElementById("sampledata-list").classList.toggle("hidden", browseScope !== "sampledata");
+      document.getElementById("detail-pane").classList.toggle("hidden", browseScope === "sampledata");
+      document.getElementById("sampledata-detail-pane").classList.toggle("hidden", browseScope !== "sampledata");
+      document.getElementById("sampledata-content-tabs").classList.toggle("hidden", browseScope !== "sampledata");
+      document.getElementById("sampledata-count").classList.toggle("hidden", browseScope !== "sampledata");
+      document.getElementById("version-control").classList.toggle("hidden", browseScope === "sampledata");
+      title.textContent = SCOPE_TITLES[browseScope];
+
+      const filterInput = document.getElementById("filter-input");
+      filterInput.value = "";
+      filterInput.placeholder = browseScope === "sampledata" ? "type to filter sample data…" : "type to filter…";
+
       renderBrowseLogs("");
       renderBrowseSubs("");
+      if (browseScope === "sampledata") loadSampleData();
     });
   });
 }
@@ -625,31 +683,28 @@ function wireEntryListClicks() {
 
 function wireFilterInput() {
   document.getElementById("filter-input").addEventListener("input", (e) => {
-    if (currentMode === "browse") {
-      if (browseScope === "logs") renderBrowseLogs(e.target.value);
-      else renderBrowseSubs(e.target.value);
-    } else if (currentMode === "sampledata") {
-      renderSampleList(e.target.value);
-    }
+    if (currentMode !== "browse") return;
+    if (browseScope === "logs") renderBrowseLogs(e.target.value);
+    else if (browseScope === "subtitles") renderBrowseSubs(e.target.value);
+    else renderSampleList(e.target.value);
   });
 }
 
 // ---------- device controls ----------
 
 function moveSelection(delta) {
-  if (currentMode === "browse") {
-    if (browseScope === "logs") {
-      if (!filteredLogs.length) return;
-      selectedLogIdx = (selectedLogIdx + delta + filteredLogs.length) % filteredLogs.length;
-      renderBrowseLogs(document.getElementById("filter-input").value);
-      document.querySelector("#logs-list .entry.selected")?.scrollIntoView({ block: "nearest" });
-    } else {
-      if (!filteredSubs.length) return;
-      selectedSubIdx = (selectedSubIdx + delta + filteredSubs.length) % filteredSubs.length;
-      renderBrowseSubs(document.getElementById("filter-input").value);
-      document.querySelector("#subs-list .entry.selected")?.scrollIntoView({ block: "nearest" });
-    }
-  } else if (currentMode === "sampledata") {
+  if (currentMode !== "browse") return;
+  if (browseScope === "logs") {
+    if (!filteredLogs.length) return;
+    selectedLogIdx = (selectedLogIdx + delta + filteredLogs.length) % filteredLogs.length;
+    renderBrowseLogs(document.getElementById("filter-input").value);
+    document.querySelector("#logs-list .entry.selected")?.scrollIntoView({ block: "nearest" });
+  } else if (browseScope === "subtitles") {
+    if (!filteredSubGroups.length) return;
+    selectedSubIdx = (selectedSubIdx + delta + filteredSubGroups.length) % filteredSubGroups.length;
+    renderBrowseSubs(document.getElementById("filter-input").value);
+    document.querySelector("#subs-list .entry.selected")?.scrollIntoView({ block: "nearest" });
+  } else {
     if (!filteredSamples.length) return;
     selectedSampleIdx = (selectedSampleIdx + delta + filteredSamples.length) % filteredSamples.length;
     renderSampleList(document.getElementById("filter-input").value);
@@ -657,34 +712,42 @@ function moveSelection(delta) {
   }
 }
 
+// Compare mode has no browsable entry list (just diff cards), so PREV/NEXT there
+// still step through the "to" version instead.
 function stepVersion(delta) {
-  const selectId = currentMode === "compare" ? "compare-to" : "browse-version";
-  const select = document.getElementById(selectId);
+  const select = document.getElementById("compare-to");
   const nextIndex = select.selectedIndex + delta;
   if (nextIndex < 0 || nextIndex >= select.options.length) return;
   select.selectedIndex = nextIndex;
   select.dispatchEvent(new Event("change"));
 }
 
-function scrollSampleDetail(delta) {
-  document.querySelector("#panel-sampledata .detail-screen .screen-scroll")?.scrollBy({ top: delta, behavior: "smooth" });
+function scrollBrowseDetail(delta) {
+  document.querySelector("#panel-browse .detail-screen .screen-scroll")?.scrollBy({ top: delta, behavior: "smooth" });
 }
 
 function wireDeviceControls() {
-  document.getElementById("btn-up").addEventListener("click", () => moveSelection(-1));
-  document.getElementById("btn-down").addEventListener("click", () => moveSelection(1));
+  // In Browse mode, UP/DOWN scroll the detail pane and PREV/NEXT step between
+  // entries in the list -- Compare mode has no entry list, so there PREV/NEXT
+  // fall back to stepping the "to" version instead.
+  document.getElementById("btn-up").addEventListener("click", () => {
+    if (currentMode === "browse") scrollBrowseDetail(-120);
+  });
+  document.getElementById("btn-down").addEventListener("click", () => {
+    if (currentMode === "browse") scrollBrowseDetail(120);
+  });
   document.getElementById("btn-prev").addEventListener("click", () => {
-    if (currentMode === "sampledata") scrollSampleDetail(-120);
+    if (currentMode === "browse") moveSelection(-1);
     else stepVersion(1); // older
   });
   document.getElementById("btn-next").addEventListener("click", () => {
-    if (currentMode === "sampledata") scrollSampleDetail(120);
+    if (currentMode === "browse") moveSelection(1);
     else stepVersion(-1); // newer
   });
   document.getElementById("btn-exe").addEventListener("click", () => {
     if (currentMode === "compare") {
       loadCompare();
-    } else if (currentMode === "sampledata") {
+    } else if (browseScope === "sampledata") {
       const it = filteredSamples[selectedSampleIdx];
       if (it) unlockSample(it.id);
     } else {
@@ -695,12 +758,10 @@ function wireDeviceControls() {
     const input = document.getElementById("filter-input");
     input.value = "";
     input.blur();
-    if (currentMode === "browse") {
-      if (browseScope === "logs") renderBrowseLogs("");
-      else renderBrowseSubs("");
-    } else if (currentMode === "sampledata") {
-      renderSampleList("");
-    }
+    if (currentMode !== "browse") return;
+    if (browseScope === "logs") renderBrowseLogs("");
+    else if (browseScope === "subtitles") renderBrowseSubs("");
+    else renderSampleList("");
   });
 
   const led = document.getElementById("status-led");
@@ -747,7 +808,9 @@ async function init() {
   wireDeviceControls();
 
   const requestedMode = new URLSearchParams(location.search).get("mode");
-  if (requestedMode === "sampledata") setMode("sampledata");
+  if (requestedMode === "sampledata") {
+    document.querySelector('#browse-content-tabs .content-tab[data-content="sampledata"]').click();
+  }
 
   setStatus("Loading commit history…");
   try {

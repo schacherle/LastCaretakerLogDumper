@@ -18,19 +18,24 @@
     <nav class="tabs" id="mode-tabs">
       <button class="tab active" data-mode="browse">Browse</button>
       <button class="tab" data-mode="compare">Compare</button>
-      <button class="tab" data-mode="sampledata">Sample Data</button>
     </nav>
 
     <div class="toolbar-controls" id="browse-controls">
       <div class="content-tabs" id="browse-content-tabs">
         <button class="content-tab active" data-content="logs">Voyage Logs</button>
         <button class="content-tab" data-content="subtitles">Quest Subtitles</button>
+        <button class="content-tab" data-content="sampledata">Sample Data</button>
       </div>
-      <label class="control">
+      <div class="content-tabs hidden" id="sampledata-content-tabs">
+        <button class="content-tab active" data-content="all">All</button>
+        <button class="content-tab" data-content="field">Hologram</button>
+        <button class="content-tab" data-content="cave">Painting</button>
+      </div>
+      <span id="sampledata-count" class="build-badge hidden"></span>
+      <label class="control" id="version-control">
         <span>Version</span>
         <select id="browse-version"></select>
       </label>
-      <span id="browse-build" class="build-badge hidden"></span>
     </div>
 
     <div class="toolbar-controls hidden" id="compare-controls">
@@ -48,14 +53,6 @@
       </label>
     </div>
 
-    <div class="toolbar-controls hidden" id="sampledata-controls">
-      <div class="content-tabs" id="sampledata-content-tabs">
-        <button class="content-tab active" data-content="all">All</button>
-        <button class="content-tab" data-content="field">Hologram</button>
-        <button class="content-tab" data-content="cave">Painting</button>
-      </div>
-      <span id="sampledata-count" class="build-badge"></span>
-    </div>
   </div>
 
   <section id="panel-browse" class="panel active">
@@ -65,12 +62,16 @@
         <div class="screen-scroll">
           <div id="logs-list" class="entry-list"></div>
           <div id="subs-list" class="entry-list hidden"></div>
+          <div id="sampledata-list" class="entry-list hidden"></div>
         </div>
       </div>
       <div class="screen detail-screen">
         <div class="screen-scroll">
           <div id="detail-pane" class="detail-pane">
             <p class="empty-note">Select an entry from the list.</p>
+          </div>
+          <div id="sampledata-detail-pane" class="detail-pane hidden">
+            <p class="empty-note">Select a record from the list.</p>
           </div>
         </div>
       </div>
@@ -84,24 +85,6 @@
         <div class="screen-scroll">
           <div id="compare-logs" class="content-view active"></div>
           <div id="compare-subtitles" class="content-view"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="panel-sampledata" class="panel">
-    <div class="screens">
-      <div class="screen list-screen">
-        <div class="screen-title">SAMPLE DATA</div>
-        <div class="screen-scroll">
-          <div id="sampledata-list" class="entry-list"></div>
-        </div>
-      </div>
-      <div class="screen detail-screen">
-        <div class="screen-scroll">
-          <div id="sampledata-detail-pane" class="detail-pane">
-            <p class="empty-note">Select a record from the list.</p>
-          </div>
         </div>
       </div>
     </div>
