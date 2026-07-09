@@ -89,6 +89,16 @@ body {
   font-size: 0.85rem;
 }
 
+.tagline a {
+  color: var(--green);
+  text-decoration: none;
+}
+
+.tagline a:hover {
+  color: var(--green-bright);
+  text-decoration: underline;
+}
+
 main {
   max-width: 1040px;
   margin: 0 auto;

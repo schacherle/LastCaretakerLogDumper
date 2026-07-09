@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ORBIT ARCHIVE TERMINAL — Sample Data</title>
+<meta name="description" content="Browsable archive of all 104 recovered Voyage / The Last Caretaker Sample Data holograms.">
+<style>
+  :root {
+    --screen: #050806;
+    --screen-edge: #081208;
+    --phosphor: #33ff33;
+    --phosphor-bright: #baffba;
+    --phosphor-dim: #1f8f1f;
+    --phosphor-faint: #145214;
+    --amber: #F35605;
+    --amber-dim: #a83e04;
+    --grey: #cfd6d2;
+    --error: #ff5c5c;
+    --bezel: #232527;
+    --bezel-hi: #313437;
+    --bezel-lo: #141516;
+    --strip: #2c2e31;
+    --strip-hi: #3a3d40;
+    --mono: 'Courier New', ui-monospace, 'SF Mono', Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: #0c0d0e;
+    background-image:
+      radial-gradient(ellipse at 50% -10%, #1a1c1e 0%, #0c0d0e 55%);
+    color: var(--grey);
+    font-family: var(--mono);
+    min-height: 100vh;
+    padding: clamp(1rem, 3vw, 2.5rem) 1rem 3rem;
+    overflow-x: hidden;
+  }
+
+  .rig { max-width: 1180px; margin: 0 auto; }
+
+  .masthead {
+    display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+    gap: .5rem;
+    margin-bottom: 1rem;
+    color: var(--grey);
+    font-size: .72rem;
+    letter-spacing: .05em;
+  }
+  .masthead .brand { color: var(--amber); font-weight: bold; }
+  .masthead .brand::before { content: "// "; color: var(--phosphor-dim); }
+  .masthead a { color: var(--phosphor-dim); text-decoration: none; }
+  .masthead a:hover { color: var(--phosphor); text-decoration: underline; }
+
+  /* ---- bezel / housing ---- */
+  .bezel {
+    background: var(--bezel);
+    background-image:
+      repeating-linear-gradient(115deg, rgba(255,255,255,.015) 0 2px, transparent 2px 5px),
+      linear-gradient(180deg, var(--bezel-hi) 0%, var(--bezel) 6%, var(--bezel) 94%, #17181a 100%);
+    border-radius: 10px;
+    padding: clamp(.6rem, 2vw, 1.4rem);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.06),
+      inset 0 -2px 6px rgba(0,0,0,.6),
+      0 20px 45px -18px rgba(0,0,0,.8);
+    border: 1px solid #17181a;
+  }
+
+  .screens {
+    display: flex;
+    gap: clamp(.6rem, 1.6vw, 1rem);
+    align-items: stretch;
+  }
+  @media (max-width: 760px) {
+    .screens { flex-direction: column; }
+  }
+
+  .crt {
+    position: relative;
+    background: var(--screen-edge);
+    border-radius: 6px;
+    padding: 3px;
+    box-shadow: inset 0 0 0 1px #000, 0 2px 10px rgba(0,0,0,.5);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .crt .label {
+    position: absolute; top: -.55rem; left: .8rem;
+    background: var(--bezel);
+    font-size: .6rem;
+    letter-spacing: .12em;
+    padding: 0 .4rem;
+    color: #8a8d90;
+  }
+
+  .screen {
+    background: var(--screen);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+    min-height: 0;
+  }
+  .screen::before {
+    /* scanlines + subtle rgb fringe */
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,.28) 50%),
+      linear-gradient(90deg, rgba(255,0,0,.05), rgba(0,255,0,.02), rgba(0,0,255,.05));
+    background-size: 100% 3px, 4px 100%;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .screen::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 40%, rgba(51,255,51,.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 2;
+    animation: flicker 4.2s infinite;
+  }
+  @keyframes flicker {
+    0%, 96%, 100% { opacity: 1; }
+    97% { opacity: .82; }
+    98% { opacity: .97; }
+    99% { opacity: .88; }
+  }
+  @media (prefers-reduced-motion: reduce) { .screen::after { animation: none; } }
+
+  .screen-inner {
+    position: relative; z-index: 1;
+    height: 100%;
+    padding: .8rem .85rem;
+    overflow-y: auto;
+    font-size: .78rem;
+    line-height: 1.55;
+    text-shadow: 0 0 6px rgba(51,255,51,.35);
+  }
+  .screen-inner::-webkit-scrollbar { width: 7px; }
+  .screen-inner::-webkit-scrollbar-track { background: rgba(0,0,0,.4); }
+  .screen-inner::-webkit-scrollbar-thumb { background: var(--phosphor-faint); border-radius: 4px; }
+  .screen-inner { scrollbar-width: thin; scrollbar-color: var(--phosphor-faint) rgba(0,0,0,.4); }
+
+  /* list pane */
+  .pane-list { flex: 0 0 clamp(210px, 26vw, 300px); height: min(72vh, 640px); }
+  .pane-detail { flex: 1; height: min(72vh, 640px); }
+  @media (max-width: 760px) {
+    .pane-list, .pane-detail { flex: none; height: 46vh; }
+  }
+
+  .list-toolbar {
+    position: sticky; top: 0;
+    background: var(--screen);
+    padding-bottom: .5rem;
+    margin-bottom: .35rem;
+    border-bottom: 1px dashed var(--phosphor-faint);
+    z-index: 2;
+  }
+  .filters { display: flex; gap: .3rem; margin-top: .4rem; flex-wrap: wrap; }
+  .filters button {
+    background: transparent;
+    border: 1px solid var(--phosphor-faint);
+    color: var(--phosphor-dim);
+    font-family: var(--mono);
+    font-size: .66rem;
+    letter-spacing: .04em;
+    padding: .18rem .45rem;
+    cursor: pointer;
+  }
+  .filters button.active { color: #000; background: var(--phosphor); border-color: var(--phosphor); }
+  .filters button:hover:not(.active) { color: var(--phosphor); border-color: var(--phosphor); }
+
+  .list-count { color: var(--phosphor-dim); font-size: .66rem; margin-top: .3rem; }
+  .clear-search {
+    background: transparent; border: none;
+    color: var(--amber);
+    font-family: var(--mono); font-size: .66rem;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0; margin-left: .3rem;
+  }
+  .clear-search:hover { color: var(--phosphor-bright); }
+  .mem-tag { color: var(--phosphor-dim); font-style: italic; }
+
+  .row {
+    display: flex; gap: .5rem; align-items: baseline;
+    width: 100%;
+    background: transparent; border: none;
+    color: var(--phosphor);
+    font-family: var(--mono); font-size: .72rem;
+    text-align: left;
+    padding: .18rem .3rem;
+    cursor: pointer;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .row .id { color: var(--phosphor-dim); flex: 0 0 auto; }
+  .row .nm { overflow: hidden; text-overflow: ellipsis; }
+  .row.sel { background: var(--phosphor); color: #001a00; }
+  .row.sel .id { color: #003300; }
+  .row:hover:not(.sel) { background: rgba(51,255,51,.08); }
+  .row .miss { color: var(--error); }
+
+  /* detail pane */
+  .ascii-rule { color: var(--phosphor-dim); white-space: pre; font-size: .7rem; }
+  .rec-head { color: var(--phosphor-bright); font-weight: bold; }
+  .kv { color: var(--grey); }
+  .kv b { color: var(--amber); }
+  .ok { color: var(--phosphor); }
+  .dim { color: var(--phosphor-dim); }
+
+  .framebuffer {
+    margin: .7rem 0;
+    border: 1px solid var(--phosphor-faint);
+    padding: 4px;
+    max-width: 420px;
+  }
+  .framebuffer img {
+    display: block; width: 100%; height: auto;
+    filter: saturate(1.05) contrast(1.05);
+  }
+  .framebuffer .cap {
+    font-size: .62rem; color: var(--phosphor-dim); margin-top: .3rem;
+  }
+  .fb-missing {
+    border: 1px dashed var(--phosphor-faint);
+    padding: 1.2rem .8rem;
+    max-width: 420px;
+    color: var(--error);
+    font-size: .68rem;
+    margin: .7rem 0;
+  }
+
+  .section-label {
+    color: var(--amber);
+    margin-top: 1rem;
+    margin-bottom: .3rem;
+  }
+  .field-reading { color: var(--phosphor-bright); }
+
+  .lock-block { margin-top: .9rem; }
+  .lock-line { color: var(--phosphor-dim); font-size: .72rem; }
+  .lock-line .ok-tag { color: var(--phosphor); }
+  .unlock-btn {
+    margin-top: .4rem;
+    background: transparent;
+    border: 1px solid var(--amber);
+    color: var(--amber);
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .06em;
+    padding: .3rem .6rem;
+    cursor: pointer;
+  }
+  .unlock-btn:hover { background: var(--amber); color: #1a0900; }
+  .unlock-text {
+    color: var(--phosphor-bright);
+    margin-top: .5rem;
+    max-width: 68ch;
+    animation: reveal .35s ease;
+  }
+  @keyframes reveal { from { opacity: 0; transform: translateY(3px);} to { opacity: 1; transform:none; } }
+  @media (prefers-reduced-motion: reduce) { .unlock-text { animation: none; } }
+  .unlock-empty { color: var(--phosphor-dim); font-style: italic; }
+
+  /* control strip */
+  .control-strip {
+    margin-top: clamp(.6rem, 1.6vw, 1rem);
+    background: var(--strip);
+    background-image: linear-gradient(180deg, var(--strip-hi), var(--strip) 40%, #232527);
+    border: 1px solid #17181a;
+    border-radius: 6px;
+    padding: .55rem .8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .6rem;
+    flex-wrap: wrap;
+  }
+  .btn-group { display: flex; gap: .4rem; }
+  .hbtn {
+    background: linear-gradient(180deg, #3a3d40, #232527);
+    border: 1px solid #16171a;
+    color: #d8dbd8;
+    font-family: var(--mono);
+    font-size: .64rem;
+    letter-spacing: .04em;
+    padding: .38rem .55rem;
+    border-radius: 3px;
+    cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 1px 2px rgba(0,0,0,.5);
+  }
+  .hbtn:active { transform: translateY(1px); box-shadow: inset 0 2px 3px rgba(0,0,0,.5); }
+  .hbtn.exe { border-color: var(--amber); color: var(--amber); }
+  .led-wrap { display: flex; align-items: center; gap: .4rem; font-size: .62rem; color: #9aa; letter-spacing: .05em; }
+  .led {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #2a2a2a, #101010);
+    box-shadow: inset 0 0 2px rgba(0,0,0,.8);
+  }
+  .led.on { background: radial-gradient(circle at 30% 30%, #6bff6b, #0f8f0f); box-shadow: 0 0 6px rgba(80,255,80,.8), 0 0 10px rgba(80,255,80,.5); }
+
+  /* command bar */
+  .cmdbar {
+    margin-top: .6rem;
+    background: var(--screen);
+    border: 1px solid #000;
+    border-radius: 4px;
+    padding: .55rem .7rem;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    font-size: .78rem;
+  }
+  .cmdbar .prompt { color: var(--amber); white-space: nowrap; }
+  .cmdbar .tilde { color: var(--grey); }
+  .cmdbar input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--phosphor);
+    font-family: var(--mono);
+    font-size: .78rem;
+    text-shadow: 0 0 6px rgba(51,255,51,.35);
+  }
+  .cmdbar input::placeholder { color: var(--phosphor-faint); }
+
+  .hint {
+    margin-top: .6rem;
+    font-size: .64rem;
+    color: #6b6f6d;
+    letter-spacing: .02em;
+    line-height: 1.6;
+  }
+  .hint code { color: var(--phosphor-dim); }
+</style>
+</head>
+<body>
+<div class="rig">
+  <div class="masthead">
+    <span class="brand">ORBIT ARCHIVE TERMINAL</span>
+    <span><a href="../index.html">&larr; Last Caretaker Archive</a> · SAMPLE DATA RECOVERY · CHANNEL37 SALVAGE UNIT</span>
+  </div>
+
+  <div class="bezel">
+    <div class="screens">
+      <div class="crt pane-list"><span class="label">INDEX</span>
+        <div class="screen"><div class="screen-inner" id="listScreen"></div></div>
+      </div>
+      <div class="crt pane-detail"><span class="label">RECORD</span>
+        <div class="screen"><div class="screen-inner boot" id="detailScreen"></div></div>
+      </div>
+    </div>
+
+    <div class="control-strip">
+      <div class="btn-group">
+        <button class="hbtn" id="btnPrev" title="Open previous record">◀ PREV</button>
+        <button class="hbtn" id="btnNext" title="Open next record">NEXT ▶</button>
+      </div>
+      <div class="btn-group">
+        <button class="hbtn" id="btnUp" title="Scroll record up">▲ SCROLL</button>
+        <button class="hbtn" id="btnDown" title="Scroll record down">▼ SCROLL</button>
+      </div>
+      <div class="led-wrap"><span class="led" id="unlockLed"></span> MEM UNLOCKED</div>
+      <div class="btn-group">
+        <button class="hbtn exe" id="btnExe">EXE / UNLOCK</button>
+        <button class="hbtn" id="btnHelp">HELP</button>
+      </div>
+    </div>
+
+    <div class="cmdbar">
+      <span class="prompt">salvage@orbit</span><span class="tilde">:~$</span>
+      <input id="cmdInput" type="text" autocomplete="off" spellcheck="false"
+        placeholder="try: ls painting · open 013 · find -m rocket · unlock · help">
+    </div>
+  </div>
+
+  <p class="hint">
+    Keyboard: <code>&uarr;/&darr;</code> move selection · <code>Enter</code> open highlighted record ·
+    <code>u</code> unlock · <code>Esc</code> clear search. Commands: <code>ls [all|hologram|painting]</code>,
+    <code>open &lt;id&gt;</code>, <code>find &lt;term&gt;</code> (add <code>-m</code> to also search unlocked
+    memory text), <code>unlock</code>, <code>next</code>/<code>prev</code>, <code>clear</code>, <code>help</code>.
+  </p>
+</div>
+
+<script>
+let DATA = [];
+
+function siteLabel(it) {
+  if (it.collection === 'cave') return 'ORBIT ARCHIVE';
+  return it.site || '—';
+}
+function slug(it) {
+  return it.title.toUpperCase().replace(/[^A-Z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+}
+
+let filterMode = 'all';
+let query = '';
+let queryIncludesMemories = false;
+let visible = [];
+let selPos = 0;      // index within `visible`
+let currentIdx = null; // index within DATA that's actually opened in detail pane
+const unlocked = new Set();
+
+const listScreen = document.getElementById('listScreen');
+const detailScreen = document.getElementById('detailScreen');
+const cmdInput = document.getElementById('cmdInput');
+const unlockLed = document.getElementById('unlockLed');
+
+function clearSearch() {
+  query = '';
+  queryIncludesMemories = false;
+  selPos = 0;
+  renderList();
+}
+
+function computeVisible() {
+  const q = query.trim().toLowerCase();
+  visible = [];
+  DATA.forEach((it, i) => {
+    const matchesFilter = filterMode === 'all' || it.collection === filterMode;
+    let hay = (it.title + ' ' + it.short + ' ' + (it.site || '')).toLowerCase();
+    if (queryIncludesMemories) hay += ' ' + (it.unlock || '').toLowerCase();
+    const matchesQ = !q || hay.includes(q);
+    if (matchesFilter && matchesQ) visible.push(i);
+  });
+  if (selPos >= visible.length) selPos = Math.max(0, visible.length - 1);
+}
+
+function renderList() {
+  computeVisible();
+  const rows = visible.map((di, pos) => {
+    const it = DATA[di];
+    const isSel = pos === selPos;
+    const isOpen = di === currentIdx;
+    const idTxt = it.collection === 'cave' ? 'C' + it.id.replace('CavePainting_', '').padStart(3, '0') : it.id.padStart(3, '0');
+    const missing = !it.img ? '<span class="miss">*</span>' : '';
+    return `<button class="row ${isSel ? 'sel' : ''}" data-pos="${pos}" ${isOpen ? 'data-open="1"' : ''}>
+      <span class="id">${idTxt}</span><span class="nm">${missing}${slug(it)}</span>
+    </button>`;
+  }).join('');
+
+  listScreen.innerHTML = `
+    <div class="list-toolbar">
+      <div class="filters">
+        <button data-filter="all" class="${filterMode === 'all' ? 'active' : ''}">ALL</button>
+        <button data-filter="field" class="${filterMode === 'field' ? 'active' : ''}">HOLOGRAM</button>
+        <button data-filter="cave" class="${filterMode === 'cave' ? 'active' : ''}">PAINTING</button>
+      </div>
+      <div class="list-count">${visible.length} / ${DATA.length} records${query ? ` ~ "${query}"${queryIncludesMemories ? ' <span class="mem-tag">+memories</span>' : ''} <button class="clear-search" id="clearSearchBtn">[x clear]</button>` : ''}</div>
+    </div>
+    ${rows || '<div class="dim">no matches</div>'}
+  `;
+
+  listScreen.querySelectorAll('.row').forEach(btn => {
+    btn.addEventListener('click', () => {
+      selPos = Number(btn.dataset.pos);
+      openCurrent();
+    });
+  });
+  const clearBtn = document.getElementById('clearSearchBtn');
+  if (clearBtn) clearBtn.addEventListener('click', clearSearch);
+  listScreen.querySelectorAll('[data-filter]').forEach(btn => {
+    btn.addEventListener('click', () => { filterMode = btn.dataset.filter; selPos = 0; renderList(); });
+  });
+
+  const openRow = listScreen.querySelector('.row.sel');
+  if (openRow) openRow.scrollIntoView({ block: 'nearest' });
+}
+
+function renderDetail(di) {
+  const it = DATA[di];
+  const idTxt = it.collection === 'cave' ? 'CAVE-' + it.id.replace('CavePainting_', '').padStart(3, '0') : 'SD-' + it.id.padStart(3, '0');
+  const isUnlocked = unlocked.has(di);
+  unlockLed.classList.toggle('on', isUnlocked && !!it.unlock);
+
+  const media = it.img
+    ? `<div class="framebuffer"><img src="${it.img}" alt="${it.title}" loading="lazy"><div class="cap">FRAMEBUFFER // ${idTxt}.CAP</div></div>`
+    : `<div class="fb-missing">[ NO CAPTURE ON RECORD ]<br>scan exists in log only — image was never recovered</div>`;
+
+  let lockHtml;
+  if (!it.unlock) {
+    lockHtml = `<div class="lock-block">
+      <div class="lock-line">&gt; memory status: <span class="ok-tag">N/A</span></div>
+      <div class="unlock-text unlock-empty">No deeper memory was reconstructed from this scan.</div>
+    </div>`;
+  } else if (isUnlocked) {
+    lockHtml = `<div class="lock-block">
+      <div class="lock-line">&gt; verifying integrity..... <span class="ok-tag">[OK]</span></div>
+      <div class="lock-line">&gt; decrypting payload...... <span class="ok-tag">[OK]</span></div>
+      <div class="section-label">UNLOCKED MEMORY</div>
+      <div class="unlock-text">${it.unlock}</div>
+    </div>`;
+  } else {
+    lockHtml = `<div class="lock-block">
+      <div class="lock-line">&gt; memory status: <span style="color:var(--error)">LOCKED</span></div>
+      <button class="unlock-btn" id="inlineUnlock">[ UNLOCK MEMORY ]</button>
+    </div>`;
+  }
+
+  detailScreen.innerHTML = `
+    <div class="ascii-rule">##################################################</div>
+    <div class="rec-head"># SAMPLE DATA — RECORD ${idTxt} #</div>
+    <div class="ascii-rule">##################################################</div>
+    <div style="margin:.5rem 0 .2rem;">
+      <div class="kv"><b>SITE:</b> ${siteLabel(it)}</div>
+      <div class="kv"><b>TITLE:</b> ${it.title.toUpperCase()}</div>
+    </div>
+    <div class="dim">&gt; loading scan............... <span class="ok">[OK]</span></div>
+    <div class="dim">&gt; rendering capture........... <span class="ok">[OK]</span></div>
+    ${media}
+    <div class="section-label">FIELD READING</div>
+    <div class="field-reading">${it.short}</div>
+    ${lockHtml}
+  `;
+
+  const btn = document.getElementById('inlineUnlock');
+  if (btn) btn.addEventListener('click', () => doUnlock(di));
+}
+
+function openCurrent() {
+  if (!visible.length) return;
+  currentIdx = visible[selPos];
+  renderList();
+  renderDetail(currentIdx);
+}
+
+function doUnlock(di) {
+  if (di === null || di === undefined) return;
+  const it = DATA[di];
+  if (!it.unlock) return;
+  unlocked.add(di);
+  if (di === currentIdx) renderDetail(di);
+}
+
+function moveSel(delta) {
+  if (!visible.length) return;
+  selPos = (selPos + delta + visible.length) % visible.length;
+  renderList();
+}
+
+function bootSequence(cb) {
+  const missing = DATA.filter(it => !it.img).length;
+  const lines = [
+    ['##########################################', 'ascii-rule'],
+    ['# ORBIT ARCHIVE TERMINAL — rev.0.3 (unofficial) #', 'rec-head'],
+    ['##########################################', 'ascii-rule'],
+    ['', ''],
+    ['&gt; mounting /sampledata.................. <span class="ok">[OK]</span>', 'dim'],
+    [`&gt; indexing ${DATA.length} records.................. <span class="ok">[OK]</span>`, 'dim'],
+    ['&gt; calibrating framebuffer............... <span class="ok">[OK]</span>', 'dim'],
+    ['', ''],
+    [`Archive mounted. ${DATA.length - missing} captures recovered, ${missing} log-only.`, 'ok'],
+    ['', ''],
+    ['Select a record on the left, or type <span class="ok">help</span>.', 'dim'],
+  ];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) {
+    detailScreen.innerHTML = lines.map(l => `<div class="${l[1]}">${l[0]}</div>`).join('');
+    cb();
+    return;
+  }
+  detailScreen.innerHTML = '';
+  let i = 0;
+  const step = () => {
+    if (i >= lines.length) { cb(); return; }
+    const div = document.createElement('div');
+    div.className = lines[i][1];
+    div.innerHTML = lines[i][0];
+    detailScreen.appendChild(div);
+    i++;
+    setTimeout(step, 90);
+  };
+  step();
+}
+
+function printHelp() {
+  detailScreen.innerHTML = `
+    <div class="rec-head">COMMAND REFERENCE</div>
+    <div class="ascii-rule">--------------------------------------------------</div>
+    <div class="dim">ls [all|hologram|painting]   <span class="ok">filter the index</span></div>
+    <div class="dim">open &lt;id&gt;             <span class="ok">open a record, e.g. open 013 / open cave 502</span></div>
+    <div class="dim">find &lt;term&gt;           <span class="ok">search title / field reading / site</span></div>
+    <div class="dim">find -m &lt;term&gt;        <span class="ok">also search unlocked memory text</span></div>
+    <div class="dim">unlock                <span class="ok">decrypt the current record's memory</span></div>
+    <div class="dim">next / prev           <span class="ok">step through the current index</span></div>
+    <div class="dim">clear                 <span class="ok">reset filters and search</span></div>
+    <div class="dim">help                  <span class="ok">this screen</span></div>
+  `;
+}
+
+function parseFindArg(arg) {
+  // supports a trailing/leading -m or --memories flag to also search unlocked memory text
+  let text = arg;
+  let includeMemories = false;
+  const flagRe = /(^|\s)(-m|--memories)(\s|$)/i;
+  if (flagRe.test(text)) {
+    includeMemories = true;
+    text = text.replace(flagRe, ' ').trim();
+  }
+  return { text, includeMemories };
+}
+
+function runCommand(raw) {
+  const cmd = raw.trim();
+  if (!cmd) { if (query) clearSearch(); return; }
+  const [verb, ...rest] = cmd.split(/\s+/);
+  const arg = rest.join(' ');
+  switch (verb.toLowerCase()) {
+    case 'help': printHelp(); return;
+    case 'clear':
+      filterMode = 'all'; query = ''; queryIncludesMemories = false; selPos = 0; renderList();
+      if (currentIdx !== null) renderDetail(currentIdx); else printHelp();
+      return;
+    case 'ls': {
+      const aliases = { hologram: 'field', holograms: 'field', field: 'field', painting: 'cave', paintings: 'cave', cave: 'cave', all: 'all' };
+      const m = (arg || 'all').toLowerCase();
+      filterMode = aliases[m] || 'all';
+      selPos = 0; renderList();
+      return;
+    }
+    case 'open': {
+      const a = arg.toLowerCase().replace('cave', '').trim();
+      const isCave = arg.toLowerCase().includes('cave');
+      const idx = DATA.findIndex(it => isCave ? it.id === 'CavePainting_' + a : it.id === a);
+      if (idx === -1) { flashError('no record ' + arg); return; }
+      const pos = visible.indexOf(idx);
+      if (pos === -1) { filterMode = 'all'; query = ''; computeVisible(); }
+      selPos = Math.max(0, visible.indexOf(idx));
+      openCurrent();
+      return;
+    }
+    case 'find': case 'search': {
+      const parsed = parseFindArg(arg);
+      query = parsed.text; queryIncludesMemories = parsed.includeMemories;
+      selPos = 0; renderList();
+      if (visible.length) openCurrent();
+      return;
+    }
+    case 'unlock': case 'decrypt':
+      if (currentIdx !== null) doUnlock(currentIdx);
+      return;
+    case 'next': moveSel(1); openCurrent(); return;
+    case 'prev': moveSel(-1); openCurrent(); return;
+    default: {
+      // bare text: treat as a search (title / field reading / site only)
+      const parsed = parseFindArg(cmd);
+      query = parsed.text; queryIncludesMemories = parsed.includeMemories;
+      selPos = 0; renderList();
+      if (visible.length) openCurrent();
+    }
+  }
+}
+
+function flashError(msg) {
+  const div = document.createElement('div');
+  div.style.color = 'var(--error)';
+  div.textContent = '> ' + msg;
+  detailScreen.prepend(div);
+}
+
+function scrollDetail(delta) {
+  detailScreen.scrollBy({ top: delta, behavior: 'smooth' });
+}
+
+document.getElementById('btnUp').addEventListener('click', () => scrollDetail(-120));
+document.getElementById('btnDown').addEventListener('click', () => scrollDetail(120));
+document.getElementById('btnPrev').addEventListener('click', () => { moveSel(-1); openCurrent(); });
+document.getElementById('btnNext').addEventListener('click', () => { moveSel(1); openCurrent(); });
+document.getElementById('btnExe').addEventListener('click', () => {
+  if (currentIdx === null) openCurrent(); else doUnlock(currentIdx);
+});
+document.getElementById('btnHelp').addEventListener('click', printHelp);
+
+cmdInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    runCommand(cmdInput.value);
+    cmdInput.value = '';
+  }
+  if (e.key === 'Escape') {
+    cmdInput.value = '';
+    if (query) clearSearch();
+    cmdInput.blur();
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (document.activeElement === cmdInput) return;
+  if (e.key === 'ArrowDown') { e.preventDefault(); moveSel(1); }
+  if (e.key === 'ArrowUp') { e.preventDefault(); moveSel(-1); }
+  if (e.key === 'Enter') { openCurrent(); }
+  if (e.key.toLowerCase() === 'u') { if (currentIdx !== null) doUnlock(currentIdx); }
+  if (e.key === 'Escape' && query) { clearSearch(); }
+});
+
+fetch('data.json')
+  .then(r => r.json())
+  .then(data => {
+    DATA = data;
+    renderList();
+    bootSequence(() => {});
+  })
+  .catch(err => {
+    detailScreen.innerHTML = `<div style="color:var(--error)">FAILED TO MOUNT /sampledata<br>${err}</div>`;
+  });
+</script>
+</body>
+</html>
