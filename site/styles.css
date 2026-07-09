@@ -200,19 +200,6 @@ select:focus {
   box-shadow: 0 0 0 2px var(--glow);
 }
 
-.build-badge {
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: #06230d;
-  background: var(--green);
-  padding: 0.35rem 0.65rem;
-  white-space: nowrap;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-radius: 3px;
-}
-.build-badge.hidden { display: none; }
-
 /* ---------- screens ---------- */
 
 .panel { display: none; }
@@ -267,8 +254,22 @@ select:focus {
   font-size: 0.95rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  margin-bottom: 0.7rem;
   text-shadow: 0 0 8px rgba(243, 86, 5, 0.35);
+}
+
+.screen-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-bottom: 0.7rem;
+}
+
+.list-count {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--green);
+  white-space: nowrap;
 }
 
 /* entry list (master list, left screen) */

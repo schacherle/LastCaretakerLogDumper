@@ -31,7 +31,6 @@
         <button class="content-tab" data-content="field">Hologram</button>
         <button class="content-tab" data-content="cave">Painting</button>
       </div>
-      <span id="sampledata-count" class="build-badge hidden"></span>
       <label class="control" id="version-control">
         <span>Version</span>
         <select id="browse-version"></select>
@@ -59,7 +58,10 @@
   <section id="panel-browse" class="panel active">
     <div class="screens">
       <div class="screen list-screen">
-        <div class="screen-title" id="list-screen-title">DATA LOGS</div>
+        <div class="screen-title-row">
+          <div class="screen-title" id="list-screen-title">DATA LOGS</div>
+          <span class="list-count" id="list-count"></span>
+        </div>
         <div class="screen-scroll">
           <div id="logs-list" class="entry-list"></div>
           <div id="subs-list" class="entry-list hidden"></div>

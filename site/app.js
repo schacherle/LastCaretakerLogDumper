@@ -5,6 +5,7 @@ const PATHS = {
   logs: "voyage_logs_dump.json",
   subtitles: "voyage_quest_subtitles_dump.json",
   sampleText: "voyage_sampledata_text_dump.json",
+  sampleData: "site/sampledata/data.json",
 };
 
 const fileCache = new Map(); // `${sha}:${path}` -> parsed json | null (missing)
@@ -21,8 +22,7 @@ let compareScope = "logs"; // "logs" | "subtitles" | "sampledata"
 let selectedLogIdx = -1;
 let selectedSubIdx = -1; // indexes filteredSubGroups
 
-let sampleData = []; // loaded once from sampledata/data.json
-let sampleDataLoaded = false;
+let sampleData = []; // reloaded per-version by loadBrowseVersion(), like currentBrowseLogs/Subs
 let filteredSamples = [];
 let sampleScope = "all"; // "all" | "field" | "cave"
 let selectedSampleIdx = -1;
@@ -161,13 +161,14 @@ async function fetchCommitsForPath(path) {
 }
 
 async function buildVersionList() {
-  const [logCommits, subCommits, sampleTextCommits] = await Promise.all([
+  const [logCommits, subCommits, sampleTextCommits, sampleDataCommits] = await Promise.all([
     fetchCommitsForPath(PATHS.logs),
     fetchCommitsForPath(PATHS.subtitles),
     fetchCommitsForPath(PATHS.sampleText),
+    fetchCommitsForPath(PATHS.sampleData),
   ]);
   const bySha = new Map();
-  for (const c of [...logCommits, ...subCommits, ...sampleTextCommits]) {
+  for (const c of [...logCommits, ...subCommits, ...sampleTextCommits, ...sampleDataCommits]) {
     if (!bySha.has(c.sha)) bySha.set(c.sha, c);
   }
   return [...bySha.values()].sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -212,7 +213,10 @@ function renderBrowseLogs(filterText) {
         .join("")
     : `<p class="empty-note">No logs match your filter.</p>`;
 
-  if (browseScope === "logs") renderDetail();
+  if (browseScope === "logs") {
+    document.getElementById("list-count").textContent = `${filteredLogs.length}/${currentBrowseLogs.length}`;
+    renderDetail();
+  }
 }
 
 function renderBrowseSubs(filterText) {
@@ -238,7 +242,10 @@ function renderBrowseSubs(filterText) {
         .join("")
     : `<p class="empty-note">No subtitles match your filter.</p>`;
 
-  if (browseScope === "subtitles") renderDetail();
+  if (browseScope === "subtitles") {
+    document.getElementById("list-count").textContent = `${filteredSubGroups.length}/${groups.length}`;
+    renderDetail();
+  }
 }
 
 // ---------- browse: detail pane rendering ----------
@@ -298,18 +305,22 @@ function renderDetail() {
 async function loadBrowseVersion(sha) {
   setStatus("Loading version…");
   try {
-    const [logsJson, subsJson] = await Promise.all([
+    const [logsJson, subsJson, sampleJson] = await Promise.all([
       fetchFileAtSha(PATHS.logs, sha),
       fetchFileAtSha(PATHS.subtitles, sha),
+      fetchFileAtSha(PATHS.sampleData, sha),
     ]);
     const { logs } = normalizeLogs(logsJson);
     currentBrowseLogs = logs;
     currentBrowseSubs = normalizeArrayJson(subsJson);
+    sampleData = normalizeArrayJson(sampleJson);
     selectedLogIdx = -1;
     selectedSubIdx = -1;
+    selectedSampleIdx = -1;
 
     renderBrowseLogs(document.getElementById("filter-input").value);
     renderBrowseSubs(document.getElementById("filter-input").value);
+    renderSampleList(document.getElementById("filter-input").value);
     setStatus("");
   } catch (err) {
     console.error(err);
@@ -329,22 +340,6 @@ function sampleSiteLabel(it) {
   return it.collection === "cave" ? "Orbit archive" : it.site || "—";
 }
 
-async function loadSampleData() {
-  if (sampleDataLoaded) return;
-  setStatus("Loading sample data…");
-  try {
-    const res = await fetch("sampledata/data.json");
-    if (!res.ok) throw new Error(`Failed to load sample data (${res.status})`);
-    sampleData = await res.json();
-    sampleDataLoaded = true;
-    setStatus("");
-  } catch (err) {
-    console.error(err);
-    setStatus(err.message, true);
-  }
-  renderSampleList(document.getElementById("filter-input").value);
-}
-
 function renderSampleList(filterText) {
   const term = (filterText || "").toLowerCase();
   filteredSamples = sampleData.filter((it) => {
@@ -356,9 +351,6 @@ function renderSampleList(filterText) {
   if (selectedSampleIdx >= filteredSamples.length) selectedSampleIdx = filteredSamples.length ? 0 : -1;
   if (selectedSampleIdx === -1 && filteredSamples.length) selectedSampleIdx = 0;
 
-  const countEl = document.getElementById("sampledata-count");
-  if (countEl) countEl.textContent = `${filteredSamples.length}/${sampleData.length}`;
-
   const container = document.getElementById("sampledata-list");
   container.innerHTML = filteredSamples.length
     ? filteredSamples
@@ -366,7 +358,10 @@ function renderSampleList(filterText) {
         .join("")
     : `<p class="empty-note">No sample data matches your filter.</p>`;
 
-  renderSampleDetail();
+  if (browseScope === "sampledata") {
+    document.getElementById("list-count").textContent = `${filteredSamples.length}/${sampleData.length}`;
+    renderSampleDetail();
+  }
 }
 
 function renderSampleDetail() {
@@ -573,8 +568,25 @@ function renderSampleTextDiffCard(kind, item) {
   </div>`;
 }
 
+// Sample data ids come from FindAllOf()'s arbitrary traversal order (unlike logs/
+// subtitles, which are already author-ordered), e.g. "DA_SampleData_131" right
+// before "DA_SampleData_104" -- so sort numerically for a stable, readable diff.
+function sampleIdSortKey(id) {
+  const m = /^DA_SampleData_(?:(CavePainting)_)?(\d+)$/.exec(id || "");
+  return m ? [m[1] ? 1 : 0, parseInt(m[2], 10)] : [2, 0];
+}
+
+function compareSampleIds(a, b) {
+  const ka = sampleIdSortKey(a);
+  const kb = sampleIdSortKey(b);
+  return ka[0] - kb[0] || ka[1] - kb[1];
+}
+
 function renderSampleTextDiff(fromItems, toItems) {
   const { added, removed, changed } = diffByKey(fromItems, toItems, (s) => s.id);
+  added.sort((a, b) => compareSampleIds(a.id, b.id));
+  removed.sort((a, b) => compareSampleIds(a.id, b.id));
+  changed.sort((a, b) => compareSampleIds(a.to.id, b.to.id));
   const container = document.getElementById("compare-sampledata");
   if (!added.length && !removed.length && !changed.length) {
     container.innerHTML = `<p class="empty-note">No differences in sample data text between these versions.</p>`;
@@ -666,8 +678,6 @@ function wireBrowseContentTabs() {
       document.getElementById("detail-pane").classList.toggle("hidden", browseScope === "sampledata");
       document.getElementById("sampledata-detail-pane").classList.toggle("hidden", browseScope !== "sampledata");
       document.getElementById("sampledata-content-tabs").classList.toggle("hidden", browseScope !== "sampledata");
-      document.getElementById("sampledata-count").classList.toggle("hidden", browseScope !== "sampledata");
-      document.getElementById("version-control").classList.toggle("hidden", browseScope === "sampledata");
       title.textContent = SCOPE_TITLES[browseScope];
 
       const filterInput = document.getElementById("filter-input");
@@ -676,7 +686,7 @@ function wireBrowseContentTabs() {
 
       renderBrowseLogs("");
       renderBrowseSubs("");
-      if (browseScope === "sampledata") loadSampleData();
+      renderSampleList("");
     });
   });
 }
@@ -857,11 +867,6 @@ async function init() {
   wireFilterInput();
   wireDeviceControls();
 
-  const requestedMode = new URLSearchParams(location.search).get("mode");
-  if (requestedMode === "sampledata") {
-    document.querySelector('#browse-content-tabs .content-tab[data-content="sampledata"]').click();
-  }
-
   setStatus("Loading commit history…");
   try {
     versions = await buildVersionList();
@@ -879,6 +884,11 @@ async function init() {
   document.getElementById("compare-to").addEventListener("change", loadCompare);
 
   await loadBrowseVersion(document.getElementById("browse-version").value);
+
+  const requestedMode = new URLSearchParams(location.search).get("mode");
+  if (requestedMode === "sampledata") {
+    document.querySelector('#browse-content-tabs .content-tab[data-content="sampledata"]').click();
+  }
 }
 
 document.addEventListener("DOMContentLoaded", init);
