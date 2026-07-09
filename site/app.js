@@ -1,6 +1,16 @@
 "use strict";
 
-const REPO = "schacherle/LastCaretakerLogDumper";
+// GitHub Pages project sites are always served as https://<owner>.github.io/<repo>/,
+// so the repo this site should read from can be read straight off the URL instead of
+// hardcoded -- the same app.js works unmodified on any fork's Pages deployment. Falls
+// back to this repo for local testing (file://, localhost) where that pattern doesn't apply.
+function detectRepo() {
+  const m = /^([^.]+)\.github\.io$/.exec(location.hostname);
+  const repoName = m && location.pathname.split("/").filter(Boolean)[0];
+  return repoName ? `${m[1]}/${repoName}` : "schacherle/LastCaretakerLogDumper";
+}
+
+const REPO = detectRepo();
 const PATHS = {
   logs: "voyage_logs_dump.json",
   subtitles: "voyage_quest_subtitles_dump.json",
