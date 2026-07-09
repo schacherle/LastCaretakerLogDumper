@@ -144,7 +144,8 @@ main > .device {
 
 .toolbar-controls.hidden { display: none; }
 
-#browse-controls {
+#browse-controls,
+#compare-controls {
   flex-direction: column;
   align-items: flex-end;
 }
