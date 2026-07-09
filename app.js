@@ -18,11 +18,13 @@ const PATHS = {
   subtitles: "voyage_quest_subtitles_dump.json",
   sampleText: "voyage_sampledata_text_dump.json",
   sampleData: "site/sampledata/data.json",
+  sampleImagesDir: "sampledata_images",
 };
 
 const fileCache = new Map(); // `${sha}:${path}` -> parsed json | null (missing)
 
 let versions = []; // [{ sha, message, date }], newest first
+let currentBrowseSha = null; // sha of the version currently loaded in Browse mode
 let currentBrowseLogs = [];
 let currentBrowseSubs = [];
 let filteredLogs = [];
@@ -316,6 +318,7 @@ function renderDetail() {
 
 async function loadBrowseVersion(sha) {
   setStatus("Loading version…");
+  currentBrowseSha = sha;
   try {
     const [logsJson, subsJson, sampleJson] = await Promise.all([
       fetchFileAtSha(PATHS.logs, sha),
@@ -352,6 +355,15 @@ function sampleSiteLabel(it) {
   return it.collection === "cave" ? "Orbit archive" : it.site || "—";
 }
 
+// Thumbnails live at the repo root (sampledata_images/SampleData_<id>.png), same as
+// the *_dump.json files -- raw.githubusercontent.com works directly as an <img> src,
+// no fetch/decode needed, and it's naturally version-aware like the JSON dumps (not
+// every id has art, e.g. "Bed on Wheels" -- a 404 there is expected, not a bug).
+function sampleImageUrl(it) {
+  if (!currentBrowseSha) return null;
+  return `https://raw.githubusercontent.com/${REPO}/${currentBrowseSha}/${PATHS.sampleImagesDir}/SampleData_${it.id}.png`;
+}
+
 function renderSampleList(filterText) {
   const term = (filterText || "").toLowerCase();
   filteredSamples = sampleData.filter((it) => {
@@ -384,9 +396,16 @@ function renderSampleDetail() {
     return;
   }
 
-  const media = it.img
-    ? `<div class="framebuffer"><img src="sampledata/${it.img}" alt="${escapeHtml(it.title)}" loading="lazy"><div class="framebuffer-cap">FRAMEBUFFER // ${sampleCode(it)}.CAP</div></div>`
-    : `<div class="fb-missing">[ NO CAPTURE ON RECORD ]<br>scan exists in log only — image was never recovered</div>`;
+  // Not every id has a recovered texture (e.g. "Bed on Wheels") -- rather than
+  // tracking that in data.json, just attempt the image and fall back on error.
+  const imgUrl = sampleImageUrl(it);
+  const media = `
+    <div class="framebuffer" id="sample-framebuffer">
+      <img id="sample-image" src="${imgUrl}" alt="${escapeHtml(it.title)}" loading="lazy">
+      <div class="framebuffer-cap">FRAMEBUFFER // ${sampleCode(it)}.CAP</div>
+    </div>
+    <div class="fb-missing hidden" id="sample-image-missing">[ NO CAPTURE ON RECORD ]<br>scan exists in log only — image was never recovered</div>
+  `;
 
   const isUnlocked = unlockedSamples.has(it.id);
   let lockHtml;
@@ -419,6 +438,18 @@ function renderSampleDetail() {
 
   const btn = document.getElementById("inline-unlock");
   if (btn) btn.addEventListener("click", () => unlockSample(it.id));
+
+  const img = document.getElementById("sample-image");
+  if (img) {
+    img.addEventListener(
+      "error",
+      () => {
+        document.getElementById("sample-framebuffer")?.classList.add("hidden");
+        document.getElementById("sample-image-missing")?.classList.remove("hidden");
+      },
+      { once: true }
+    );
+  }
 }
 
 function unlockSample(id) {
