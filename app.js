@@ -4,6 +4,8 @@ const REPO = "schacherle/LastCaretakerLogDumper";
 const PATHS = {
   logs: "voyage_logs_dump.json",
   subtitles: "voyage_quest_subtitles_dump.json",
+  sampleText: "voyage_sampledata_text_dump.json",
+  sampleData: "site/sampledata/data.json",
 };
 
 const fileCache = new Map(); // `${sha}:${path}` -> parsed json | null (missing)
@@ -11,6 +13,23 @@ const fileCache = new Map(); // `${sha}:${path}` -> parsed json | null (missing)
 let versions = []; // [{ sha, message, date }], newest first
 let currentBrowseLogs = [];
 let currentBrowseSubs = [];
+let filteredLogs = [];
+let filteredSubGroups = [];
+
+let currentMode = "browse"; // "browse" | "compare"
+let browseScope = "logs"; // "logs" | "subtitles" | "sampledata"
+let compareScope = "logs"; // "logs" | "subtitles" | "sampledata"
+let selectedLogIdx = -1;
+let selectedSubIdx = -1; // indexes filteredSubGroups
+
+let sampleData = []; // reloaded per-version by loadBrowseVersion(), like currentBrowseLogs/Subs
+let filteredSamples = [];
+let sampleScope = "all"; // "all" | "field" | "cave"
+let selectedSampleIdx = -1;
+const unlockedSamples = new Set();
+
+let displayOn = true;
+let brt = 100, con = 100, sat = 100;
 
 // ---------- helpers ----------
 
@@ -82,10 +101,49 @@ function normalizeLogs(json) {
   return { buildNumber: json.build_number || null, logs: json.data || [] };
 }
 
-function normalizeSubtitles(json) {
+function normalizeArrayJson(json) {
   if (!json) return [];
   if (Array.isArray(json)) return json;
   return json.data || [];
+}
+
+// Subtitle names encode "<storyline>-<part>", e.g. "CU3_3-1" .. "CU3_3-6" are six
+// lines of the same storyline (CU3 = Concurrent Update 3, "3" = story index).
+// Part suffixes aren't always plain integers (e.g. "-1a", "-2_Anna_B"), so only the
+// leading digits are used for ordering within a group.
+const SUBTITLE_PART_RE = /^(.*)-(\d.*)$/;
+
+function subtitleGroupKey(name) {
+  const m = SUBTITLE_PART_RE.exec(name || "");
+  return m ? m[1] : (name || "");
+}
+
+function subtitlePartLabel(name) {
+  const m = SUBTITLE_PART_RE.exec(name || "");
+  return m ? m[2] : "";
+}
+
+function subtitlePartNumber(name) {
+  const n = parseInt(subtitlePartLabel(name), 10);
+  return Number.isNaN(n) ? 0 : n;
+}
+
+function groupSubtitles(subs) {
+  const order = [];
+  const byKey = new Map();
+  for (const s of subs) {
+    const key = subtitleGroupKey(s.Name);
+    if (!byKey.has(key)) {
+      byKey.set(key, []);
+      order.push(key);
+    }
+    byKey.get(key).push(s);
+  }
+  return order.map((key) => {
+    const items = byKey.get(key).slice().sort((a, b) => subtitlePartNumber(a.Name) - subtitlePartNumber(b.Name));
+    const totalDuration = items.reduce((sum, s) => sum + (s.Duration || 0), 0);
+    return { key, items, totalDuration };
+  });
 }
 
 // ---------- commit history ----------
@@ -103,12 +161,14 @@ async function fetchCommitsForPath(path) {
 }
 
 async function buildVersionList() {
-  const [logCommits, subCommits] = await Promise.all([
+  const [logCommits, subCommits, sampleTextCommits, sampleDataCommits] = await Promise.all([
     fetchCommitsForPath(PATHS.logs),
     fetchCommitsForPath(PATHS.subtitles),
+    fetchCommitsForPath(PATHS.sampleText),
+    fetchCommitsForPath(PATHS.sampleData),
   ]);
   const bySha = new Map();
-  for (const c of [...logCommits, ...subCommits]) {
+  for (const c of [...logCommits, ...subCommits, ...sampleTextCommits, ...sampleDataCommits]) {
     if (!bySha.has(c.sha)) bySha.set(c.sha, c);
   }
   return [...bySha.values()].sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -126,9 +186,77 @@ function populateVersionSelects() {
   document.getElementById("compare-from").value = (versions[1] || versions[0]).sha;
 }
 
-// ---------- browse rendering ----------
+// ---------- browse: master list rendering ----------
 
-function renderLogCard(log) {
+function entryRowHtml(idx, title, badge, isSelected) {
+  return `<div class="entry ${isSelected ? "selected" : ""}" data-idx="${idx}">
+    <span class="entry-title">${escapeHtml(title) || "<em>(untitled)</em>"}</span>
+    <span class="entry-badge">${escapeHtml(badge)}</span>
+  </div>`;
+}
+
+function renderBrowseLogs(filterText) {
+  const term = (filterText || "").toLowerCase();
+  filteredLogs = currentBrowseLogs.filter(
+    (l) => !term || (l.title || "").toLowerCase().includes(term) || (l.id || "").toLowerCase().includes(term)
+  );
+  if (selectedLogIdx >= filteredLogs.length) selectedLogIdx = filteredLogs.length ? 0 : -1;
+  if (selectedLogIdx === -1 && filteredLogs.length) selectedLogIdx = 0;
+
+  const container = document.getElementById("logs-list");
+  container.innerHTML = filteredLogs.length
+    ? filteredLogs
+        .map((l, i) => {
+          const count = (l.fragments || []).length;
+          return entryRowHtml(i, l.title, `${count} ${count === 1 ? "PAGE" : "PAGES"}`, i === selectedLogIdx);
+        })
+        .join("")
+    : `<p class="empty-note">No logs match your filter.</p>`;
+
+  if (browseScope === "logs") {
+    document.getElementById("list-count").textContent = `${filteredLogs.length}/${currentBrowseLogs.length}`;
+    renderDetail();
+  }
+}
+
+function renderBrowseSubs(filterText) {
+  const term = (filterText || "").toLowerCase();
+  const groups = groupSubtitles(currentBrowseSubs);
+  filteredSubGroups = !term
+    ? groups
+    : groups.filter(
+        (g) =>
+          g.key.toLowerCase().includes(term) ||
+          g.items.some((s) => (s.Name || "").toLowerCase().includes(term) || (s.Subtitle || "").toLowerCase().includes(term))
+      );
+  if (selectedSubIdx >= filteredSubGroups.length) selectedSubIdx = filteredSubGroups.length ? 0 : -1;
+  if (selectedSubIdx === -1 && filteredSubGroups.length) selectedSubIdx = 0;
+
+  const container = document.getElementById("subs-list");
+  container.innerHTML = filteredSubGroups.length
+    ? filteredSubGroups
+        .map((g, i) => {
+          const count = g.items.length;
+          return entryRowHtml(i, g.key, `${count} ${count === 1 ? "LINE" : "LINES"}`, i === selectedSubIdx);
+        })
+        .join("")
+    : `<p class="empty-note">No subtitles match your filter.</p>`;
+
+  if (browseScope === "subtitles") {
+    document.getElementById("list-count").textContent = `${filteredSubGroups.length}/${groups.length}`;
+    renderDetail();
+  }
+}
+
+// ---------- browse: detail pane rendering ----------
+
+function renderLogDetail() {
+  const pane = document.getElementById("detail-pane");
+  const log = filteredLogs[selectedLogIdx];
+  if (!log) {
+    pane.innerHTML = `<p class="empty-note">Select an entry from the list.</p>`;
+    return;
+  }
   const fragments = (log.fragments || [])
     .map(
       (f) => `<div class="fragment">
@@ -137,71 +265,155 @@ function renderLogCard(log) {
       </div>`
     )
     .join("");
-  return `<details class="card">
-    <summary><span class="summary-title">${escapeHtml(log.title) || "<em>(untitled)</em>"}</span><span class="id-tag">${escapeHtml(log.id)}</span></summary>
-    <div class="card-body">
-      ${log.description ? `<p>${escapeHtml(log.description)}</p>` : ""}
-      ${fragments}
-      ${log.footer ? `<p class="footer-text">${escapeHtml(log.footer)}</p>` : ""}
-    </div>
-  </details>`;
+  pane.innerHTML = `
+    <div class="detail-head-1">${escapeHtml(log.title) || "(untitled)"} ${selectedLogIdx + 1}/${filteredLogs.length}</div>
+    <div class="detail-head-2">${escapeHtml(log.id)}</div>
+    ${log.description ? `<p class="detail-intro">${escapeHtml(log.description)}</p>` : ""}
+    ${fragments}
+    ${log.footer ? `<p class="footer-text">${escapeHtml(log.footer)}</p>` : ""}
+  `;
 }
 
-function renderSubRow(sub) {
-  return `<div class="sub-row">
-    <div class="sub-row-head"><span>${escapeHtml(sub.Name)}</span><span>${formatDuration(sub.Duration)}</span></div>
-    <p>${escapeHtml(sub.Subtitle)}</p>
-  </div>`;
+function renderSubDetail() {
+  const pane = document.getElementById("detail-pane");
+  const group = filteredSubGroups[selectedSubIdx];
+  if (!group) {
+    pane.innerHTML = `<p class="empty-note">Select an entry from the list.</p>`;
+    return;
+  }
+  const lines = group.items
+    .map(
+      (s) => `<div class="fragment">
+        <div class="fragment-title">Part ${escapeHtml(subtitlePartLabel(s.Name)) || "?"} <span class="muted">${formatDuration(s.Duration)}</span></div>
+        <p>${escapeHtml(s.Subtitle)}</p>
+      </div>`
+    )
+    .join("");
+  const count = group.items.length;
+  pane.innerHTML = `
+    <div class="detail-head-1">${escapeHtml(group.key)} ${selectedSubIdx + 1}/${filteredSubGroups.length}</div>
+    <div class="detail-head-2">${count} ${count === 1 ? "line" : "lines"} · ${formatDuration(group.totalDuration)}</div>
+    ${lines}
+  `;
 }
 
-function renderBrowseLogs(filterText) {
-  const term = (filterText || "").toLowerCase();
-  const filtered = currentBrowseLogs.filter(
-    (l) => !term || (l.title || "").toLowerCase().includes(term) || (l.id || "").toLowerCase().includes(term)
-  );
-  const container = document.getElementById("logs-list");
-  container.innerHTML = filtered.length
-    ? filtered.map(renderLogCard).join("")
-    : `<p class="empty-note">No logs match your filter.</p>`;
-}
-
-function renderBrowseSubs(filterText) {
-  const term = (filterText || "").toLowerCase();
-  const filtered = currentBrowseSubs.filter(
-    (s) => !term || (s.Name || "").toLowerCase().includes(term) || (s.Subtitle || "").toLowerCase().includes(term)
-  );
-  const container = document.getElementById("subs-list");
-  container.innerHTML = filtered.length
-    ? filtered.map(renderSubRow).join("")
-    : `<p class="empty-note">No subtitles match your filter.</p>`;
+function renderDetail() {
+  if (browseScope === "logs") renderLogDetail();
+  else if (browseScope === "subtitles") renderSubDetail();
 }
 
 async function loadBrowseVersion(sha) {
   setStatus("Loading version…");
   try {
-    const [logsJson, subsJson] = await Promise.all([
+    const [logsJson, subsJson, sampleJson] = await Promise.all([
       fetchFileAtSha(PATHS.logs, sha),
       fetchFileAtSha(PATHS.subtitles, sha),
+      fetchFileAtSha(PATHS.sampleData, sha),
     ]);
-    const { buildNumber, logs } = normalizeLogs(logsJson);
+    const { logs } = normalizeLogs(logsJson);
     currentBrowseLogs = logs;
-    currentBrowseSubs = normalizeSubtitles(subsJson);
+    currentBrowseSubs = normalizeArrayJson(subsJson);
+    sampleData = normalizeArrayJson(sampleJson);
+    selectedLogIdx = -1;
+    selectedSubIdx = -1;
+    selectedSampleIdx = -1;
 
-    const badge = document.getElementById("browse-build");
-    if (buildNumber) {
-      badge.textContent = `Build ${buildNumber}`;
-      badge.classList.remove("hidden");
-    } else {
-      badge.classList.add("hidden");
-    }
-
-    renderBrowseLogs(document.getElementById("logs-filter").value);
-    renderBrowseSubs(document.getElementById("subs-filter").value);
+    renderBrowseLogs(document.getElementById("filter-input").value);
+    renderBrowseSubs(document.getElementById("filter-input").value);
+    renderSampleList(document.getElementById("filter-input").value);
     setStatus("");
   } catch (err) {
     console.error(err);
     setStatus(err.message, true);
   }
+}
+
+// ---------- sample data ----------
+
+function sampleCode(it) {
+  return it.collection === "cave"
+    ? `CAVE-${String(it.id.replace("CavePainting_", "")).padStart(3, "0")}`
+    : `SD-${String(it.id).padStart(3, "0")}`;
+}
+
+function sampleSiteLabel(it) {
+  return it.collection === "cave" ? "Orbit archive" : it.site || "—";
+}
+
+function renderSampleList(filterText) {
+  const term = (filterText || "").toLowerCase();
+  filteredSamples = sampleData.filter((it) => {
+    const matchesScope = sampleScope === "all" || it.collection === sampleScope;
+    const hay = `${it.title} ${it.short} ${it.site || ""}`.toLowerCase();
+    const matchesTerm = !term || hay.includes(term);
+    return matchesScope && matchesTerm;
+  });
+  if (selectedSampleIdx >= filteredSamples.length) selectedSampleIdx = filteredSamples.length ? 0 : -1;
+  if (selectedSampleIdx === -1 && filteredSamples.length) selectedSampleIdx = 0;
+
+  const container = document.getElementById("sampledata-list");
+  container.innerHTML = filteredSamples.length
+    ? filteredSamples
+        .map((it, i) => entryRowHtml(i, it.title, sampleCode(it), i === selectedSampleIdx))
+        .join("")
+    : `<p class="empty-note">No sample data matches your filter.</p>`;
+
+  if (browseScope === "sampledata") {
+    document.getElementById("list-count").textContent = `${filteredSamples.length}/${sampleData.length}`;
+    renderSampleDetail();
+  }
+}
+
+function renderSampleDetail() {
+  const pane = document.getElementById("sampledata-detail-pane");
+  const it = filteredSamples[selectedSampleIdx];
+  if (!it) {
+    pane.innerHTML = `<p class="empty-note">Select a record from the list.</p>`;
+    return;
+  }
+
+  const media = it.img
+    ? `<div class="framebuffer"><img src="sampledata/${it.img}" alt="${escapeHtml(it.title)}" loading="lazy"><div class="framebuffer-cap">FRAMEBUFFER // ${sampleCode(it)}.CAP</div></div>`
+    : `<div class="fb-missing">[ NO CAPTURE ON RECORD ]<br>scan exists in log only — image was never recovered</div>`;
+
+  const isUnlocked = unlockedSamples.has(it.id);
+  let lockHtml;
+  if (!it.unlock) {
+    lockHtml = `<div class="lock-block">
+      <div class="lock-line">&gt; memory status: <span class="muted">N/A</span></div>
+      <p class="unlock-empty">No deeper memory was reconstructed from this scan.</p>
+    </div>`;
+  } else if (isUnlocked) {
+    lockHtml = `<div class="lock-block">
+      <div class="lock-line">&gt; decrypting payload...... <span class="ok-tag">[OK]</span></div>
+      <div class="section-label">Unlocked memory</div>
+      <p class="unlock-text">${escapeHtml(it.unlock)}</p>
+    </div>`;
+  } else {
+    lockHtml = `<div class="lock-block">
+      <div class="lock-line">&gt; memory status: <span class="locked-tag">LOCKED</span></div>
+      <button class="device-btn unlock-btn" type="button" id="inline-unlock">Unlock memory</button>
+    </div>`;
+  }
+
+  pane.innerHTML = `
+    <div class="detail-head-1">${escapeHtml(it.title)} ${selectedSampleIdx + 1}/${filteredSamples.length}</div>
+    <div class="detail-head-2">${sampleCode(it)} · ${escapeHtml(sampleSiteLabel(it))}</div>
+    ${media}
+    <div class="section-label">Field reading</div>
+    <p>${escapeHtml(it.short)}</p>
+    ${lockHtml}
+  `;
+
+  const btn = document.getElementById("inline-unlock");
+  if (btn) btn.addEventListener("click", () => unlockSample(it.id));
+}
+
+function unlockSample(id) {
+  const it = sampleData.find((s) => s.id === id);
+  if (!it || !it.unlock) return;
+  unlockedSamples.add(id);
+  renderSampleDetail();
 }
 
 // ---------- diffing ----------
@@ -253,7 +465,7 @@ function renderFragmentDiff(fromLog, toLog) {
   return parts.join("");
 }
 
-function renderLogDiffCard(kind, log, otherLog) {
+function renderLogDiffCard(kind, log) {
   if (kind === "added") {
     return `<div class="diff-card added"><span class="diff-tag added">Added</span><span class="id-tag">${escapeHtml(log.id)}</span>
       <div class="fragment-title" style="margin-top:.4rem">${escapeHtml(log.title)}</div>
@@ -336,20 +548,83 @@ function renderSubsDiff(fromSubs, toSubs) {
   container.innerHTML = html;
 }
 
+function renderSampleTextDiffCard(kind, item) {
+  if (kind === "added") {
+    return `<div class="diff-card added"><span class="diff-tag added">Added</span><span class="id-tag">${escapeHtml(item.id)}</span>
+      <div class="fragment-title" style="margin-top:.4rem">${escapeHtml(item.title)}</div>
+      <p>${escapeHtml(item.sentDescription)}</p></div>`;
+  }
+  if (kind === "removed") {
+    return `<div class="diff-card removed"><span class="diff-tag removed">Removed</span><span class="id-tag">${escapeHtml(item.id)}</span>
+      <div class="fragment-title" style="margin-top:.4rem">${escapeHtml(item.title)}</div></div>`;
+  }
+  const titleChanged = item.from.title !== item.to.title;
+  const uncollectedChanged = item.from.uncollectedDescription !== item.to.uncollectedDescription;
+  const sentChanged = item.from.sentDescription !== item.to.sentDescription;
+  return `<div class="diff-card changed"><span class="diff-tag changed">Changed</span><span class="id-tag">${escapeHtml(item.to.id)}</span>
+    <div class="fragment-title" style="margin-top:.4rem">${titleChanged ? renderWordDiff(item.from.title, item.to.title) : escapeHtml(item.to.title)}</div>
+    ${uncollectedChanged ? `<p>${renderWordDiff(item.from.uncollectedDescription, item.to.uncollectedDescription)}</p>` : ""}
+    ${sentChanged ? `<p>${renderWordDiff(item.from.sentDescription, item.to.sentDescription)}</p>` : ""}
+  </div>`;
+}
+
+// Sample data ids come from FindAllOf()'s arbitrary traversal order (unlike logs/
+// subtitles, which are already author-ordered), e.g. "DA_SampleData_131" right
+// before "DA_SampleData_104" -- so sort numerically for a stable, readable diff.
+function sampleIdSortKey(id) {
+  const m = /^DA_SampleData_(?:(CavePainting)_)?(\d+)$/.exec(id || "");
+  return m ? [m[1] ? 1 : 0, parseInt(m[2], 10)] : [2, 0];
+}
+
+function compareSampleIds(a, b) {
+  const ka = sampleIdSortKey(a);
+  const kb = sampleIdSortKey(b);
+  return ka[0] - kb[0] || ka[1] - kb[1];
+}
+
+function renderSampleTextDiff(fromItems, toItems) {
+  const { added, removed, changed } = diffByKey(fromItems, toItems, (s) => s.id);
+  added.sort((a, b) => compareSampleIds(a.id, b.id));
+  removed.sort((a, b) => compareSampleIds(a.id, b.id));
+  changed.sort((a, b) => compareSampleIds(a.to.id, b.to.id));
+  const container = document.getElementById("compare-sampledata");
+  if (!added.length && !removed.length && !changed.length) {
+    container.innerHTML = `<p class="empty-note">No differences in sample data text between these versions.</p>`;
+    return;
+  }
+  let html = "";
+  if (added.length) {
+    html += `<div class="section-heading">Added (${added.length})</div>`;
+    html += added.map((s) => renderSampleTextDiffCard("added", s)).join("");
+  }
+  if (changed.length) {
+    html += `<div class="section-heading">Changed (${changed.length})</div>`;
+    html += changed.map((c) => renderSampleTextDiffCard("changed", c)).join("");
+  }
+  if (removed.length) {
+    html += `<div class="section-heading">Removed (${removed.length})</div>`;
+    html += removed.map((s) => renderSampleTextDiffCard("removed", s)).join("");
+  }
+  container.innerHTML = html;
+}
+
 async function loadCompare() {
   const fromSha = document.getElementById("compare-from").value;
   const toSha = document.getElementById("compare-to").value;
   if (!fromSha || !toSha) return;
   setStatus("Comparing versions…");
   try {
-    const [fromLogsJson, toLogsJson, fromSubsJson, toSubsJson] = await Promise.all([
+    const [fromLogsJson, toLogsJson, fromSubsJson, toSubsJson, fromSampleJson, toSampleJson] = await Promise.all([
       fetchFileAtSha(PATHS.logs, fromSha),
       fetchFileAtSha(PATHS.logs, toSha),
       fetchFileAtSha(PATHS.subtitles, fromSha),
       fetchFileAtSha(PATHS.subtitles, toSha),
+      fetchFileAtSha(PATHS.sampleText, fromSha),
+      fetchFileAtSha(PATHS.sampleText, toSha),
     ]);
     renderLogsDiff(normalizeLogs(fromLogsJson).logs, normalizeLogs(toLogsJson).logs);
-    renderSubsDiff(normalizeSubtitles(fromSubsJson), normalizeSubtitles(toSubsJson));
+    renderSubsDiff(normalizeArrayJson(fromSubsJson), normalizeArrayJson(toSubsJson));
+    renderSampleTextDiff(normalizeArrayJson(fromSampleJson), normalizeArrayJson(toSampleJson));
     setStatus("");
   } catch (err) {
     console.error(err);
@@ -357,31 +632,226 @@ async function loadCompare() {
   }
 }
 
-// ---------- tab wiring ----------
+// ---------- toolbar wiring ----------
 
 function wireModeTabs() {
   const tabs = document.querySelectorAll("#mode-tabs .tab");
   tabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      tabs.forEach((t) => t.classList.remove("active"));
-      tab.classList.add("active");
-      const mode = tab.dataset.mode;
-      document.getElementById("panel-browse").classList.toggle("active", mode === "browse");
-      document.getElementById("panel-compare").classList.toggle("active", mode === "compare");
-      if (mode === "compare") loadCompare();
-    });
+    tab.addEventListener("click", () => setMode(tab.dataset.mode));
   });
 }
 
-function wireContentTabs(scope) {
-  const buttons = document.querySelectorAll(`.content-tabs[data-scope="${scope}"] .content-tab`);
+function setMode(mode) {
+  currentMode = mode;
+  document.querySelectorAll("#mode-tabs .tab").forEach((t) => t.classList.toggle("active", t.dataset.mode === mode));
+  document.getElementById("panel-browse").classList.toggle("active", currentMode === "browse");
+  document.getElementById("panel-compare").classList.toggle("active", currentMode === "compare");
+  document.getElementById("browse-controls").classList.toggle("hidden", currentMode !== "browse");
+  document.getElementById("compare-controls").classList.toggle("hidden", currentMode !== "compare");
+  const filterInput = document.getElementById("filter-input");
+  const terminalBar = document.getElementById("terminal-bar");
+  if (currentMode === "compare") {
+    terminalBar.classList.add("disabled");
+    filterInput.placeholder = "filtering not available in compare mode";
+  } else {
+    terminalBar.classList.remove("disabled");
+    filterInput.placeholder = browseScope === "sampledata" ? "type to filter sample data…" : "type to filter…";
+  }
+  if (currentMode === "compare") loadCompare();
+}
+
+const SCOPE_TITLES = { logs: "DATA LOGS", subtitles: "QUEST SUBTITLES", sampledata: "SAMPLE DATA" };
+const COMPARE_SCOPE_TITLES = { logs: "VOYAGE LOGS", subtitles: "QUEST SUBTITLES", sampledata: "SAMPLE DATA" };
+
+function wireBrowseContentTabs() {
+  const buttons = document.querySelectorAll("#browse-content-tabs .content-tab");
+  const title = document.getElementById("list-screen-title");
   buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
       buttons.forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
-      const content = btn.dataset.content;
-      document.getElementById(`${scope}-logs`).classList.toggle("active", content === "logs");
-      document.getElementById(`${scope}-subtitles`).classList.toggle("active", content === "subtitles");
+      browseScope = btn.dataset.content;
+
+      document.getElementById("logs-list").classList.toggle("hidden", browseScope !== "logs");
+      document.getElementById("subs-list").classList.toggle("hidden", browseScope !== "subtitles");
+      document.getElementById("sampledata-list").classList.toggle("hidden", browseScope !== "sampledata");
+      document.getElementById("detail-pane").classList.toggle("hidden", browseScope === "sampledata");
+      document.getElementById("sampledata-detail-pane").classList.toggle("hidden", browseScope !== "sampledata");
+      document.getElementById("sampledata-content-tabs").classList.toggle("hidden", browseScope !== "sampledata");
+      title.textContent = SCOPE_TITLES[browseScope];
+
+      const filterInput = document.getElementById("filter-input");
+      filterInput.value = "";
+      filterInput.placeholder = browseScope === "sampledata" ? "type to filter sample data…" : "type to filter…";
+
+      renderBrowseLogs("");
+      renderBrowseSubs("");
+      renderSampleList("");
+    });
+  });
+}
+
+function wireCompareContentTabs() {
+  const buttons = document.querySelectorAll("#compare-content-tabs .content-tab");
+  const label = document.getElementById("compare-scope-label");
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      buttons.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      compareScope = btn.dataset.content;
+      document.getElementById("compare-logs").classList.toggle("active", compareScope === "logs");
+      document.getElementById("compare-subtitles").classList.toggle("active", compareScope === "subtitles");
+      document.getElementById("compare-sampledata").classList.toggle("active", compareScope === "sampledata");
+      label.textContent = COMPARE_SCOPE_TITLES[compareScope];
+    });
+  });
+}
+
+function wireSampleContentTabs() {
+  const buttons = document.querySelectorAll("#sampledata-content-tabs .content-tab");
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      buttons.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      sampleScope = btn.dataset.content;
+      document.getElementById("filter-input").value = "";
+      renderSampleList("");
+    });
+  });
+}
+
+function wireEntryListClicks() {
+  document.getElementById("logs-list").addEventListener("click", (e) => {
+    const row = e.target.closest(".entry");
+    if (!row) return;
+    selectedLogIdx = Number(row.dataset.idx);
+    renderBrowseLogs(document.getElementById("filter-input").value);
+  });
+  document.getElementById("subs-list").addEventListener("click", (e) => {
+    const row = e.target.closest(".entry");
+    if (!row) return;
+    selectedSubIdx = Number(row.dataset.idx);
+    renderBrowseSubs(document.getElementById("filter-input").value);
+  });
+  document.getElementById("sampledata-list").addEventListener("click", (e) => {
+    const row = e.target.closest(".entry");
+    if (!row) return;
+    selectedSampleIdx = Number(row.dataset.idx);
+    renderSampleList(document.getElementById("filter-input").value);
+  });
+}
+
+function wireFilterInput() {
+  document.getElementById("filter-input").addEventListener("input", (e) => {
+    if (currentMode !== "browse") return;
+    if (browseScope === "logs") renderBrowseLogs(e.target.value);
+    else if (browseScope === "subtitles") renderBrowseSubs(e.target.value);
+    else renderSampleList(e.target.value);
+  });
+}
+
+// ---------- device controls ----------
+
+function moveSelection(delta) {
+  if (currentMode !== "browse") return;
+  if (browseScope === "logs") {
+    if (!filteredLogs.length) return;
+    selectedLogIdx = (selectedLogIdx + delta + filteredLogs.length) % filteredLogs.length;
+    renderBrowseLogs(document.getElementById("filter-input").value);
+    document.querySelector("#logs-list .entry.selected")?.scrollIntoView({ block: "nearest" });
+  } else if (browseScope === "subtitles") {
+    if (!filteredSubGroups.length) return;
+    selectedSubIdx = (selectedSubIdx + delta + filteredSubGroups.length) % filteredSubGroups.length;
+    renderBrowseSubs(document.getElementById("filter-input").value);
+    document.querySelector("#subs-list .entry.selected")?.scrollIntoView({ block: "nearest" });
+  } else {
+    if (!filteredSamples.length) return;
+    selectedSampleIdx = (selectedSampleIdx + delta + filteredSamples.length) % filteredSamples.length;
+    renderSampleList(document.getElementById("filter-input").value);
+    document.querySelector("#sampledata-list .entry.selected")?.scrollIntoView({ block: "nearest" });
+  }
+}
+
+// Compare mode has no browsable entry list (just diff cards), so PREV/NEXT there
+// still step through the "to" version instead.
+function stepVersion(delta) {
+  const select = document.getElementById("compare-to");
+  const nextIndex = select.selectedIndex + delta;
+  if (nextIndex < 0 || nextIndex >= select.options.length) return;
+  select.selectedIndex = nextIndex;
+  select.dispatchEvent(new Event("change"));
+}
+
+function scrollBrowseDetail(delta) {
+  document.querySelector("#panel-browse .detail-screen .screen-scroll")?.scrollBy({ top: delta, behavior: "smooth" });
+}
+
+function wireDeviceControls() {
+  // In Browse mode, UP/DOWN scroll the detail pane and PREV/NEXT step between
+  // entries in the list -- Compare mode has no entry list, so there PREV/NEXT
+  // fall back to stepping the "to" version instead.
+  document.getElementById("btn-up").addEventListener("click", () => {
+    if (currentMode === "browse") scrollBrowseDetail(-120);
+  });
+  document.getElementById("btn-down").addEventListener("click", () => {
+    if (currentMode === "browse") scrollBrowseDetail(120);
+  });
+  document.getElementById("btn-prev").addEventListener("click", () => {
+    if (currentMode === "browse") moveSelection(-1);
+    else stepVersion(1); // older
+  });
+  document.getElementById("btn-next").addEventListener("click", () => {
+    if (currentMode === "browse") moveSelection(1);
+    else stepVersion(-1); // newer
+  });
+  document.getElementById("btn-exe").addEventListener("click", () => {
+    if (currentMode === "compare") {
+      loadCompare();
+    } else if (browseScope === "sampledata") {
+      const it = filteredSamples[selectedSampleIdx];
+      if (it) unlockSample(it.id);
+    } else {
+      document.getElementById("filter-input").focus();
+    }
+  });
+  document.getElementById("btn-exit").addEventListener("click", () => {
+    const input = document.getElementById("filter-input");
+    input.value = "";
+    input.blur();
+    if (currentMode !== "browse") return;
+    if (browseScope === "logs") renderBrowseLogs("");
+    else if (browseScope === "subtitles") renderBrowseSubs("");
+    else renderSampleList("");
+  });
+
+  const led = document.getElementById("status-led");
+  const dispBtn = document.getElementById("disp-toggle");
+  const screensEls = () => document.querySelectorAll(".screens");
+
+  function applyDisplayFilter() {
+    screensEls().forEach((el) => {
+      el.style.filter = displayOn ? `brightness(${brt}%) contrast(${con}%) saturate(${sat}%)` : "brightness(0%)";
+    });
+  }
+
+  dispBtn.addEventListener("click", () => {
+    displayOn = !displayOn;
+    dispBtn.textContent = displayOn ? "DISP ON" : "DISP OFF";
+    led.classList.toggle("off", !displayOn);
+    applyDisplayFilter();
+  });
+
+  document.querySelectorAll(".control-grid [data-action]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const action = btn.dataset.action;
+      const clamp = (v) => Math.max(40, Math.min(160, v));
+      if (action === "brt-up") brt = clamp(brt + 10);
+      if (action === "brt-down") brt = clamp(brt - 10);
+      if (action === "con-up") con = clamp(con + 10);
+      if (action === "con-down") con = clamp(con - 10);
+      if (action === "sat-up") sat = clamp(sat + 10);
+      if (action === "sat-down") sat = clamp(sat - 10);
+      applyDisplayFilter();
     });
   });
 }
@@ -390,8 +860,12 @@ function wireContentTabs(scope) {
 
 async function init() {
   wireModeTabs();
-  wireContentTabs("browse");
-  wireContentTabs("compare");
+  wireBrowseContentTabs();
+  wireCompareContentTabs();
+  wireSampleContentTabs();
+  wireEntryListClicks();
+  wireFilterInput();
+  wireDeviceControls();
 
   setStatus("Loading commit history…");
   try {
@@ -406,12 +880,15 @@ async function init() {
   }
 
   document.getElementById("browse-version").addEventListener("change", (e) => loadBrowseVersion(e.target.value));
-  document.getElementById("logs-filter").addEventListener("input", (e) => renderBrowseLogs(e.target.value));
-  document.getElementById("subs-filter").addEventListener("input", (e) => renderBrowseSubs(e.target.value));
   document.getElementById("compare-from").addEventListener("change", loadCompare);
   document.getElementById("compare-to").addEventListener("change", loadCompare);
 
   await loadBrowseVersion(document.getElementById("browse-version").value);
+
+  const requestedMode = new URLSearchParams(location.search).get("mode");
+  if (requestedMode === "sampledata") {
+    document.querySelector('#browse-content-tabs .content-tab[data-content="sampledata"]').click();
+  }
 }
 
 document.addEventListener("DOMContentLoaded", init);
