@@ -11,6 +11,17 @@ const fileCache = new Map(); // `${sha}:${path}` -> parsed json | null (missing)
 let versions = []; // [{ sha, message, date }], newest first
 let currentBrowseLogs = [];
 let currentBrowseSubs = [];
+let filteredLogs = [];
+let filteredSubs = [];
+
+let currentMode = "browse"; // "browse" | "compare"
+let browseScope = "logs"; // "logs" | "subtitles"
+let compareScope = "logs"; // "logs" | "subtitles"
+let selectedLogIdx = -1;
+let selectedSubIdx = -1;
+
+let displayOn = true;
+let brt = 100, con = 100, sat = 100;
 
 // ---------- helpers ----------
 
@@ -126,9 +137,61 @@ function populateVersionSelects() {
   document.getElementById("compare-from").value = (versions[1] || versions[0]).sha;
 }
 
-// ---------- browse rendering ----------
+// ---------- browse: master list rendering ----------
 
-function renderLogCard(log) {
+function entryRowHtml(idx, title, badge, isSelected) {
+  return `<div class="entry ${isSelected ? "selected" : ""}" data-idx="${idx}">
+    <span class="entry-title">${escapeHtml(title) || "<em>(untitled)</em>"}</span>
+    <span class="entry-badge">${escapeHtml(badge)}</span>
+  </div>`;
+}
+
+function renderBrowseLogs(filterText) {
+  const term = (filterText || "").toLowerCase();
+  filteredLogs = currentBrowseLogs.filter(
+    (l) => !term || (l.title || "").toLowerCase().includes(term) || (l.id || "").toLowerCase().includes(term)
+  );
+  if (selectedLogIdx >= filteredLogs.length) selectedLogIdx = filteredLogs.length ? 0 : -1;
+  if (selectedLogIdx === -1 && filteredLogs.length) selectedLogIdx = 0;
+
+  const container = document.getElementById("logs-list");
+  container.innerHTML = filteredLogs.length
+    ? filteredLogs
+        .map((l, i) => {
+          const count = (l.fragments || []).length;
+          return entryRowHtml(i, l.title, `${count} ${count === 1 ? "PAGE" : "PAGES"}`, i === selectedLogIdx);
+        })
+        .join("")
+    : `<p class="empty-note">No logs match your filter.</p>`;
+
+  if (browseScope === "logs") renderDetail();
+}
+
+function renderBrowseSubs(filterText) {
+  const term = (filterText || "").toLowerCase();
+  filteredSubs = currentBrowseSubs.filter(
+    (s) => !term || (s.Name || "").toLowerCase().includes(term) || (s.Subtitle || "").toLowerCase().includes(term)
+  );
+  if (selectedSubIdx >= filteredSubs.length) selectedSubIdx = filteredSubs.length ? 0 : -1;
+  if (selectedSubIdx === -1 && filteredSubs.length) selectedSubIdx = 0;
+
+  const container = document.getElementById("subs-list");
+  container.innerHTML = filteredSubs.length
+    ? filteredSubs.map((s, i) => entryRowHtml(i, s.Name, formatDuration(s.Duration), i === selectedSubIdx)).join("")
+    : `<p class="empty-note">No subtitles match your filter.</p>`;
+
+  if (browseScope === "subtitles") renderDetail();
+}
+
+// ---------- browse: detail pane rendering ----------
+
+function renderLogDetail() {
+  const pane = document.getElementById("detail-pane");
+  const log = filteredLogs[selectedLogIdx];
+  if (!log) {
+    pane.innerHTML = `<p class="empty-note">Select an entry from the list.</p>`;
+    return;
+  }
   const fragments = (log.fragments || [])
     .map(
       (f) => `<div class="fragment">
@@ -137,50 +200,32 @@ function renderLogCard(log) {
       </div>`
     )
     .join("");
-  const count = (log.fragments || []).length;
-  return `<details class="card">
-    <summary>
-      <span class="summary-title">${escapeHtml(log.title) || "<em>(untitled)</em>"}</span>
-      <span class="summary-meta">
-        <span class="frag-count">${count} ${count === 1 ? "page" : "pages"}</span>
-        <span class="id-tag">${escapeHtml(log.id)}</span>
-      </span>
-    </summary>
-    <div class="card-body">
-      ${log.description ? `<p>${escapeHtml(log.description)}</p>` : ""}
-      ${fragments}
-      ${log.footer ? `<p class="footer-text">${escapeHtml(log.footer)}</p>` : ""}
-    </div>
-  </details>`;
+  pane.innerHTML = `
+    <div class="detail-head-1">${escapeHtml(log.title) || "(untitled)"} ${selectedLogIdx + 1}/${filteredLogs.length}</div>
+    <div class="detail-head-2">${escapeHtml(log.id)}</div>
+    ${log.description ? `<p class="detail-intro">${escapeHtml(log.description)}</p>` : ""}
+    ${fragments}
+    ${log.footer ? `<p class="footer-text">${escapeHtml(log.footer)}</p>` : ""}
+  `;
 }
 
-function renderSubRow(sub) {
-  return `<div class="sub-row">
-    <div class="sub-row-head"><span><span class="prompt">&gt;</span>${escapeHtml(sub.Name)}</span><span>${formatDuration(sub.Duration)}</span></div>
+function renderSubDetail() {
+  const pane = document.getElementById("detail-pane");
+  const sub = filteredSubs[selectedSubIdx];
+  if (!sub) {
+    pane.innerHTML = `<p class="empty-note">Select an entry from the list.</p>`;
+    return;
+  }
+  pane.innerHTML = `
+    <div class="detail-head-1">${escapeHtml(sub.Name)} ${selectedSubIdx + 1}/${filteredSubs.length}</div>
+    <div class="detail-head-2">${formatDuration(sub.Duration)}</div>
     <p>${escapeHtml(sub.Subtitle)}</p>
-  </div>`;
+  `;
 }
 
-function renderBrowseLogs(filterText) {
-  const term = (filterText || "").toLowerCase();
-  const filtered = currentBrowseLogs.filter(
-    (l) => !term || (l.title || "").toLowerCase().includes(term) || (l.id || "").toLowerCase().includes(term)
-  );
-  const container = document.getElementById("logs-list");
-  container.innerHTML = filtered.length
-    ? filtered.map(renderLogCard).join("")
-    : `<p class="empty-note">No logs match your filter.</p>`;
-}
-
-function renderBrowseSubs(filterText) {
-  const term = (filterText || "").toLowerCase();
-  const filtered = currentBrowseSubs.filter(
-    (s) => !term || (s.Name || "").toLowerCase().includes(term) || (s.Subtitle || "").toLowerCase().includes(term)
-  );
-  const container = document.getElementById("subs-list");
-  container.innerHTML = filtered.length
-    ? filtered.map(renderSubRow).join("")
-    : `<p class="empty-note">No subtitles match your filter.</p>`;
+function renderDetail() {
+  if (browseScope === "logs") renderLogDetail();
+  else renderSubDetail();
 }
 
 async function loadBrowseVersion(sha) {
@@ -193,6 +238,8 @@ async function loadBrowseVersion(sha) {
     const { buildNumber, logs } = normalizeLogs(logsJson);
     currentBrowseLogs = logs;
     currentBrowseSubs = normalizeSubtitles(subsJson);
+    selectedLogIdx = -1;
+    selectedSubIdx = -1;
 
     const badge = document.getElementById("browse-build");
     if (buildNumber) {
@@ -202,8 +249,8 @@ async function loadBrowseVersion(sha) {
       badge.classList.add("hidden");
     }
 
-    renderBrowseLogs(document.getElementById("logs-filter").value);
-    renderBrowseSubs(document.getElementById("subs-filter").value);
+    renderBrowseLogs(document.getElementById("filter-input").value);
+    renderBrowseSubs(document.getElementById("filter-input").value);
     setStatus("");
   } catch (err) {
     console.error(err);
@@ -260,7 +307,7 @@ function renderFragmentDiff(fromLog, toLog) {
   return parts.join("");
 }
 
-function renderLogDiffCard(kind, log, otherLog) {
+function renderLogDiffCard(kind, log) {
   if (kind === "added") {
     return `<div class="diff-card added"><span class="diff-tag added">Added</span><span class="id-tag">${escapeHtml(log.id)}</span>
       <div class="fragment-title" style="margin-top:.4rem">${escapeHtml(log.title)}</div>
@@ -364,7 +411,7 @@ async function loadCompare() {
   }
 }
 
-// ---------- tab wiring ----------
+// ---------- toolbar wiring ----------
 
 function wireModeTabs() {
   const tabs = document.querySelectorAll("#mode-tabs .tab");
@@ -372,23 +419,157 @@ function wireModeTabs() {
     tab.addEventListener("click", () => {
       tabs.forEach((t) => t.classList.remove("active"));
       tab.classList.add("active");
-      const mode = tab.dataset.mode;
-      document.getElementById("panel-browse").classList.toggle("active", mode === "browse");
-      document.getElementById("panel-compare").classList.toggle("active", mode === "compare");
-      if (mode === "compare") loadCompare();
+      currentMode = tab.dataset.mode;
+      document.getElementById("panel-browse").classList.toggle("active", currentMode === "browse");
+      document.getElementById("panel-compare").classList.toggle("active", currentMode === "compare");
+      document.getElementById("browse-controls").classList.toggle("hidden", currentMode !== "browse");
+      document.getElementById("compare-controls").classList.toggle("hidden", currentMode !== "compare");
+      const filterInput = document.getElementById("filter-input");
+      const terminalBar = document.getElementById("terminal-bar");
+      if (currentMode === "compare") {
+        terminalBar.classList.add("disabled");
+        filterInput.placeholder = "filtering not available in compare mode";
+      } else {
+        terminalBar.classList.remove("disabled");
+        filterInput.placeholder = "type to filter…";
+      }
+      if (currentMode === "compare") loadCompare();
     });
   });
 }
 
-function wireContentTabs(scope) {
-  const buttons = document.querySelectorAll(`.content-tabs[data-scope="${scope}"] .content-tab`);
+function wireBrowseContentTabs() {
+  const buttons = document.querySelectorAll("#browse-content-tabs .content-tab");
+  const title = document.getElementById("list-screen-title");
   buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
       buttons.forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
-      const content = btn.dataset.content;
-      document.getElementById(`${scope}-logs`).classList.toggle("active", content === "logs");
-      document.getElementById(`${scope}-subtitles`).classList.toggle("active", content === "subtitles");
+      browseScope = btn.dataset.content;
+      document.getElementById("logs-list").classList.toggle("hidden", browseScope !== "logs");
+      document.getElementById("subs-list").classList.toggle("hidden", browseScope !== "subtitles");
+      title.textContent = browseScope === "logs" ? "DATA LOGS" : "QUEST SUBTITLES";
+      document.getElementById("filter-input").value = "";
+      renderBrowseLogs("");
+      renderBrowseSubs("");
+    });
+  });
+}
+
+function wireCompareContentTabs() {
+  const buttons = document.querySelectorAll("#compare-content-tabs .content-tab");
+  const label = document.getElementById("compare-scope-label");
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      buttons.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      compareScope = btn.dataset.content;
+      document.getElementById("compare-logs").classList.toggle("active", compareScope === "logs");
+      document.getElementById("compare-subtitles").classList.toggle("active", compareScope === "subtitles");
+      label.textContent = compareScope === "logs" ? "VOYAGE LOGS" : "QUEST SUBTITLES";
+    });
+  });
+}
+
+function wireEntryListClicks() {
+  document.getElementById("logs-list").addEventListener("click", (e) => {
+    const row = e.target.closest(".entry");
+    if (!row) return;
+    selectedLogIdx = Number(row.dataset.idx);
+    renderBrowseLogs(document.getElementById("filter-input").value);
+  });
+  document.getElementById("subs-list").addEventListener("click", (e) => {
+    const row = e.target.closest(".entry");
+    if (!row) return;
+    selectedSubIdx = Number(row.dataset.idx);
+    renderBrowseSubs(document.getElementById("filter-input").value);
+  });
+}
+
+function wireFilterInput() {
+  document.getElementById("filter-input").addEventListener("input", (e) => {
+    if (currentMode !== "browse") return;
+    if (browseScope === "logs") renderBrowseLogs(e.target.value);
+    else renderBrowseSubs(e.target.value);
+  });
+}
+
+// ---------- device controls ----------
+
+function moveSelection(delta) {
+  if (currentMode !== "browse") return;
+  if (browseScope === "logs") {
+    if (!filteredLogs.length) return;
+    selectedLogIdx = (selectedLogIdx + delta + filteredLogs.length) % filteredLogs.length;
+    renderBrowseLogs(document.getElementById("filter-input").value);
+    document.querySelector("#logs-list .entry.selected")?.scrollIntoView({ block: "nearest" });
+  } else {
+    if (!filteredSubs.length) return;
+    selectedSubIdx = (selectedSubIdx + delta + filteredSubs.length) % filteredSubs.length;
+    renderBrowseSubs(document.getElementById("filter-input").value);
+    document.querySelector("#subs-list .entry.selected")?.scrollIntoView({ block: "nearest" });
+  }
+}
+
+function stepVersion(delta) {
+  const selectId = currentMode === "compare" ? "compare-to" : "browse-version";
+  const select = document.getElementById(selectId);
+  const nextIndex = select.selectedIndex + delta;
+  if (nextIndex < 0 || nextIndex >= select.options.length) return;
+  select.selectedIndex = nextIndex;
+  select.dispatchEvent(new Event("change"));
+}
+
+function wireDeviceControls() {
+  document.getElementById("btn-up").addEventListener("click", () => moveSelection(-1));
+  document.getElementById("btn-down").addEventListener("click", () => moveSelection(1));
+  document.getElementById("btn-prev").addEventListener("click", () => stepVersion(1)); // older
+  document.getElementById("btn-next").addEventListener("click", () => stepVersion(-1)); // newer
+  document.getElementById("btn-exe").addEventListener("click", () => {
+    if (currentMode === "compare") {
+      loadCompare();
+    } else {
+      document.getElementById("filter-input").focus();
+    }
+  });
+  document.getElementById("btn-exit").addEventListener("click", () => {
+    const input = document.getElementById("filter-input");
+    input.value = "";
+    input.blur();
+    if (currentMode === "browse") {
+      if (browseScope === "logs") renderBrowseLogs("");
+      else renderBrowseSubs("");
+    }
+  });
+
+  const led = document.getElementById("status-led");
+  const dispBtn = document.getElementById("disp-toggle");
+  const screensEls = () => document.querySelectorAll(".screens");
+
+  function applyDisplayFilter() {
+    screensEls().forEach((el) => {
+      el.style.filter = displayOn ? `brightness(${brt}%) contrast(${con}%) saturate(${sat}%)` : "brightness(0%)";
+    });
+  }
+
+  dispBtn.addEventListener("click", () => {
+    displayOn = !displayOn;
+    dispBtn.textContent = displayOn ? "DISP ON" : "DISP OFF";
+    led.classList.toggle("off", !displayOn);
+    applyDisplayFilter();
+  });
+
+  document.querySelectorAll(".control-grid [data-action]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const action = btn.dataset.action;
+      const clamp = (v) => Math.max(40, Math.min(160, v));
+      if (action === "brt-up") brt = clamp(brt + 10);
+      if (action === "brt-down") brt = clamp(brt - 10);
+      if (action === "con-up") con = clamp(con + 10);
+      if (action === "con-down") con = clamp(con - 10);
+      if (action === "sat-up") sat = clamp(sat + 10);
+      if (action === "sat-down") sat = clamp(sat - 10);
+      applyDisplayFilter();
     });
   });
 }
@@ -397,8 +578,11 @@ function wireContentTabs(scope) {
 
 async function init() {
   wireModeTabs();
-  wireContentTabs("browse");
-  wireContentTabs("compare");
+  wireBrowseContentTabs();
+  wireCompareContentTabs();
+  wireEntryListClicks();
+  wireFilterInput();
+  wireDeviceControls();
 
   setStatus("Loading commit history…");
   try {
@@ -413,8 +597,6 @@ async function init() {
   }
 
   document.getElementById("browse-version").addEventListener("change", (e) => loadBrowseVersion(e.target.value));
-  document.getElementById("logs-filter").addEventListener("input", (e) => renderBrowseLogs(e.target.value));
-  document.getElementById("subs-filter").addEventListener("input", (e) => renderBrowseSubs(e.target.value));
   document.getElementById("compare-from").addEventListener("change", loadCompare);
   document.getElementById("compare-to").addEventListener("change", loadCompare);
 
