@@ -358,26 +358,6 @@ end
     KismetRenderingLibrary.cpp).
 ]]
 
--- Numeric IDs of "field memory" Sample Data records that ship with unique art.
--- (No. 22 "Bed on Wheels" has text but no unique texture in the retail build.)
-local sampleDataFieldIds = {
-    "13", "14", "15", "16", "17", "18", "21", "23", "24", "25",
-    "27", "29", "34", "35", "41", "42", "43", "45", "46", "50",
-    "51", "52", "53", "54", "56", "57", "59", "60", "62", "63",
-    "85", "87", "88", "89", "90", "91", "92", "93", "94", "95",
-    "96", "97", "98", "99", "104", "118", "119", "120", "121", "122",
-    "123", "124", "125", "126", "127", "128", "129", "130", "131",
-}
-
--- Numeric IDs of "cave painting" Sample Data records (all 44 have art).
-local sampleDataCaveIds = {
-    "502", "504", "505", "506", "510", "511", "512", "514", "517", "518",
-    "521", "522", "527", "531", "537", "547", "559", "568", "575", "584",
-    "589", "591", "596", "598", "603", "604", "605", "606", "617", "624",
-    "628", "635", "641", "647", "660", "666", "676", "683", "687", "694",
-    "701", "702", "703", "704",
-}
-
 local function dumpVoyageSampleDataText()
     print("[T1KTLCVoyageLogDumper] Dumping sample data text...\n")
     local assets = FindAllOf("VoyageSampleDataAsset")
@@ -463,18 +443,16 @@ local function dumpVoyageSampleDataImages()
     end
 
     local outDir = "sampledata_images\\"
+    local assets = FindAllOf("VoyageSampleDataAsset")
     local ok, total = 0, 0
 
-    for _, id in ipairs(sampleDataFieldIds) do
+    for _, asset in ipairs(assets) do
         total = total + 1
-        local name = "SampleData_" .. id
-        if exportSampleDataTexture(krl, worldContext, "/Game/Textures/UI/SampleDatas/" .. name, outDir, name) then
-            ok = ok + 1
-        end
-    end
-    for _, id in ipairs(sampleDataCaveIds) do
-        total = total + 1
-        local name = "SampleData_CavePainting_" .. id
+        -- Asset names are "DA_SampleData_<id>" or "DA_SampleData_CavePainting_<id>" --
+        -- the matching texture lives at the same name minus the "DA_" prefix. Not every
+        -- asset has unique art (e.g. "Bed on Wheels" doesn't), so exportSampleDataTexture()
+        -- failing to load one is expected and handled gracefully, not an error.
+        local name = asset:GetFName():ToString():gsub("^DA_", "")
         if exportSampleDataTexture(krl, worldContext, "/Game/Textures/UI/SampleDatas/" .. name, outDir, name) then
             ok = ok + 1
         end
