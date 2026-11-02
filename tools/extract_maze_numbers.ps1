@@ -8,8 +8,94 @@
 # Usage: .\extract_maze_numbers.ps1 [-DataPath <path_to_folder>]
 
 param(
-    [string]$DataPath = "G:\Users\%USERNAME%\Downloads\FModel\Output\Exports\Voyage\Content\Maps\VoyageWorld2\_Generated_"
+    [string]$DataPath = "G:\Users\%USERNAME%\Downloads\FModel\Output\Exports\Voyage\Content\Maps\VoyageWorld2\_Generated_",
+    [string]$Cue4ParsePath = "G:\Users\%USERNAME%\Downloads\retoc\cue4parse.exe",
+    [string]$GamePath = "C:\Program Files (x86)\Steam\steamapps\common\Voyage\Voyage",
+    [bool]$UseCue4Parse = $true
 )
+
+function Get-ExecutableBuildNumber {
+    param([Parameter(Mandatory)][string]$ExecutablePath)
+
+    $pattern = "CC CC CC CC B8 ** ** ** ** C3 CC CC CC CC CC CC CC CC CC"
+    $patternBytes = @($pattern -split '\s+' | ForEach-Object {
+        if ($_ -eq '**') { -1 } else { [Convert]::ToInt32($_, 16) }
+    })
+    $exeBytes = [System.IO.File]::ReadAllBytes($ExecutablePath)
+    $anchorPatternIndex = -1
+    for ($index = 0; $index -lt $patternBytes.Count; $index++) {
+        if ($patternBytes[$index] -ge 0) {
+            if ($anchorPatternIndex -lt 0) { $anchorPatternIndex = $index }
+            if ($patternBytes[$index] -ne 0xCC) {
+                $anchorPatternIndex = $index
+                break
+            }
+        }
+    }
+
+    # pattern would match multiple things, noticed the build number would always occur at a fixed distance from the first match, so search based on that
+    $anchorByte = [byte]$patternBytes[$anchorPatternIndex]
+    $searchFrom = 0
+    $repeatValueDisplacement = 0xB1
+    while ($searchFrom -lt $exeBytes.Length) {
+        $anchorOffset = [Array]::IndexOf($exeBytes, $anchorByte, $searchFrom)
+        if ($anchorOffset -lt 0) { break }
+        $searchFrom = $anchorOffset + 1
+        $matchOffset = $anchorOffset - $anchorPatternIndex
+        if ($matchOffset -lt 0 -or $matchOffset + $patternBytes.Count -gt $exeBytes.Length) { continue }
+
+        $isMatch = $true
+        for ($index = 0; $index -lt $patternBytes.Count; $index++) {
+            if ($patternBytes[$index] -ge 0 -and $exeBytes[$matchOffset + $index] -ne $patternBytes[$index]) {
+                $isMatch = $false
+                break
+            }
+        }
+        if ($isMatch) {
+            $buildNumber = [BitConverter]::ToUInt32($exeBytes, $matchOffset + 5)
+            if ($buildNumber -lt 10000 -or $buildNumber -gt 999999) { continue }
+
+            $repeatValueOffset = $matchOffset + 5 + $repeatValueDisplacement
+            if ($repeatValueOffset -gt ($exeBytes.Length - 4) -or
+                $exeBytes[$repeatValueOffset - 1] -ne 0xBA -or
+                [BitConverter]::ToUInt32($exeBytes, $repeatValueOffset) -ne $buildNumber) { continue }
+
+            return [uint32]$buildNumber
+        }
+    }
+
+    return $null
+}
+
+$exe_file = "$GamePath\Binaries\Win64\VoyageSteam-Win64-Shipping.exe"
+if (-not (Test-Path -LiteralPath $exe_file)) {
+    Write-Error "Game executable not found at $exe_file"
+    exit 1
+}
+
+$buildNumber = Get-ExecutableBuildNumber -ExecutablePath $exe_file
+if ($null -eq $buildNumber) {
+    Write-Host "Pattern not found in $exe_file"
+    $buildNumber = "Fmodel Export"
+} else {
+    Write-Host "Resolved build number: $buildNumber"
+}
+
+if($UseCue4Parse) {
+    # https://github.com/joric/CUE4Parse.CLI
+    # cue4parse.exe -i "C:\Program Files (x86)\Steam\steamapps\common\Voyage\Voyage\Content\Paks" -p "Voyage/Content/Maps/VoyageWorld2/_Generated_/BTNG5AVC8BRSKAVK26CN42D8D.umap" -f json -m Mappings.usmap
+    $Cue4ParsePath = [System.Environment]::ExpandEnvironmentVariables($Cue4ParsePath);
+    if(-Not (Test-Path $Cue4ParsePath)) {
+        Write-Error "CUE4Parse executable not found at $Cue4ParsePath"
+        exit 1
+    }
+    Write-Host "Extracting via CUE4Parse... takes 5-8 min...`n"
+    $DataPath = (Join-Path -Path (Get-Location) -ChildPath "tempdata")
+    & $Cue4ParsePath -i "$GamePath\Content\Paks" -y -p "Voyage/Content/Maps/VoyageWorld2/_Generated_/BTNG5AVC8BRSKAVK26CN42D8D.umap" -p "Voyage/Content/Maps/VoyageWorld2/_Generated_/5TF4A0F0ZHMO6BIX2MHR52922.umap" -f json -m "$GamePath\Binaries\Win64\Mappings.usmap" -o $DataPath
+    Write-Host "Data extracted to $DataPath"
+    # strip filename off path
+    $DataPath = (Join-Path -Path $DataPath -ChildPath "Voyage\Content\Maps\VoyageWorld2\_Generated_")
+}
 
 # Room label lookup - maps instance IDs to room labels (from main.lua)
 $maze_room_data = @{
@@ -172,8 +258,9 @@ Write-Host "Extracted $($dump.Count) maze room number entries."
 $outputPath = Join-Path $PSScriptRoot "voyage_maze_numbers_dump_test.json"
 
 # Build ordered output matching the Lua script's key order
+# build_number = "FModel Export"
 $outputData = [ordered]@{
-    build_number = "FModel Export"
+    build_number = $buildNumber.ToString()
     data         = @($dump | ForEach-Object {
         [ordered]@{
             id    = $_.id
