@@ -27,15 +27,19 @@ let versions = []; // [{ sha, message, date }], newest first
 let currentBrowseSha = null; // sha of the version currently loaded in Browse mode
 let currentBrowseLogs = [];
 let currentBrowseSubs = [];
+let timelineEvents = [];
 let filteredLogs = [];
 let filteredSubGroups = [];
+let filteredTimeline = [];
 
 let currentMode = "browse"; // "browse" | "compare"
-let browseScope = "logs"; // "logs" | "subtitles" | "sampledata"
+let browseScope = "logs"; // "logs" | "timeline" | "subtitles" | "sampledata"
 let compareScope = "logs"; // "logs" | "subtitles" | "sampledata"
 let selectedLogIdx = -1;
+let selectedTimelineIdx = -1;
 let selectedSubIdx = -1; // indexes filteredSubGroups
 let selectedLogKey = null;
+let selectedTimelineKey = null;
 let selectedSubKey = null;
 
 let sampleData = []; // reloaded per-version by loadBrowseVersion(), like currentBrowseLogs/Subs
@@ -58,6 +62,102 @@ function escapeHtml(str) {
   return String(str ?? "").replace(/[&<>"']/g, (c) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   }[c]));
+}
+
+const TIMELINE_MONTHS = {
+  january: 1, february: 2, march: 3, april: 4, may: 5, june: 6,
+  july: 7, august: 8, september: 9, october: 10, november: 11, december: 12,
+  jan: 1, feb: 2, mar: 3, apr: 4, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12,
+};
+const MONTH_REGEX = "(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)";
+
+function extractTimelineDate(text) {
+  if (!text) return null;
+  // 1. Month Day, Year or Month Day Year
+  let m = new RegExp(`\\b(${MONTH_REGEX})\\.?\\s+(\\d{1,2})(?:st|nd|rd|th)?,?\\s+((?:18|19|20|21)\\d\\d)\\b`, "i").exec(text);
+  if (m) {
+    const mon = TIMELINE_MONTHS[m[1].toLowerCase().replace(/\.$/, "")];
+    return { year: parseInt(m[3], 10), month: mon, day: parseInt(m[2], 10), displayDate: `${m[1]} ${parseInt(m[2], 10)}, ${m[3]}` };
+  }
+
+  // 2. Day Month Year
+  m = new RegExp(`\\b(\\d{1,2})(?:st|nd|rd|th)?\\s+(${MONTH_REGEX})\\.?,?\\s+((?:18|19|20|21)\\d\\d)\\b`, "i").exec(text);
+  if (m) {
+    const mon = TIMELINE_MONTHS[m[2].toLowerCase().replace(/\.$/, "")];
+    return { year: parseInt(m[3], 10), month: mon, day: parseInt(m[1], 10), displayDate: `${m[2]} ${parseInt(m[1], 10)}, ${m[3]}` };
+  }
+
+  // 3. DD.MM.YYYY or DD-MM-YYYY
+  m = /\b(\d{1,2})[.-](\d{1,2})[.-]((?:18|19|20|21)\d\d)\b/.exec(text);
+  if (m) {
+    const yr = parseInt(m[3], 10), mon = parseInt(m[2], 10), day = parseInt(m[1], 10);
+    return { year: yr, month: mon, day: day, displayDate: `${yr}-${String(mon).padStart(2, "0")}-${String(day).padStart(2, "0")}` };
+  }
+
+  // 4. YYYY-MM-DD
+  m = /\b((?:18|19|20|21)\d\d)[.-](\d{2})[.-](\d{2})\b/.exec(text);
+  if (m) {
+    const yr = parseInt(m[1], 10), mon = parseInt(m[2], 10), day = parseInt(m[3], 10);
+    return { year: yr, month: mon, day: day, displayDate: `${yr}-${String(mon).padStart(2, "0")}-${String(day).padStart(2, "0")}` };
+  }
+
+  // 5. Month Year
+  m = new RegExp(`\\b(${MONTH_REGEX})\\.?\\s+((?:18|19|20|21)\\d\\d)\\b`, "i").exec(text);
+  if (m) {
+    const mon = TIMELINE_MONTHS[m[1].toLowerCase().replace(/\.$/, "")];
+    return { year: parseInt(m[2], 10), month: mon, day: 1, displayDate: `${m[1]} ${m[2]}` };
+  }
+
+  // 6. Year in text
+  m = /\b((?:18|19|20|21)\d\d)\b/.exec(text);
+  if (m) {
+    const yr = parseInt(m[1], 10);
+    return { year: yr, month: 1, day: 1, displayDate: `${yr}` };
+  }
+
+  return null;
+}
+
+function buildTimelineEvents(logs) {
+  const events = [];
+  (logs || []).forEach((log) => {
+    const fragments = log.fragments || [];
+    fragments.forEach((frag, fIdx) => {
+      let dt = extractTimelineDate(frag.title);
+      if (!dt && frag.description) {
+        dt = extractTimelineDate(frag.description.slice(0, 300));
+      }
+      if (!dt) {
+        dt = extractTimelineDate(log.title);
+      }
+      if (dt) {
+        const fragId = frag.id || `${log.id}:${fIdx}`;
+        events.push({
+          key: fragId,
+          year: dt.year,
+          month: dt.month,
+          day: dt.day,
+          displayDate: dt.displayDate,
+          logId: log.id,
+          logTitle: (log.title || "").trim(),
+          fragmentId: fragId,
+          fragmentTitle: (frag.title || "").trim(),
+          fragmentDesc: (frag.description || "").trim(),
+          pageKey: logPageKey(frag, fIdx),
+        });
+      }
+    });
+  });
+
+  events.sort((a, b) => {
+    if (a.year !== b.year) return a.year - b.year;
+    if (a.month !== b.month) return a.month - b.month;
+    if (a.day !== b.day) return a.day - b.day;
+    if (a.logId !== b.logId) return a.logId.localeCompare(b.logId);
+    return a.fragmentId.localeCompare(b.fragmentId);
+  });
+
+  return events;
 }
 
 function formatDuration(d) {
@@ -101,6 +201,8 @@ function setBrowseModeUi(scope) {
     btn.classList.toggle("active", btn.dataset.content === scope);
   });
   document.getElementById("logs-list").classList.toggle("hidden", scope !== "logs");
+  const timelineEl = document.getElementById("timeline-list");
+  if (timelineEl) timelineEl.classList.toggle("hidden", scope !== "timeline");
   document.getElementById("subs-list").classList.toggle("hidden", scope !== "subtitles");
   document.getElementById("sampledata-list").classList.toggle("hidden", scope !== "sampledata");
   document.getElementById("detail-pane").classList.toggle("hidden", scope === "sampledata");
@@ -123,9 +225,14 @@ function applyBrowseScope(scope, options = {}) {
 
   const filterInput = document.getElementById("filter-input");
   if (resetFilter) filterInput.value = "";
-  filterInput.placeholder = browseScope === "sampledata" ? "type to filter sample data…" : "type to filter…";
+  filterInput.placeholder = browseScope === "sampledata"
+    ? "type to filter sample data…"
+    : browseScope === "timeline"
+    ? "type to filter timeline…"
+    : "type to filter…";
 
   renderBrowseLogs(currentFilterValue());
+  renderTimelineList(currentFilterValue());
   renderBrowseSubs(currentFilterValue());
   renderSampleList(currentFilterValue());
   updateCopyLinkButton();
@@ -142,12 +249,14 @@ function applySampleScope(scope, options = {}) {
 
 function currentSelectedEntryKey() {
   if (browseScope === "logs") return selectedLogKey;
+  if (browseScope === "timeline") return selectedTimelineKey;
   if (browseScope === "subtitles") return selectedSubKey;
   return selectedSampleKey;
 }
 
 function currentSelectedEntry() {
   if (browseScope === "logs") return filteredLogs[selectedLogIdx] || null;
+  if (browseScope === "timeline") return filteredTimeline[selectedTimelineIdx] || null;
   if (browseScope === "subtitles") return filteredSubGroups[selectedSubIdx] || null;
   return filteredSamples[selectedSampleIdx] || null;
 }
@@ -218,6 +327,7 @@ function parseBrowseHash() {
 
 function scrollSelectedEntryIntoView() {
   if (browseScope === "logs") document.querySelector("#logs-list .entry.selected")?.scrollIntoView({ block: "nearest" });
+  else if (browseScope === "timeline") document.querySelector("#timeline-list .entry.selected")?.scrollIntoView({ block: "nearest" });
   else if (browseScope === "subtitles") document.querySelector("#subs-list .entry.selected")?.scrollIntoView({ block: "nearest" });
   else document.querySelector("#sampledata-list .entry.selected")?.scrollIntoView({ block: "nearest" });
 }
@@ -408,6 +518,11 @@ function selectBrowseEntryByKey(scope, key) {
     selectedLogKey = key;
     renderBrowseLogs(currentFilterValue());
     return !!filteredLogs[selectedLogIdx] && filteredLogs[selectedLogIdx].id === key;
+  }
+  if (scope === "timeline") {
+    selectedTimelineKey = key;
+    renderTimelineList(currentFilterValue());
+    return !!filteredTimeline[selectedTimelineIdx] && filteredTimeline[selectedTimelineIdx].key === key;
   }
   if (scope === "subtitles") {
     selectedSubKey = key;
@@ -625,6 +740,46 @@ function renderBrowseLogs(filterText) {
   }
 }
 
+function renderTimelineList(filterText) {
+  const term = (filterText || "").toLowerCase();
+  filteredTimeline = timelineEvents.filter((ev) => {
+    if (!term) return true;
+    return (
+      ev.displayDate.toLowerCase().includes(term) ||
+      ev.logTitle.toLowerCase().includes(term) ||
+      ev.logId.toLowerCase().includes(term) ||
+      ev.fragmentTitle.toLowerCase().includes(term) ||
+      ev.fragmentDesc.toLowerCase().includes(term)
+    );
+  });
+
+  if (selectedTimelineKey) {
+    const matchIdx = filteredTimeline.findIndex((ev) => ev.key === selectedTimelineKey);
+    if (matchIdx !== -1) selectedTimelineIdx = matchIdx;
+  }
+  if (selectedTimelineIdx >= filteredTimeline.length) selectedTimelineIdx = filteredTimeline.length ? 0 : -1;
+  if (selectedTimelineIdx === -1 && filteredTimeline.length) selectedTimelineIdx = 0;
+  selectedTimelineKey = filteredTimeline[selectedTimelineIdx]?.key || null;
+
+  const container = document.getElementById("timeline-list");
+  if (container) {
+    container.innerHTML = filteredTimeline.length
+      ? filteredTimeline
+          .map((ev, i) => {
+            const label = ev.fragmentTitle || ev.logTitle;
+            return entryRowHtml(i, label, ev.displayDate, i === selectedTimelineIdx);
+          })
+          .join("")
+      : `<p class="empty-note">No timeline entries match your filter.</p>`;
+  }
+
+  if (browseScope === "timeline") {
+    document.getElementById("list-count").textContent = `${filteredTimeline.length}/${timelineEvents.length}`;
+    renderDetail();
+    syncBrowseSelectionHash();
+  }
+}
+
 function renderBrowseSubs(filterText) {
   const term = (filterText || "").toLowerCase();
   const groups = groupSubtitles(currentBrowseSubs);
@@ -709,8 +864,26 @@ function renderSubDetail() {
   `;
 }
 
+function renderTimelineDetail() {
+  const pane = document.getElementById("detail-pane");
+  const ev = filteredTimeline[selectedTimelineIdx];
+  if (!ev) {
+    pane.innerHTML = `<p class="empty-note">Select an entry from the list.</p>`;
+    return;
+  }
+  pane.innerHTML = `
+    <div class="detail-head-1">${escapeHtml(ev.displayDate)} — ${escapeHtml(ev.fragmentTitle || ev.logTitle)} ${selectedTimelineIdx + 1}/${filteredTimeline.length}</div>
+    <div class="detail-head-2">${escapeHtml(ev.logTitle)} · ${escapeHtml(ev.logId)}</div>
+    <div class="fragment" data-link-page="${escapeHtml(ev.pageKey)}">
+      ${ev.fragmentTitle ? `<div class="fragment-title">${escapeHtml(ev.fragmentTitle)}</div>` : ""}
+      <p>${escapeHtml(ev.fragmentDesc)}</p>
+    </div>
+  `;
+}
+
 function renderDetail() {
   if (browseScope === "logs") renderLogDetail();
+  else if (browseScope === "timeline") renderTimelineDetail();
   else if (browseScope === "subtitles") renderSubDetail();
 }
 
@@ -741,15 +914,19 @@ async function loadBrowseVersion(sha) {
     const { logs } = normalizeLogs(logsJson);
     currentBrowseLogs = logs;
     currentBrowseSubs = normalizeArrayJson(subsJson);
+    timelineEvents = buildTimelineEvents(logs);
     sampleData = mergeSampleDataText(normalizeArrayJson(sampleJson), normalizeArrayJson(sampleTextJson));
     selectedLogIdx = -1;
+    selectedTimelineIdx = -1;
     selectedSubIdx = -1;
     selectedSampleIdx = -1;
     selectedLogKey = null;
+    selectedTimelineKey = null;
     selectedSubKey = null;
     selectedSampleKey = null;
 
     renderBrowseLogs(currentFilterValue());
+    renderTimelineList(currentFilterValue());
     renderBrowseSubs(currentFilterValue());
     renderSampleList(currentFilterValue());
     setStatus("");
@@ -1127,7 +1304,7 @@ function setMode(mode) {
   if (currentMode === "compare") loadCompare();
 }
 
-const SCOPE_TITLES = { logs: "DATA LOGS", subtitles: "QUEST SUBTITLES", sampledata: "SAMPLE DATA" };
+const SCOPE_TITLES = { logs: "DATA LOGS", timeline: "TIMELINE", subtitles: "QUEST SUBTITLES", sampledata: "SAMPLE DATA" };
 const COMPARE_SCOPE_TITLES = { logs: "VOYAGE LOGS", subtitles: "QUEST SUBTITLES", sampledata: "SAMPLE DATA" };
 
 function wireBrowseContentTabs() {
@@ -1172,6 +1349,13 @@ function wireEntryListClicks() {
     selectedLogKey = filteredLogs[selectedLogIdx]?.id || null;
     renderBrowseLogs(currentFilterValue());
   });
+  document.getElementById("timeline-list")?.addEventListener("click", (e) => {
+    const row = e.target.closest(".entry");
+    if (!row) return;
+    selectedTimelineIdx = Number(row.dataset.idx);
+    selectedTimelineKey = filteredTimeline[selectedTimelineIdx]?.key || null;
+    renderTimelineList(currentFilterValue());
+  });
   document.getElementById("subs-list").addEventListener("click", (e) => {
     const row = e.target.closest(".entry");
     if (!row) return;
@@ -1192,6 +1376,7 @@ function wireFilterInput() {
   document.getElementById("filter-input").addEventListener("input", (e) => {
     if (currentMode !== "browse") return;
     if (browseScope === "logs") renderBrowseLogs(e.target.value);
+    else if (browseScope === "timeline") renderTimelineList(e.target.value);
     else if (browseScope === "subtitles") renderBrowseSubs(e.target.value);
     else renderSampleList(e.target.value);
   });
@@ -1241,6 +1426,12 @@ function moveSelection(delta) {
     selectedLogIdx = (selectedLogIdx + delta + filteredLogs.length) % filteredLogs.length;
     selectedLogKey = filteredLogs[selectedLogIdx]?.id || null;
     renderBrowseLogs(currentFilterValue());
+    scrollSelectedEntryIntoView();
+  } else if (browseScope === "timeline") {
+    if (!filteredTimeline.length) return;
+    selectedTimelineIdx = (selectedTimelineIdx + delta + filteredTimeline.length) % filteredTimeline.length;
+    selectedTimelineKey = filteredTimeline[selectedTimelineIdx]?.key || null;
+    renderTimelineList(currentFilterValue());
     scrollSelectedEntryIntoView();
   } else if (browseScope === "subtitles") {
     if (!filteredSubGroups.length) return;
@@ -1307,6 +1498,7 @@ function wireDeviceControls() {
     hideSelectionLinkButton();
     if (currentMode !== "browse") return;
     if (browseScope === "logs") renderBrowseLogs("");
+    else if (browseScope === "timeline") renderTimelineList("");
     else if (browseScope === "subtitles") renderBrowseSubs("");
     else renderSampleList("");
   });
