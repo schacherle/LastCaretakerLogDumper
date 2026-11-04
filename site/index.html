@@ -14,70 +14,70 @@
 <main>
 <div class="device" id="device">
 
-  <div class="toolbar">
-    <nav class="tabs" id="mode-tabs">
-      <button class="tab active" data-mode="browse">Browse</button>
-      <button class="tab" data-mode="compare">Compare</button>
+  <div class="toolbar" role="toolbar" aria-label="Archive tools">
+    <nav class="tabs" id="mode-tabs" role="tablist" aria-label="Mode selection">
+      <button class="tab active" id="tab-mode-browse" role="tab" aria-selected="true" aria-controls="panel-browse" data-mode="browse">Browse</button>
+      <button class="tab" id="tab-mode-compare" role="tab" aria-selected="false" aria-controls="panel-compare" data-mode="compare">Compare</button>
     </nav>
 
     <div class="toolbar-controls" id="browse-controls">
       <div class="toolbar-row">
-        <div class="content-tabs" id="browse-content-tabs">
-          <button class="content-tab active" data-content="logs">Voyage Logs</button>
-          <button class="content-tab" data-content="subtitles">Quest Subtitles</button>
-          <button class="content-tab" data-content="sampledata">Sample Data</button>
+        <div class="content-tabs" id="browse-content-tabs" role="tablist" aria-label="Browse content categories">
+          <button class="content-tab active" role="tab" aria-selected="true" data-content="logs">Voyage Logs</button>
+          <button class="content-tab" role="tab" aria-selected="false" data-content="subtitles">Quest Subtitles</button>
+          <button class="content-tab" role="tab" aria-selected="false" data-content="sampledata">Sample Data</button>
         </div>
-        <label class="control" id="version-control">
+        <label class="control" id="version-control" for="browse-version">
           <span>Version</span>
-          <select id="browse-version"></select>
+          <select id="browse-version" aria-label="Select archive version to browse"></select>
         </label>
       </div>
-      <div class="content-tabs hidden" id="sampledata-content-tabs">
-        <button class="content-tab active" data-content="all">All</button>
-        <button class="content-tab" data-content="field">Hologram</button>
-        <button class="content-tab" data-content="cave">Painting</button>
+      <div class="content-tabs hidden" id="sampledata-content-tabs" role="tablist" aria-label="Sample data subcategories">
+        <button class="content-tab active" role="tab" aria-selected="true" data-content="all">All</button>
+        <button class="content-tab" role="tab" aria-selected="false" data-content="field">Hologram</button>
+        <button class="content-tab" role="tab" aria-selected="false" data-content="cave">Painting</button>
       </div>
     </div>
 
     <div class="toolbar-controls hidden" id="compare-controls">
       <div class="toolbar-row">
-        <label class="control">
+        <label class="control" for="compare-from">
           <span>From</span>
-          <select id="compare-from"></select>
+          <select id="compare-from" aria-label="Select base version to compare from"></select>
         </label>
-        <label class="control">
+        <label class="control" for="compare-to">
           <span>To</span>
-          <select id="compare-to"></select>
+          <select id="compare-to" aria-label="Select target version to compare to"></select>
         </label>
       </div>
-      <div class="content-tabs" id="compare-content-tabs">
-        <button class="content-tab active" data-content="logs">Voyage Logs</button>
-        <button class="content-tab" data-content="subtitles">Quest Subtitles</button>
-        <button class="content-tab" data-content="sampledata">Sample Data</button>
+      <div class="content-tabs" id="compare-content-tabs" role="tablist" aria-label="Compare content categories">
+        <button class="content-tab active" role="tab" aria-selected="true" data-content="logs">Voyage Logs</button>
+        <button class="content-tab" role="tab" aria-selected="false" data-content="subtitles">Quest Subtitles</button>
+        <button class="content-tab" role="tab" aria-selected="false" data-content="sampledata">Sample Data</button>
       </div>
     </div>
 
   </div>
 
-  <section id="panel-browse" class="panel active">
+  <section id="panel-browse" class="panel active" role="tabpanel" aria-labelledby="tab-mode-browse">
     <div class="screens">
       <div class="screen list-screen">
         <div class="screen-title-row">
-          <div class="screen-title" id="list-screen-title">DATA LOGS</div>
-          <span class="list-count" id="list-count"></span>
+          <h2 class="screen-title" id="list-screen-title">DATA LOGS</h2>
+          <span class="list-count" id="list-count" aria-live="polite"></span>
         </div>
         <div class="screen-scroll">
-          <div id="logs-list" class="entry-list"></div>
-          <div id="subs-list" class="entry-list hidden"></div>
-          <div id="sampledata-list" class="entry-list hidden"></div>
+          <div id="logs-list" class="entry-list" role="listbox" aria-label="Voyage Logs"></div>
+          <div id="subs-list" class="entry-list hidden" role="listbox" aria-label="Quest Subtitles"></div>
+          <div id="sampledata-list" class="entry-list hidden" role="listbox" aria-label="Sample Data Records"></div>
         </div>
       </div>
       <div class="screen detail-screen">
         <div class="screen-scroll">
-          <div id="detail-pane" class="detail-pane">
+          <div id="detail-pane" class="detail-pane" aria-label="Log detail view">
             <p class="empty-note">Select an entry from the list.</p>
           </div>
-          <div id="sampledata-detail-pane" class="detail-pane hidden">
+          <div id="sampledata-detail-pane" class="detail-pane hidden" aria-label="Sample data detail view">
             <p class="empty-note">Select a record from the list.</p>
           </div>
         </div>
@@ -85,56 +85,56 @@
     </div>
   </section>
 
-  <section id="panel-compare" class="panel">
+  <section id="panel-compare" class="panel" role="tabpanel" aria-labelledby="tab-mode-compare">
     <div class="screens single">
       <div class="screen detail-screen wide">
-        <div class="screen-title">COMPARE — <span id="compare-scope-label">VOYAGE LOGS</span></div>
+        <h2 class="screen-title">COMPARE — <span id="compare-scope-label">VOYAGE LOGS</span></h2>
         <div class="screen-scroll">
-          <div id="compare-logs" class="content-view active"></div>
-          <div id="compare-subtitles" class="content-view"></div>
-          <div id="compare-sampledata" class="content-view"></div>
+          <div id="compare-logs" class="content-view active" role="region" aria-label="Voyage Logs Comparison"></div>
+          <div id="compare-subtitles" class="content-view" role="region" aria-label="Quest Subtitles Comparison"></div>
+          <div id="compare-sampledata" class="content-view" role="region" aria-label="Sample Data Comparison"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <div id="status" class="status hidden"></div>
+  <div id="status" class="status hidden" role="status" aria-live="polite"></div>
 
-  <div class="control-strip">
+  <div class="control-strip" role="region" aria-label="Hardware control panel">
     <div class="control-block">
-      <div class="control-block-label">DISPLAY</div>
-      <div class="control-grid">
-        <button class="device-btn" type="button" data-action="brt-up">BRT +</button>
-        <button class="device-btn" type="button" data-action="con-up">CON +</button>
-        <button class="device-btn" type="button" data-action="sat-up">SAT +</button>
-        <button class="device-btn" type="button" data-action="brt-down">BRT -</button>
-        <button class="device-btn" type="button" data-action="con-down">CON -</button>
-        <button class="device-btn" type="button" data-action="sat-down">SAT -</button>
+      <div class="control-block-label" aria-hidden="true">DISPLAY</div>
+      <div class="control-grid" role="group" aria-label="Display screen adjustments">
+        <button class="device-btn" type="button" data-action="brt-up" aria-label="Increase Brightness">BRT +</button>
+        <button class="device-btn" type="button" data-action="con-up" aria-label="Increase Contrast">CON +</button>
+        <button class="device-btn" type="button" data-action="sat-up" aria-label="Increase Saturation">SAT +</button>
+        <button class="device-btn" type="button" data-action="brt-down" aria-label="Decrease Brightness">BRT -</button>
+        <button class="device-btn" type="button" data-action="con-down" aria-label="Decrease Contrast">CON -</button>
+        <button class="device-btn" type="button" data-action="sat-down" aria-label="Decrease Saturation">SAT -</button>
       </div>
     </div>
 
     <div class="control-center">
-      <button class="device-btn disp-btn" type="button" id="disp-toggle">DISP ON</button>
-      <div class="led" id="status-led"></div>
+      <button class="device-btn disp-btn" type="button" id="disp-toggle" aria-label="Toggle Display On/Off" aria-pressed="true">DISP ON</button>
+      <div class="led" id="status-led" role="status" aria-label="Display power indicator"></div>
     </div>
 
     <div class="control-block">
-      <div class="control-block-label">SETTINGS</div>
-      <div class="control-grid">
-        <button class="device-btn" type="button" id="btn-exe">EXE</button>
-        <button class="device-btn" type="button" id="btn-up">UP</button>
-        <button class="device-btn" type="button" id="btn-exit">EXIT</button>
-        <button class="device-btn" type="button" id="btn-prev">PREV</button>
-        <button class="device-btn" type="button" id="btn-down">DOWN</button>
-        <button class="device-btn" type="button" id="btn-next">NEXT</button>
+      <div class="control-block-label" aria-hidden="true">SETTINGS</div>
+      <div class="control-grid" role="group" aria-label="Terminal and navigation controls">
+        <button class="device-btn" type="button" id="btn-exe" aria-label="Execute or select">EXE</button>
+        <button class="device-btn" type="button" id="btn-up" aria-label="Scroll detail view up">UP</button>
+        <button class="device-btn" type="button" id="btn-exit" aria-label="Clear filter and exit">EXIT</button>
+        <button class="device-btn" type="button" id="btn-prev" aria-label="Select previous entry">PREV</button>
+        <button class="device-btn" type="button" id="btn-down" aria-label="Scroll detail view down">DOWN</button>
+        <button class="device-btn" type="button" id="btn-next" aria-label="Select next entry">NEXT</button>
       </div>
     </div>
   </div>
 
-  <div class="terminal-bar" id="terminal-bar">
-    <span class="terminal-prompt">user@archive:~$</span>
-    <input type="search" id="filter-input" class="terminal-input" placeholder="type to filter…" autocomplete="off">
-    <button class="device-btn terminal-link-btn" type="button" id="copy-link-btn">COPY ENTRY LINK</button>
+  <div class="terminal-bar" id="terminal-bar" role="search" aria-label="Entry filter search">
+    <span class="terminal-prompt" aria-hidden="true">user@archive:~$</span>
+    <input type="search" id="filter-input" class="terminal-input" placeholder="type to filter…" autocomplete="off" aria-label="Filter entries">
+    <button class="device-btn terminal-link-btn" type="button" id="copy-link-btn" aria-label="Copy permalink for the selected entry">COPY ENTRY LINK</button>
   </div>
 
   <button class="device-btn selection-link-btn hidden" type="button" id="selection-link-btn" aria-label="Copy text link" title="Copy text link">🔗</button>

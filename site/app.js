@@ -98,7 +98,9 @@ function selectorValue(value) {
 function setBrowseModeUi(scope) {
   const title = document.getElementById("list-screen-title");
   document.querySelectorAll("#browse-content-tabs .content-tab").forEach((btn) => {
-    btn.classList.toggle("active", btn.dataset.content === scope);
+    const isActive = btn.dataset.content === scope;
+    btn.classList.toggle("active", isActive);
+    btn.setAttribute("aria-selected", isActive ? "true" : "false");
   });
   document.getElementById("logs-list").classList.toggle("hidden", scope !== "logs");
   document.getElementById("subs-list").classList.toggle("hidden", scope !== "subtitles");
@@ -111,7 +113,9 @@ function setBrowseModeUi(scope) {
 
 function setSampleScopeUi(scope) {
   document.querySelectorAll("#sampledata-content-tabs .content-tab").forEach((btn) => {
-    btn.classList.toggle("active", btn.dataset.content === scope);
+    const isActive = btn.dataset.content === scope;
+    btn.classList.toggle("active", isActive);
+    btn.setAttribute("aria-selected", isActive ? "true" : "false");
   });
 }
 
@@ -589,7 +593,7 @@ function populateVersionSelects() {
 // ---------- browse: master list rendering ----------
 
 function entryRowHtml(idx, title, badge, isSelected) {
-  return `<div class="entry ${isSelected ? "selected" : ""}" data-idx="${idx}">
+  return `<div class="entry ${isSelected ? "selected" : ""}" data-idx="${idx}" role="option" aria-selected="${isSelected ? "true" : "false"}" tabindex="0">
     <span class="entry-title">${escapeHtml(title) || "<em>(untitled)</em>"}</span>
     <span class="entry-badge">${escapeHtml(badge)}</span>
   </div>`;
@@ -1109,7 +1113,11 @@ function wireModeTabs() {
 
 function setMode(mode) {
   currentMode = mode;
-  document.querySelectorAll("#mode-tabs .tab").forEach((t) => t.classList.toggle("active", t.dataset.mode === mode));
+  document.querySelectorAll("#mode-tabs .tab").forEach((t) => {
+    const isActive = t.dataset.mode === mode;
+    t.classList.toggle("active", isActive);
+    t.setAttribute("aria-selected", isActive ? "true" : "false");
+  });
   document.getElementById("panel-browse").classList.toggle("active", currentMode === "browse");
   document.getElementById("panel-compare").classList.toggle("active", currentMode === "compare");
   document.getElementById("browse-controls").classList.toggle("hidden", currentMode !== "browse");
@@ -1144,8 +1152,12 @@ function wireCompareContentTabs() {
   const label = document.getElementById("compare-scope-label");
   buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      buttons.forEach((b) => b.classList.remove("active"));
+      buttons.forEach((b) => {
+        b.classList.remove("active");
+        b.setAttribute("aria-selected", "false");
+      });
       btn.classList.add("active");
+      btn.setAttribute("aria-selected", "true");
       compareScope = btn.dataset.content;
       document.getElementById("compare-logs").classList.toggle("active", compareScope === "logs");
       document.getElementById("compare-subtitles").classList.toggle("active", compareScope === "subtitles");
@@ -1165,26 +1177,40 @@ function wireSampleContentTabs() {
 }
 
 function wireEntryListClicks() {
-  document.getElementById("logs-list").addEventListener("click", (e) => {
-    const row = e.target.closest(".entry");
+  function handleSelect(target, scope) {
+    const row = target.closest(".entry");
     if (!row) return;
-    selectedLogIdx = Number(row.dataset.idx);
-    selectedLogKey = filteredLogs[selectedLogIdx]?.id || null;
-    renderBrowseLogs(currentFilterValue());
-  });
-  document.getElementById("subs-list").addEventListener("click", (e) => {
-    const row = e.target.closest(".entry");
-    if (!row) return;
-    selectedSubIdx = Number(row.dataset.idx);
-    selectedSubKey = filteredSubGroups[selectedSubIdx]?.key || null;
-    renderBrowseSubs(currentFilterValue());
-  });
-  document.getElementById("sampledata-list").addEventListener("click", (e) => {
-    const row = e.target.closest(".entry");
-    if (!row) return;
-    selectedSampleIdx = Number(row.dataset.idx);
-    selectedSampleKey = filteredSamples[selectedSampleIdx]?.id || null;
-    renderSampleList(currentFilterValue());
+    const idx = Number(row.dataset.idx);
+    if (scope === "logs") {
+      selectedLogIdx = idx;
+      selectedLogKey = filteredLogs[selectedLogIdx]?.id || null;
+      renderBrowseLogs(currentFilterValue());
+    } else if (scope === "subs") {
+      selectedSubIdx = idx;
+      selectedSubKey = filteredSubGroups[selectedSubIdx]?.key || null;
+      renderBrowseSubs(currentFilterValue());
+    } else if (scope === "sampledata") {
+      selectedSampleIdx = idx;
+      selectedSampleKey = filteredSamples[selectedSampleIdx]?.id || null;
+      renderSampleList(currentFilterValue());
+    }
+  }
+
+  const lists = [
+    { id: "logs-list", scope: "logs" },
+    { id: "subs-list", scope: "subs" },
+    { id: "sampledata-list", scope: "sampledata" },
+  ];
+
+  lists.forEach(({ id, scope }) => {
+    const el = document.getElementById(id);
+    el.addEventListener("click", (e) => handleSelect(e.target, scope));
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        handleSelect(e.target, scope);
+      }
+    });
   });
 }
 
@@ -1324,6 +1350,7 @@ function wireDeviceControls() {
   dispBtn.addEventListener("click", () => {
     displayOn = !displayOn;
     dispBtn.textContent = displayOn ? "DISP ON" : "DISP OFF";
+    dispBtn.setAttribute("aria-pressed", displayOn ? "true" : "false");
     led.classList.toggle("off", !displayOn);
     applyDisplayFilter();
   });
