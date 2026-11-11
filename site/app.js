@@ -123,7 +123,7 @@ function applyBrowseScope(scope, options = {}) {
 
   const filterInput = document.getElementById("filter-input");
   if (resetFilter) filterInput.value = "";
-  filterInput.placeholder = browseScope === "sampledata" ? "type to filter sample data…" : "type to filter…";
+  filterInput.placeholder = browseScope === "sampledata" ? "Type to filter sample data…" : "Type to filter entries…";
 
   renderBrowseLogs(currentFilterValue());
   renderBrowseSubs(currentFilterValue());
@@ -480,7 +480,7 @@ async function fetchFileAtSha(path, sha) {
     return null;
   }
   if (!res.ok) {
-    throw new Error(`Failed to fetch ${path} @ ${sha.slice(0, 7)} (${res.status})`);
+    throw new Error(`Unable to load '${path}' at commit ${sha.slice(0, 7)} (HTTP ${res.status}). Please check your connection and try again.`);
   }
   const buf = await res.arrayBuffer();
   const json = JSON.parse(decodeArrayBuffer(buf));
@@ -546,7 +546,10 @@ async function fetchCommitsForPath(path) {
   for (let page = 1; ; page++) {
     const url = `https://api.github.com/repos/${REPO}/commits?path=${encodeURIComponent(path)}&per_page=100&page=${page}`;
     const res = await fetch(url);
-    if (!res.ok) throw new Error(`Failed to list commits for ${path} (${res.status})`);
+    if (!res.ok) {
+      const hint = res.status === 403 ? " Rate limit exceeded; please wait a moment." : "";
+      throw new Error(`Unable to load commit history for '${path}' (HTTP ${res.status}).${hint} Please check your connection and reload.`);
+    }
     const data = await res.json();
     for (const c of data) {
       commits.push({
@@ -616,7 +619,7 @@ function renderBrowseLogs(filterText) {
           return entryRowHtml(i, l.title, `${count} ${count === 1 ? "PAGE" : "PAGES"}`, i === selectedLogIdx);
         })
         .join("")
-    : `<p class="empty-note">No logs match your filter.</p>`;
+    : `<p class="empty-note">No voyage logs match your filter. Try adjusting your search term or clearing the filter.</p>`;
 
   if (browseScope === "logs") {
     document.getElementById("list-count").textContent = `${filteredLogs.length}/${currentBrowseLogs.length}`;
@@ -651,7 +654,7 @@ function renderBrowseSubs(filterText) {
           return entryRowHtml(i, g.key, `${count} ${count === 1 ? "LINE" : "LINES"}`, i === selectedSubIdx);
         })
         .join("")
-    : `<p class="empty-note">No subtitles match your filter.</p>`;
+    : `<p class="empty-note">No quest subtitles match your filter. Try adjusting your search term or clearing the filter.</p>`;
 
   if (browseScope === "subtitles") {
     document.getElementById("list-count").textContent = `${filteredSubGroups.length}/${groups.length}`;
@@ -666,7 +669,7 @@ function renderLogDetail() {
   const pane = document.getElementById("detail-pane");
   const log = filteredLogs[selectedLogIdx];
   if (!log) {
-    pane.innerHTML = `<p class="empty-note">Select an entry from the list.</p>`;
+    pane.innerHTML = `<p class="empty-note">Select a voyage log from the list to view its description and fragments.</p>`;
     return;
   }
   const fragments = (log.fragments || [])
@@ -690,7 +693,7 @@ function renderSubDetail() {
   const pane = document.getElementById("detail-pane");
   const group = filteredSubGroups[selectedSubIdx];
   if (!group) {
-    pane.innerHTML = `<p class="empty-note">Select an entry from the list.</p>`;
+    pane.innerHTML = `<p class="empty-note">Select a subtitle sequence from the list to inspect lines and timestamps.</p>`;
     return;
   }
   const lines = group.items
@@ -801,7 +804,7 @@ function renderSampleList(filterText) {
     ? filteredSamples
         .map((it, i) => entryRowHtml(i, it.title, sampleCode(it), i === selectedSampleIdx))
         .join("")
-    : `<p class="empty-note">No sample data matches your filter.</p>`;
+    : `<p class="empty-note">No sample data records match your filter. Try adjusting your search term or clearing the filter.</p>`;
 
   if (browseScope === "sampledata") {
     document.getElementById("list-count").textContent = `${filteredSamples.length}/${sampleData.length}`;
@@ -814,7 +817,7 @@ function renderSampleDetail() {
   const pane = document.getElementById("sampledata-detail-pane");
   const it = filteredSamples[selectedSampleIdx];
   if (!it) {
-    pane.innerHTML = `<p class="empty-note">Select a record from the list.</p>`;
+    pane.innerHTML = `<p class="empty-note">Select a sample data record from the list to inspect field readings and memory status.</p>`;
     return;
   }
 
@@ -826,7 +829,7 @@ function renderSampleDetail() {
       <img id="sample-image" src="${imgUrl}" alt="${escapeHtml(it.title)}" loading="lazy">
       <div class="framebuffer-cap">FRAMEBUFFER // ${sampleCode(it)}.CAP</div>
     </div>
-    <div class="fb-missing hidden" id="sample-image-missing">[ NO CAPTURE ON RECORD ]<br>scan exists in log only — image was never recovered</div>
+    <div class="fb-missing hidden" id="sample-image-missing">[ NO CAPTURE ON RECORD ]<br>Visual scan was not recovered. Log text remains available below.</div>
   `;
 
   const isUnlocked = unlockedSamples.has(it.id);
@@ -957,7 +960,7 @@ function renderLogsDiff(fromLogs, toLogs) {
   const { added, removed, changed } = diffByKey(fromLogs, toLogs, (l) => l.id);
   const container = document.getElementById("compare-logs");
   if (!added.length && !removed.length && !changed.length) {
-    container.innerHTML = `<p class="empty-note">No differences in voyage logs between these versions.</p>`;
+    container.innerHTML = `<p class="empty-note">No differences detected. Voyage logs are identical between these two versions.</p>`;
     return;
   }
   let html = "";
@@ -995,7 +998,7 @@ function renderSubsDiff(fromSubs, toSubs) {
   const { added, removed, changed } = diffByKey(fromSubs, toSubs, (s) => s.Name);
   const container = document.getElementById("compare-subtitles");
   if (!added.length && !removed.length && !changed.length) {
-    container.innerHTML = `<p class="empty-note">No differences in quest subtitles between these versions.</p>`;
+    container.innerHTML = `<p class="empty-note">No differences detected. Quest subtitles are identical between these two versions.</p>`;
     return;
   }
   let html = "";
@@ -1055,7 +1058,7 @@ function renderSampleTextDiff(fromItems, toItems) {
   changed.sort((a, b) => compareSampleIds(a.to.id, b.to.id));
   const container = document.getElementById("compare-sampledata");
   if (!added.length && !removed.length && !changed.length) {
-    container.innerHTML = `<p class="empty-note">No differences in sample data text between these versions.</p>`;
+    container.innerHTML = `<p class="empty-note">No differences detected. Sample data records are identical between these two versions.</p>`;
     return;
   }
   let html = "";
@@ -1118,10 +1121,10 @@ function setMode(mode) {
   const terminalBar = document.getElementById("terminal-bar");
   if (currentMode === "compare") {
     terminalBar.classList.add("disabled");
-    filterInput.placeholder = "filtering not available in compare mode";
+    filterInput.placeholder = "Filtering is not available in compare mode";
   } else {
     terminalBar.classList.remove("disabled");
-    filterInput.placeholder = browseScope === "sampledata" ? "type to filter sample data…" : "type to filter…";
+    filterInput.placeholder = browseScope === "sampledata" ? "Type to filter sample data…" : "Type to filter entries…";
   }
   updateCopyLinkButton();
   if (currentMode === "compare") loadCompare();
@@ -1202,11 +1205,11 @@ function wireShareLinkButton() {
     if (currentMode !== "browse" || !currentSelectedEntryKey()) return;
     try {
       await copyText(currentEntryShareUrl());
-      setStatus("Entry link copied.");
+      setStatus("Entry link copied to clipboard.");
       window.setTimeout(() => setStatus(""), 1500);
     } catch (err) {
       console.error(err);
-      setStatus("Could not copy link.", true);
+      setStatus("Unable to copy link to clipboard. Please copy URL directly from your browser.", true);
     }
   });
 
@@ -1216,11 +1219,11 @@ function wireShareLinkButton() {
     if (!activeSelectionContext) return;
     try {
       await copyText(currentSelectionShareUrl());
-      setStatus("Selection link copied.");
+      setStatus("Selection link copied to clipboard.");
       window.setTimeout(() => setStatus(""), 1500);
     } catch (err) {
       console.error(err);
-      setStatus("Could not copy link.", true);
+      setStatus("Unable to copy selection link to clipboard. Please copy URL directly from your browser.", true);
     }
   });
 
@@ -1347,7 +1350,7 @@ function wireDeviceControls() {
 
 async function init() {
   if (!REPO) {
-    setStatus("Could not determine which repo to load from this URL -- pass ?repo=owner/name (e.g. for local testing).", true);
+    setStatus("Repository not specified. Add '?repo=owner/repo' to the URL (for example, '?repo=the1killer/LastCaretakerLogDumper') to load archive data.", true);
     return;
   }
 
@@ -1363,7 +1366,7 @@ async function init() {
   setStatus("Loading commit history…");
   try {
     versions = await buildVersionList();
-    if (!versions.length) throw new Error("No commit history found for these files.");
+    if (!versions.length) throw new Error("No commit history found for data dump files in this repository. Ensure the repository path is correct.");
     populateVersionSelects();
     setStatus("");
   } catch (err) {
