@@ -369,6 +369,25 @@ function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
 
+function resolveSelectedIndex(items, keyField, activeKey, activeIdx) {
+  if (!items || !items.length) return -1;
+  let idx = activeIdx;
+  if (activeKey != null) {
+    const matchIdx = items.findIndex((it) => it[keyField] === activeKey);
+    if (matchIdx !== -1) idx = matchIdx;
+  }
+  if (idx < 0 || idx >= items.length) {
+    idx = 0;
+  }
+  return idx;
+}
+
+function stepIndex(currentIndex, totalCount, delta) {
+  if (totalCount <= 0) return -1;
+  const base = currentIndex < 0 ? 0 : currentIndex;
+  return (base + delta + totalCount) % totalCount;
+}
+
 function updateSelectionLinkButton() {
   const btn = document.getElementById("selection-link-btn");
   if (!btn) return;
@@ -600,12 +619,7 @@ function renderBrowseLogs(filterText) {
   filteredLogs = currentBrowseLogs.filter(
     (l) => !term || (l.title || "").toLowerCase().includes(term) || (l.id || "").toLowerCase().includes(term)
   );
-  if (selectedLogKey) {
-    const matchIdx = filteredLogs.findIndex((l) => l.id === selectedLogKey);
-    if (matchIdx !== -1) selectedLogIdx = matchIdx;
-  }
-  if (selectedLogIdx >= filteredLogs.length) selectedLogIdx = filteredLogs.length ? 0 : -1;
-  if (selectedLogIdx === -1 && filteredLogs.length) selectedLogIdx = 0;
+  selectedLogIdx = resolveSelectedIndex(filteredLogs, "id", selectedLogKey, selectedLogIdx);
   selectedLogKey = filteredLogs[selectedLogIdx]?.id || null;
 
   const container = document.getElementById("logs-list");
@@ -635,12 +649,7 @@ function renderBrowseSubs(filterText) {
           g.key.toLowerCase().includes(term) ||
           g.items.some((s) => (s.Name || "").toLowerCase().includes(term) || (s.Subtitle || "").toLowerCase().includes(term))
       );
-  if (selectedSubKey) {
-    const matchIdx = filteredSubGroups.findIndex((g) => g.key === selectedSubKey);
-    if (matchIdx !== -1) selectedSubIdx = matchIdx;
-  }
-  if (selectedSubIdx >= filteredSubGroups.length) selectedSubIdx = filteredSubGroups.length ? 0 : -1;
-  if (selectedSubIdx === -1 && filteredSubGroups.length) selectedSubIdx = 0;
+  selectedSubIdx = resolveSelectedIndex(filteredSubGroups, "key", selectedSubKey, selectedSubIdx);
   selectedSubKey = filteredSubGroups[selectedSubIdx]?.key || null;
 
   const container = document.getElementById("subs-list");
@@ -788,12 +797,7 @@ function renderSampleList(filterText) {
     const matchesTerm = !term || hay.includes(term);
     return matchesScope && matchesTerm;
   });
-  if (selectedSampleKey) {
-    const matchIdx = filteredSamples.findIndex((it) => it.id === selectedSampleKey);
-    if (matchIdx !== -1) selectedSampleIdx = matchIdx;
-  }
-  if (selectedSampleIdx >= filteredSamples.length) selectedSampleIdx = filteredSamples.length ? 0 : -1;
-  if (selectedSampleIdx === -1 && filteredSamples.length) selectedSampleIdx = 0;
+  selectedSampleIdx = resolveSelectedIndex(filteredSamples, "id", selectedSampleKey, selectedSampleIdx);
   selectedSampleKey = filteredSamples[selectedSampleIdx]?.id || null;
 
   const container = document.getElementById("sampledata-list");
@@ -953,27 +957,38 @@ function renderLogDiffCard(kind, log) {
   </div>`;
 }
 
-function renderLogsDiff(fromLogs, toLogs) {
-  const { added, removed, changed } = diffByKey(fromLogs, toLogs, (l) => l.id);
-  const container = document.getElementById("compare-logs");
+function renderDiffSectionGroup(containerId, emptyMessage, added, changed, removed, cardRenderer) {
+  const container = document.getElementById(containerId);
   if (!added.length && !removed.length && !changed.length) {
-    container.innerHTML = `<p class="empty-note">No differences in voyage logs between these versions.</p>`;
+    container.innerHTML = `<p class="empty-note">${escapeHtml(emptyMessage)}</p>`;
     return;
   }
   let html = "";
   if (added.length) {
     html += `<div class="section-heading">Added (${added.length})</div>`;
-    html += added.map((l) => renderLogDiffCard("added", l)).join("");
+    html += added.map((item) => cardRenderer("added", item)).join("");
   }
   if (changed.length) {
     html += `<div class="section-heading">Changed (${changed.length})</div>`;
-    html += changed.map((c) => renderLogDiffCard("changed", c)).join("");
+    html += changed.map((item) => cardRenderer("changed", item)).join("");
   }
   if (removed.length) {
     html += `<div class="section-heading">Removed (${removed.length})</div>`;
-    html += removed.map((l) => renderLogDiffCard("removed", l)).join("");
+    html += removed.map((item) => cardRenderer("removed", item)).join("");
   }
   container.innerHTML = html;
+}
+
+function renderLogsDiff(fromLogs, toLogs) {
+  const { added, removed, changed } = diffByKey(fromLogs, toLogs, (l) => l.id);
+  renderDiffSectionGroup(
+    "compare-logs",
+    "No differences in voyage logs between these versions.",
+    added,
+    changed,
+    removed,
+    renderLogDiffCard
+  );
 }
 
 function renderSubDiffCard(kind, item) {
@@ -993,25 +1008,14 @@ function renderSubDiffCard(kind, item) {
 
 function renderSubsDiff(fromSubs, toSubs) {
   const { added, removed, changed } = diffByKey(fromSubs, toSubs, (s) => s.Name);
-  const container = document.getElementById("compare-subtitles");
-  if (!added.length && !removed.length && !changed.length) {
-    container.innerHTML = `<p class="empty-note">No differences in quest subtitles between these versions.</p>`;
-    return;
-  }
-  let html = "";
-  if (added.length) {
-    html += `<div class="section-heading">Added (${added.length})</div>`;
-    html += added.map((s) => renderSubDiffCard("added", s)).join("");
-  }
-  if (changed.length) {
-    html += `<div class="section-heading">Changed (${changed.length})</div>`;
-    html += changed.map((c) => renderSubDiffCard("changed", c)).join("");
-  }
-  if (removed.length) {
-    html += `<div class="section-heading">Removed (${removed.length})</div>`;
-    html += removed.map((s) => renderSubDiffCard("removed", s)).join("");
-  }
-  container.innerHTML = html;
+  renderDiffSectionGroup(
+    "compare-subtitles",
+    "No differences in quest subtitles between these versions.",
+    added,
+    changed,
+    removed,
+    renderSubDiffCard
+  );
 }
 
 function renderSampleTextDiffCard(kind, item) {
@@ -1053,25 +1057,14 @@ function renderSampleTextDiff(fromItems, toItems) {
   added.sort((a, b) => compareSampleIds(a.id, b.id));
   removed.sort((a, b) => compareSampleIds(a.id, b.id));
   changed.sort((a, b) => compareSampleIds(a.to.id, b.to.id));
-  const container = document.getElementById("compare-sampledata");
-  if (!added.length && !removed.length && !changed.length) {
-    container.innerHTML = `<p class="empty-note">No differences in sample data text between these versions.</p>`;
-    return;
-  }
-  let html = "";
-  if (added.length) {
-    html += `<div class="section-heading">Added (${added.length})</div>`;
-    html += added.map((s) => renderSampleTextDiffCard("added", s)).join("");
-  }
-  if (changed.length) {
-    html += `<div class="section-heading">Changed (${changed.length})</div>`;
-    html += changed.map((c) => renderSampleTextDiffCard("changed", c)).join("");
-  }
-  if (removed.length) {
-    html += `<div class="section-heading">Removed (${removed.length})</div>`;
-    html += removed.map((s) => renderSampleTextDiffCard("removed", s)).join("");
-  }
-  container.innerHTML = html;
+  renderDiffSectionGroup(
+    "compare-sampledata",
+    "No differences in sample data text between these versions.",
+    added,
+    changed,
+    removed,
+    renderSampleTextDiffCard
+  );
 }
 
 async function loadCompare() {
@@ -1238,23 +1231,21 @@ function moveSelection(delta) {
   if (currentMode !== "browse") return;
   if (browseScope === "logs") {
     if (!filteredLogs.length) return;
-    selectedLogIdx = (selectedLogIdx + delta + filteredLogs.length) % filteredLogs.length;
+    selectedLogIdx = stepIndex(selectedLogIdx, filteredLogs.length, delta);
     selectedLogKey = filteredLogs[selectedLogIdx]?.id || null;
     renderBrowseLogs(currentFilterValue());
-    scrollSelectedEntryIntoView();
   } else if (browseScope === "subtitles") {
     if (!filteredSubGroups.length) return;
-    selectedSubIdx = (selectedSubIdx + delta + filteredSubGroups.length) % filteredSubGroups.length;
+    selectedSubIdx = stepIndex(selectedSubIdx, filteredSubGroups.length, delta);
     selectedSubKey = filteredSubGroups[selectedSubIdx]?.key || null;
     renderBrowseSubs(currentFilterValue());
-    scrollSelectedEntryIntoView();
   } else {
     if (!filteredSamples.length) return;
-    selectedSampleIdx = (selectedSampleIdx + delta + filteredSamples.length) % filteredSamples.length;
+    selectedSampleIdx = stepIndex(selectedSampleIdx, filteredSamples.length, delta);
     selectedSampleKey = filteredSamples[selectedSampleIdx]?.id || null;
     renderSampleList(currentFilterValue());
-    scrollSelectedEntryIntoView();
   }
+  scrollSelectedEntryIntoView();
 }
 
 // Compare mode has no browsable entry list (just diff cards), so PREV/NEXT there
