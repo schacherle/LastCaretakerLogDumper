@@ -115,9 +115,22 @@ function setSampleScopeUi(scope) {
   });
 }
 
+function applyCompareScope(scope) {
+  if (!COMPARE_SCOPE_TITLES[scope]) return;
+  compareScope = scope;
+  document.querySelectorAll("#compare-content-tabs .content-tab").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.content === scope);
+  });
+  document.getElementById("compare-logs").classList.toggle("active", scope === "logs");
+  document.getElementById("compare-subtitles").classList.toggle("active", scope === "subtitles");
+  document.getElementById("compare-sampledata").classList.toggle("active", scope === "sampledata");
+  const label = document.getElementById("compare-scope-label");
+  if (label) label.textContent = COMPARE_SCOPE_TITLES[scope];
+}
+
 function applyBrowseScope(scope, options = {}) {
   if (!SCOPE_TITLES[scope]) return;
-  const { resetFilter = true } = options;
+  const { resetFilter = true, syncHash = true, pushHistory = false } = options;
   browseScope = scope;
   setBrowseModeUi(scope);
 
@@ -129,15 +142,17 @@ function applyBrowseScope(scope, options = {}) {
   renderBrowseSubs(currentFilterValue());
   renderSampleList(currentFilterValue());
   updateCopyLinkButton();
+  if (syncHash) syncUrlHash({ push: pushHistory });
 }
 
 function applySampleScope(scope, options = {}) {
   if (!["all", "field", "cave"].includes(scope)) return;
-  const { resetFilter = true } = options;
+  const { resetFilter = true, syncHash = true, pushHistory = false } = options;
   sampleScope = scope;
   setSampleScopeUi(scope);
   if (resetFilter) document.getElementById("filter-input").value = "";
   renderSampleList(currentFilterValue());
+  if (syncHash) syncUrlHash({ push: pushHistory });
 }
 
 function currentSelectedEntryKey() {
@@ -178,6 +193,17 @@ function resolveVersionSha(version) {
   return matches.length === 1 ? matches[0].sha : "";
 }
 
+function buildCompareHash() {
+  const params = new URLSearchParams();
+  params.set("mode", "compare");
+  params.set("scope", compareScope);
+  const fromSha = document.getElementById("compare-from")?.value;
+  const toSha = document.getElementById("compare-to")?.value;
+  if (fromSha) params.set("from", shortSha(fromSha));
+  if (toSha) params.set("to", shortSha(toSha));
+  return params.toString();
+}
+
 function buildBrowseHash(extra = {}) {
   const params = new URLSearchParams();
   params.set("mode", "browse");
@@ -192,28 +218,68 @@ function buildBrowseHash(extra = {}) {
   return params.toString();
 }
 
-function writeBrowseHash(extra = {}) {
-  if (isApplyingHashState || currentMode !== "browse") return;
-  const hash = buildBrowseHash(extra);
-  const suffix = hash ? `#${hash}` : "";
-  history.replaceState(null, "", `${location.pathname}${location.search}${suffix}`);
+function buildCurrentHash(extra = {}) {
+  return currentMode === "compare" ? buildCompareHash() : buildBrowseHash(extra);
 }
 
-function parseBrowseHash() {
+function syncUrlHash(options = {}) {
+  if (isApplyingHashState) return;
+  const { push = false, extra = {} } = options;
+  const hash = buildCurrentHash(extra);
+  const suffix = hash ? `#${hash}` : "";
+  const targetUrl = `${location.pathname}${location.search}${suffix}`;
+  const currentUrl = `${location.pathname}${location.search}${location.hash}`;
+  if (targetUrl === currentUrl) return;
+  if (push) {
+    history.pushState(null, "", targetUrl);
+  } else {
+    history.replaceState(null, "", targetUrl);
+  }
+}
+
+function writeBrowseHash(extra = {}) {
+  syncUrlHash({ push: false, extra });
+}
+
+function parseAppHash() {
   const raw = location.hash.replace(/^#/, "");
   if (!raw) return null;
   const params = new URLSearchParams(raw);
-  if ((params.get("mode") || "browse") !== "browse") return null;
-  const scope = params.get("scope");
+  const rawMode = params.get("mode");
+  const mode = rawMode === "compare" ? "compare" : (rawMode === "browse" ? "browse" : null);
+  if (!mode) return null;
+
+  if (mode === "compare") {
+    const rawScope = params.get("scope");
+    const scope = COMPARE_SCOPE_TITLES[rawScope] ? rawScope : "logs";
+    return {
+      mode: "compare",
+      scope,
+      from: params.get("from") || "",
+      to: params.get("to") || "",
+    };
+  }
+
+  const rawScope = params.get("scope");
+  const scope = SCOPE_TITLES[rawScope] ? rawScope : "logs";
+  const rawSampleScope = params.get("sampleScope");
+  const sampleScopeVal = ["all", "field", "cave"].includes(rawSampleScope) ? rawSampleScope : "all";
+
   return {
-    scope: SCOPE_TITLES[scope] ? scope : "logs",
+    mode: "browse",
+    scope,
     version: params.get("version") || "",
     entry: params.get("entry") || "",
     page: params.get("page") || "",
     text: trimmedSelectionText(params.get("text") || ""),
-    sampleScope: params.get("sampleScope") || "all",
+    sampleScope: sampleScopeVal,
     unlocked: params.get("unlocked") === "1",
   };
+}
+
+function parseBrowseHash() {
+  const state = parseAppHash();
+  return state && state.mode === "browse" ? state : null;
 }
 
 function scrollSelectedEntryIntoView() {
@@ -347,9 +413,19 @@ async function copyText(text) {
   document.body.removeChild(input);
 }
 
+function compareShareUrl() {
+  const hash = buildCompareHash();
+  return `${location.origin}${location.pathname}${location.search}#${hash}`;
+}
+
 function updateCopyLinkButton() {
   const btn = document.getElementById("copy-link-btn");
   if (!btn) return;
+  if (currentMode === "compare") {
+    btn.disabled = false;
+    btn.textContent = "COPY COMPARE LINK";
+    return;
+  }
   const entryKey = currentSelectedEntryKey();
   btn.disabled = currentMode !== "browse" || !entryKey;
   btn.textContent = "COPY ENTRY LINK";
@@ -419,18 +495,33 @@ function selectBrowseEntryByKey(scope, key) {
   return !!filteredSamples[selectedSampleIdx] && filteredSamples[selectedSampleIdx].id === key;
 }
 
-async function applyBrowseHashState() {
-  const state = parseBrowseHash();
+async function applyAppHashState() {
+  const state = parseAppHash();
   if (!state) return false;
 
   isApplyingHashState = true;
   try {
-    setMode("browse");
-    applyBrowseScope(state.scope, { resetFilter: true });
-    if (state.scope === "sampledata") applySampleScope(state.sampleScope, { resetFilter: false });
+    if (state.mode === "compare") {
+      setMode("compare", { syncHash: false, loadDiff: false });
+      applyCompareScope(state.scope);
+
+      const compareFromSelect = document.getElementById("compare-from");
+      const compareToSelect = document.getElementById("compare-to");
+      const fromSha = resolveVersionSha(state.from) || compareFromSelect.value;
+      const toSha = resolveVersionSha(state.to) || compareToSelect.value;
+      if (fromSha && compareFromSelect.value !== fromSha) compareFromSelect.value = fromSha;
+      if (toSha && compareToSelect.value !== toSha) compareToSelect.value = toSha;
+
+      await loadCompare();
+      return true;
+    }
+
+    setMode("browse", { syncHash: false });
+    applyBrowseScope(state.scope, { resetFilter: true, syncHash: false });
+    if (state.scope === "sampledata") applySampleScope(state.sampleScope, { resetFilter: false, syncHash: false });
 
     const browseSelect = document.getElementById("browse-version");
-  const version = resolveVersionSha(state.version) || browseSelect.value;
+    const version = resolveVersionSha(state.version) || browseSelect.value;
     if (browseSelect.value !== version) browseSelect.value = version;
     if (currentBrowseSha !== version) await loadBrowseVersion(version);
 
@@ -443,6 +534,10 @@ async function applyBrowseHashState() {
   } finally {
     isApplyingHashState = false;
   }
+}
+
+async function applyBrowseHashState() {
+  return applyAppHashState();
 }
 
 function setStatus(text, isError) {
@@ -1078,6 +1173,14 @@ async function loadCompare() {
   const fromSha = document.getElementById("compare-from").value;
   const toSha = document.getElementById("compare-to").value;
   if (!fromSha || !toSha) return;
+
+  const logsEl = document.getElementById("compare-logs");
+  const subsEl = document.getElementById("compare-subtitles");
+  const sampleEl = document.getElementById("compare-sampledata");
+  if (logsEl) logsEl.innerHTML = `<p class="empty-note">Loading diff…</p>`;
+  if (subsEl) subsEl.innerHTML = `<p class="empty-note">Loading diff…</p>`;
+  if (sampleEl) sampleEl.innerHTML = `<p class="empty-note">Loading diff…</p>`;
+
   setStatus("Comparing versions…");
   try {
     const [fromLogsJson, toLogsJson, fromSubsJson, toSubsJson, fromSampleJson, toSampleJson] = await Promise.all([
@@ -1094,6 +1197,9 @@ async function loadCompare() {
     setStatus("");
   } catch (err) {
     console.error(err);
+    if (logsEl) logsEl.innerHTML = `<p class="empty-note">Unable to compare voyage logs: ${escapeHtml(err.message)}</p>`;
+    if (subsEl) subsEl.innerHTML = `<p class="empty-note">Unable to compare subtitles: ${escapeHtml(err.message)}</p>`;
+    if (sampleEl) sampleEl.innerHTML = `<p class="empty-note">Unable to compare sample data: ${escapeHtml(err.message)}</p>`;
     setStatus(err.message, true);
   }
 }
@@ -1103,11 +1209,12 @@ async function loadCompare() {
 function wireModeTabs() {
   const tabs = document.querySelectorAll("#mode-tabs .tab");
   tabs.forEach((tab) => {
-    tab.addEventListener("click", () => setMode(tab.dataset.mode));
+    tab.addEventListener("click", () => setMode(tab.dataset.mode, { syncHash: true, pushHistory: true }));
   });
 }
 
-function setMode(mode) {
+function setMode(mode, options = {}) {
+  const { syncHash = false, pushHistory = false, loadDiff = true } = options;
   currentMode = mode;
   document.querySelectorAll("#mode-tabs .tab").forEach((t) => t.classList.toggle("active", t.dataset.mode === mode));
   document.getElementById("panel-browse").classList.toggle("active", currentMode === "browse");
@@ -1124,7 +1231,8 @@ function setMode(mode) {
     filterInput.placeholder = browseScope === "sampledata" ? "type to filter sample data…" : "type to filter…";
   }
   updateCopyLinkButton();
-  if (currentMode === "compare") loadCompare();
+  if (syncHash) syncUrlHash({ push: pushHistory });
+  if (currentMode === "compare" && loadDiff) loadCompare();
 }
 
 const SCOPE_TITLES = { logs: "DATA LOGS", subtitles: "QUEST SUBTITLES", sampledata: "SAMPLE DATA" };
@@ -1134,23 +1242,17 @@ function wireBrowseContentTabs() {
   const buttons = document.querySelectorAll("#browse-content-tabs .content-tab");
   buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      applyBrowseScope(btn.dataset.content, { resetFilter: true });
+      applyBrowseScope(btn.dataset.content, { resetFilter: true, syncHash: true, pushHistory: true });
     });
   });
 }
 
 function wireCompareContentTabs() {
   const buttons = document.querySelectorAll("#compare-content-tabs .content-tab");
-  const label = document.getElementById("compare-scope-label");
   buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      buttons.forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-      compareScope = btn.dataset.content;
-      document.getElementById("compare-logs").classList.toggle("active", compareScope === "logs");
-      document.getElementById("compare-subtitles").classList.toggle("active", compareScope === "subtitles");
-      document.getElementById("compare-sampledata").classList.toggle("active", compareScope === "sampledata");
-      label.textContent = COMPARE_SCOPE_TITLES[compareScope];
+      applyCompareScope(btn.dataset.content);
+      syncUrlHash({ push: true });
     });
   });
 }
@@ -1159,7 +1261,7 @@ function wireSampleContentTabs() {
   const buttons = document.querySelectorAll("#sampledata-content-tabs .content-tab");
   buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      applySampleScope(btn.dataset.content, { resetFilter: true });
+      applySampleScope(btn.dataset.content, { resetFilter: true, syncHash: true, pushHistory: true });
     });
   });
 }
@@ -1199,6 +1301,17 @@ function wireFilterInput() {
 
 function wireShareLinkButton() {
   document.getElementById("copy-link-btn").addEventListener("click", async () => {
+    if (currentMode === "compare") {
+      try {
+        await copyText(compareShareUrl());
+        setStatus("Compare link copied.");
+        window.setTimeout(() => setStatus(""), 1500);
+      } catch (err) {
+        console.error(err);
+        setStatus("Could not copy compare link.", true);
+      }
+      return;
+    }
     if (currentMode !== "browse" || !currentSelectedEntryKey()) return;
     try {
       await copyText(currentEntryShareUrl());
@@ -1372,17 +1485,26 @@ async function init() {
     return;
   }
 
-  document.getElementById("browse-version").addEventListener("change", (e) => loadBrowseVersion(e.target.value));
-  document.getElementById("compare-from").addEventListener("change", loadCompare);
-  document.getElementById("compare-to").addEventListener("change", loadCompare);
+  document.getElementById("browse-version").addEventListener("change", async (e) => {
+    await loadBrowseVersion(e.target.value);
+    syncUrlHash({ push: true });
+  });
+  document.getElementById("compare-from").addEventListener("change", async () => {
+    syncUrlHash({ push: true });
+    await loadCompare();
+  });
+  document.getElementById("compare-to").addEventListener("change", async () => {
+    syncUrlHash({ push: true });
+    await loadCompare();
+  });
   window.addEventListener("hashchange", () => {
-    applyBrowseHashState().catch((err) => {
+    applyAppHashState().catch((err) => {
       console.error(err);
       setStatus(err.message, true);
     });
   });
 
-  if (!(await applyBrowseHashState())) {
+  if (!(await applyAppHashState())) {
     await loadBrowseVersion(document.getElementById("browse-version").value);
   }
 }

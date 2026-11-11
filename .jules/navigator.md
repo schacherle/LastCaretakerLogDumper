@@ -1,0 +1,5 @@
+# Navigator's Journal
+
+## 2026-11-04 - Static SPA URL Hash Routing & State Transitions
+**Learning:** This repository contains a static frontend (`site/`) hosted on GitHub Pages with no backend routing. Navigation relies exclusively on URL hash query strings (e.g. `#mode=browse&scope=logs...`) and GitHub API / raw content fetching. When compare mode or browse scopes are changed, deep links and browser back/forward transitions must cleanly synchronize URL hash state without overwriting history indiscriminately (`replaceState` for active selection/sub-state vs `pushState` for intentional user navigations) and validate every parameter to prevent unhandled runtime errors on invalid SHAs, missing keys, or unsupported scopes.
+**Action:** Always parse and validate route parameters against known schemas (`mode`, `scope`, `sampleScope`, `from`, `to`, `entry`), provide fallbacks on invalid route parameters, and coordinate loading/error/empty state transitions during version loading and diff generation.
