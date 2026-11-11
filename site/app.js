@@ -4,6 +4,14 @@
 // so the repo this site should read from can be read straight off the URL instead of
 // hardcoded -- the same app.js works unmodified on any fork's Pages deployment. Falls
 // back to this repo for local testing (file://, localhost) where that pattern doesn't apply.
+/**
+ * Determines the target GitHub repository (owner/repo) based on URL params or Pages hostname.
+ *
+ * Checks for a '?repo=' query parameter override first, then matches against
+ * '<owner>.github.io/<repo>/'. Returns null if not detected.
+ *
+ * @returns {string|null} The GitHub 'owner/repo' identifier or null if undetermined.
+ */
 function detectRepo() {
   const override = new URLSearchParams(location.search).get("repo");
   if (override) return override;
@@ -54,47 +62,105 @@ let brt = 100, con = 100, sat = 100;
 
 // ---------- helpers ----------
 
+/**
+ * Escapes special HTML characters in a string to prevent XSS injection.
+ *
+ * @param {string|number|null|undefined} str - The raw string or value to escape.
+ * @returns {string} Sanitized string with HTML entities escaped.
+ */
 function escapeHtml(str) {
   return String(str ?? "").replace(/[&<>"']/g, (c) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   }[c]));
 }
 
+/**
+ * Formats a duration in seconds into a single-decimal-place string representation.
+ *
+ * @param {number|null|undefined} d - Duration in seconds.
+ * @returns {string} Formatted duration string (e.g. '1.5s') or empty string if invalid.
+ */
 function formatDuration(d) {
   return typeof d === "number" ? `${d.toFixed(1)}s` : "";
 }
 
+/**
+ * Extracts the YYYY-MM-DD date prefix from an ISO timestamp string.
+ *
+ * @param {string|null|undefined} iso - ISO date-time string.
+ * @returns {string} Date string in YYYY-MM-DD format, or empty string.
+ */
 function formatDate(iso) {
   return iso ? iso.slice(0, 10) : "";
 }
 
+/**
+ * Extracts and truncates the first line of a multiline git commit message.
+ *
+ * @param {string|null|undefined} msg - Full git commit message.
+ * @returns {string} The first line, truncated to 70 characters with an ellipsis if longer.
+ */
 function firstLine(msg) {
   const line = (msg || "").split("\n")[0];
   return line.length > 70 ? line.slice(0, 67) + "…" : line;
 }
 
+/**
+ * Retrieves the current raw value entered in the terminal filter input element.
+ *
+ * @returns {string} Current filter text, or empty string if element is missing.
+ */
 function currentFilterValue() {
   return document.getElementById("filter-input")?.value || "";
 }
 
+/**
+ * Normalizes whitespace in user-selected text by collapsing consecutive spaces and trimming edges.
+ *
+ * @param {string|null|undefined} text - Raw selection text.
+ * @returns {string} Cleaned and whitespace-collapsed text.
+ */
 function normalizeSelectedText(text) {
   return String(text || "").replace(/\s+/g, " ").trim();
 }
 
+/**
+ * Normalizes selection text and truncates it to a maximum of 200 characters for deep linking.
+ *
+ * @param {string|null|undefined} text - Raw selection text.
+ * @returns {string} Truncated and normalized selection text.
+ */
 function trimmedSelectionText(text) {
   const normalized = normalizeSelectedText(text);
   return normalized.length > 200 ? `${normalized.slice(0, 197)}…` : normalized;
 }
 
+/**
+ * Converts a value to a safe string representation for URL hash query parameters.
+ *
+ * @param {*} value - The value to convert.
+ * @returns {string} String representation or empty string if null or undefined.
+ */
 function hashValue(value) {
   return value == null ? "" : String(value);
 }
 
+/**
+ * Escapes a string for safe usage in CSS query selectors, falling back to regex escaping if CSS.escape is unavailable.
+ *
+ * @param {*} value - The attribute value or identifier to escape.
+ * @returns {string} CSS-escaped selector string.
+ */
 function selectorValue(value) {
   if (typeof CSS !== "undefined" && typeof CSS.escape === "function") return CSS.escape(String(value));
   return String(value).replace(/["\\]/g, "\\$&");
 }
 
+/**
+ * Updates DOM visibility classes and headers when switching browse scope.
+ *
+ * @param {'logs'|'subtitles'|'sampledata'} scope - The newly active content category.
+ */
 function setBrowseModeUi(scope) {
   const title = document.getElementById("list-screen-title");
   document.querySelectorAll("#browse-content-tabs .content-tab").forEach((btn) => {
@@ -109,12 +175,24 @@ function setBrowseModeUi(scope) {
   title.textContent = SCOPE_TITLES[scope];
 }
 
+/**
+ * Updates active class styling on sample data subcategory filter tabs.
+ *
+ * @param {'all'|'field'|'cave'} scope - Subcategory filter to activate.
+ */
 function setSampleScopeUi(scope) {
   document.querySelectorAll("#sampledata-content-tabs .content-tab").forEach((btn) => {
     btn.classList.toggle("active", btn.dataset.content === scope);
   });
 }
 
+/**
+ * Switches the active Browse mode content scope (logs, subtitles, or sample data) and refreshes views.
+ *
+ * @param {'logs'|'subtitles'|'sampledata'} scope - Target content category.
+ * @param {object} [options={}] - Options object.
+ * @param {boolean} [options.resetFilter=true] - Whether to clear the terminal filter input.
+ */
 function applyBrowseScope(scope, options = {}) {
   if (!SCOPE_TITLES[scope]) return;
   const { resetFilter = true } = options;
@@ -131,6 +209,13 @@ function applyBrowseScope(scope, options = {}) {
   updateCopyLinkButton();
 }
 
+/**
+ * Switches the sample data subcategory filter ('all', 'field', or 'cave') and re-renders the list.
+ *
+ * @param {'all'|'field'|'cave'} scope - Target subcategory filter.
+ * @param {object} [options={}] - Options object.
+ * @param {boolean} [options.resetFilter=true] - Whether to clear the terminal filter input.
+ */
 function applySampleScope(scope, options = {}) {
   if (!["all", "field", "cave"].includes(scope)) return;
   const { resetFilter = true } = options;
@@ -140,36 +225,76 @@ function applySampleScope(scope, options = {}) {
   renderSampleList(currentFilterValue());
 }
 
+/**
+ * Retrieves the unique identifier or key of the currently selected entry in Browse mode.
+ *
+ * @returns {string|null} Active entry key (log id, subtitle group key, or sample id).
+ */
 function currentSelectedEntryKey() {
   if (browseScope === "logs") return selectedLogKey;
   if (browseScope === "subtitles") return selectedSubKey;
   return selectedSampleKey;
 }
 
+/**
+ * Retrieves the currently selected item object from the filtered collection in Browse mode.
+ *
+ * @returns {object|null} Active entry object or null if none is selected.
+ */
 function currentSelectedEntry() {
   if (browseScope === "logs") return filteredLogs[selectedLogIdx] || null;
   if (browseScope === "subtitles") return filteredSubGroups[selectedSubIdx] || null;
   return filteredSamples[selectedSampleIdx] || null;
 }
 
+/**
+ * Generates an anchor page key for a voyage log fragment.
+ *
+ * @param {object|null} fragment - The voyage log fragment object.
+ * @param {number} index - Index of the fragment in the parent log.
+ * @returns {string} Unique page key in 'page:<id>' or 'page:<index>' format.
+ */
 function logPageKey(fragment, index) {
   return fragment && fragment.id ? `page:${fragment.id}` : `page:${index + 1}`;
 }
 
+/**
+ * Generates an anchor page key for a quest subtitle dialogue line.
+ *
+ * @param {object|null} item - Subtitle item object.
+ * @returns {string} Unique part key in 'part:<Name>' format.
+ */
 function subtitlePageKey(item) {
   return `part:${item?.Name || ""}`;
 }
 
+/**
+ * Returns the currently active detail pane DOM element based on active browse scope.
+ *
+ * @returns {HTMLElement|null} The DOM element for the active detail pane.
+ */
 function getActiveDetailPane() {
   return browseScope === "sampledata"
     ? document.getElementById("sampledata-detail-pane")
     : document.getElementById("detail-pane");
 }
 
+/**
+ * Truncates a 40-character git commit SHA to its 7-character short form.
+ *
+ * @param {string|null|undefined} sha - Full git commit SHA.
+ * @returns {string} Short 7-character commit SHA.
+ */
 function shortSha(sha) {
   return String(sha || "").slice(0, 7);
 }
 
+/**
+ * Resolves a full or abbreviated git commit SHA against known repository versions.
+ *
+ * @param {string} version - Exact or prefix git commit SHA.
+ * @returns {string} Full 40-character SHA if resolved, or empty string.
+ */
 function resolveVersionSha(version) {
   if (!version) return "";
   const exact = versions.find((v) => v.sha === version);
@@ -178,6 +303,14 @@ function resolveVersionSha(version) {
   return matches.length === 1 ? matches[0].sha : "";
 }
 
+/**
+ * Constructs the URL hash string representing the current Browse mode navigation state.
+ *
+ * @param {object} [extra={}] - Additional deep-link state properties.
+ * @param {string} [extra.page] - Target fragment or dialogue line page key.
+ * @param {string} [extra.text] - Selected text snippet to highlight.
+ * @returns {string} Serialized URLSearchParams query string for the hash.
+ */
 function buildBrowseHash(extra = {}) {
   const params = new URLSearchParams();
   params.set("mode", "browse");
@@ -192,6 +325,11 @@ function buildBrowseHash(extra = {}) {
   return params.toString();
 }
 
+/**
+ * Replaces the browser URL hash with serialized Browse mode state without triggering page scroll.
+ *
+ * @param {object} [extra={}] - Additional deep-link state properties.
+ */
 function writeBrowseHash(extra = {}) {
   if (isApplyingHashState || currentMode !== "browse") return;
   const hash = buildBrowseHash(extra);
@@ -199,6 +337,11 @@ function writeBrowseHash(extra = {}) {
   history.replaceState(null, "", `${location.pathname}${location.search}${suffix}`);
 }
 
+/**
+ * Parses and validates the current window location hash into structured Browse mode state.
+ *
+ * @returns {object|null} Parsed state object or null if hash is empty or not in browse mode.
+ */
 function parseBrowseHash() {
   const raw = location.hash.replace(/^#/, "");
   if (!raw) return null;
@@ -216,17 +359,30 @@ function parseBrowseHash() {
   };
 }
 
+/**
+ * Scrolls the currently selected entry element in the active master list into view.
+ */
 function scrollSelectedEntryIntoView() {
   if (browseScope === "logs") document.querySelector("#logs-list .entry.selected")?.scrollIntoView({ block: "nearest" });
   else if (browseScope === "subtitles") document.querySelector("#subs-list .entry.selected")?.scrollIntoView({ block: "nearest" });
   else document.querySelector("#sampledata-list .entry.selected")?.scrollIntoView({ block: "nearest" });
 }
 
+/**
+ * Clears any active DOM text selection ranges in the browser window.
+ */
 function clearCopiedSelection() {
   const selection = window.getSelection();
   if (selection && typeof selection.removeAllRanges === "function") selection.removeAllRanges();
 }
 
+/**
+ * Searches a DOM subtree using TreeWalker for a text node containing the target snippet across normalized whitespace.
+ *
+ * @param {Node} root - Root DOM element to search within.
+ * @param {string} snippet - Text snippet to match.
+ * @returns {{ node: Text, start: number, end: number }|null} Matched text node and index offsets, or null.
+ */
 function findTextNodeMatch(root, snippet) {
   const needle = normalizeSelectedText(snippet).toLowerCase();
   if (!root || !needle) return null;
@@ -261,6 +417,11 @@ function findTextNodeMatch(root, snippet) {
   return null;
 }
 
+/**
+ * Removes all linked text highlight `<mark>` elements within the given root element, unwrapping child text.
+ *
+ * @param {HTMLElement|null} root - Root container element.
+ */
 function clearLinkedTextMarks(root) {
   if (!root) return;
   root.querySelectorAll("mark.link-mark").forEach((mark) => {
@@ -272,6 +433,13 @@ function clearLinkedTextMarks(root) {
   });
 }
 
+/**
+ * Finds a matching text snippet in the DOM container, wraps it in a `<mark class="link-mark">`, and scrolls it into view.
+ *
+ * @param {HTMLElement|null} root - Root DOM element to search.
+ * @param {string} text - Text snippet to highlight.
+ * @returns {boolean} True if a match was found and highlighted, false otherwise.
+ */
 function highlightLinkedText(root, text) {
   clearLinkedTextMarks(root);
   const match = findTextNodeMatch(root, text);
@@ -286,6 +454,11 @@ function highlightLinkedText(root, text) {
   return true;
 }
 
+/**
+ * Scrolls to a targeted page section or highlights specific linked text in the detail pane based on parsed hash state.
+ *
+ * @param {object} state - Parsed browse hash state object containing page and text properties.
+ */
 function focusBrowseHashTarget(state) {
   const pane = getActiveDetailPane();
   if (!pane) return;
@@ -298,6 +471,11 @@ function focusBrowseHashTarget(state) {
   if (state.text) highlightLinkedText(target, state.text) || highlightLinkedText(pane, state.text);
 }
 
+/**
+ * Extracts active text selection context from the detail screen including enclosing fragment page key and trimmed text.
+ *
+ * @returns {{ page: string, text: string }|null} Selection context object or null if invalid or collapsed.
+ */
 function getDetailSelectionContext() {
   if (currentMode !== "browse") return null;
   const pane = getActiveDetailPane();
@@ -318,19 +496,41 @@ function getDetailSelectionContext() {
   };
 }
 
+/**
+ * Generates an absolute shareable URL including the current origin, path, and encoded Browse mode hash parameters.
+ *
+ * @param {object} [extra={}] - Additional hash state parameters to include.
+ * @returns {string} Absolute shareable URL string.
+ */
 function browseShareUrl(extra = {}) {
   const hash = buildBrowseHash(extra);
   return `${location.origin}${location.pathname}${location.search}#${hash}`;
 }
 
+/**
+ * Generates an absolute shareable deep-link URL pointing to the currently selected master entry.
+ *
+ * @returns {string} Absolute deep-link URL.
+ */
 function currentEntryShareUrl() {
   return browseShareUrl();
 }
 
+/**
+ * Generates an absolute shareable deep-link URL pointing to the active text selection or context in the detail screen.
+ *
+ * @returns {string} Absolute deep-link URL targeting the selected text snippet.
+ */
 function currentSelectionShareUrl() {
   return browseShareUrl(activeSelectionContext || getDetailSelectionContext() || {});
 }
 
+/**
+ * Copies plain text to the system clipboard using the modern Clipboard API with fallback to textarea execCommand.
+ *
+ * @param {string} text - Text string to copy to the clipboard.
+ * @returns {Promise<void>} Resolves when text is copied.
+ */
 async function copyText(text) {
   if (navigator.clipboard?.writeText) {
     await navigator.clipboard.writeText(text);
@@ -347,6 +547,9 @@ async function copyText(text) {
   document.body.removeChild(input);
 }
 
+/**
+ * Updates the disabled state and label of the terminal 'COPY ENTRY LINK' button.
+ */
 function updateCopyLinkButton() {
   const btn = document.getElementById("copy-link-btn");
   if (!btn) return;
@@ -355,20 +558,40 @@ function updateCopyLinkButton() {
   btn.textContent = "COPY ENTRY LINK";
 }
 
+/**
+ * Hides the floating text selection link button and clears active selection context.
+ */
 function hideSelectionLinkButton() {
   activeSelectionContext = null;
   document.getElementById("selection-link-btn")?.classList.add("hidden");
 }
 
+/**
+ * Determines the target bounding rectangle for positioning the floating link button next to a selection range.
+ *
+ * @param {Range} range - DOM selection Range.
+ * @returns {DOMRect} Bounding client rect.
+ */
 function selectionButtonRect(range) {
   const rects = Array.from(range.getClientRects());
   return rects[rects.length - 1] || range.getBoundingClientRect();
 }
 
+/**
+ * Restricts a numeric value to a specified minimum and maximum boundary.
+ *
+ * @param {number} value - Input number.
+ * @param {number} min - Minimum allowed value.
+ * @param {number} max - Maximum allowed value.
+ * @returns {number} Clamped number.
+ */
 function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
 
+/**
+ * Repositions and displays the floating 🔗 link button adjacent to the active text selection in the detail pane.
+ */
 function updateSelectionLinkButton() {
   const btn = document.getElementById("selection-link-btn");
   if (!btn) return;
@@ -396,12 +619,22 @@ function updateSelectionLinkButton() {
   btn.style.top = `${top}px`;
 }
 
+/**
+ * Synchronizes the URL hash and button states with the currently selected entry and text context.
+ */
 function syncBrowseSelectionHash() {
   writeBrowseHash();
   updateCopyLinkButton();
   updateSelectionLinkButton();
 }
 
+/**
+ * Selects an entry in the specified scope by its unique key and re-renders lists.
+ *
+ * @param {'logs'|'subtitles'|'sampledata'} scope - Content scope.
+ * @param {string} key - Unique entry key to select.
+ * @returns {boolean} True if the entry was found and selected, false otherwise.
+ */
 function selectBrowseEntryByKey(scope, key) {
   if (!key) return false;
   if (scope === "logs") {
@@ -419,6 +652,11 @@ function selectBrowseEntryByKey(scope, key) {
   return !!filteredSamples[selectedSampleIdx] && filteredSamples[selectedSampleIdx].id === key;
 }
 
+/**
+ * Reads the current URL hash fragment and applies mode, scope, version, entry selection, and text highlighting.
+ *
+ * @returns {Promise<boolean>} Resolves to true if a valid browse hash was parsed and applied, false otherwise.
+ */
 async function applyBrowseHashState() {
   const state = parseBrowseHash();
   if (!state) return false;
@@ -445,6 +683,12 @@ async function applyBrowseHashState() {
   }
 }
 
+/**
+ * Displays or clears status and error messages in the terminal status overlay bar.
+ *
+ * @param {string} text - Message text to display, or empty string to hide status.
+ * @param {boolean} [isError=false] - Whether this status represents an error.
+ */
 function setStatus(text, isError) {
   const el = document.getElementById("status");
   if (!text) {
@@ -456,6 +700,12 @@ function setStatus(text, isError) {
   el.classList.toggle("error", !!isError);
 }
 
+/**
+ * Decodes a raw ArrayBuffer into a JavaScript string, handling UTF-16 LE/BE and UTF-8 BOM encodings.
+ *
+ * @param {ArrayBuffer} buf - Raw binary buffer from network response.
+ * @returns {string} Decoded string content.
+ */
 function decodeArrayBuffer(buf) {
   const bytes = new Uint8Array(buf);
   if (bytes[0] === 0xff && bytes[1] === 0xfe) {
@@ -470,6 +720,14 @@ function decodeArrayBuffer(buf) {
   return new TextDecoder("utf-8").decode(buf);
 }
 
+/**
+ * Fetches a raw file from GitHub at a specific commit SHA with in-memory caching and BOM-aware decoding.
+ *
+ * @param {string} path - Repository relative file path.
+ * @param {string} sha - 40-character git commit SHA.
+ * @returns {Promise<*|null>} Parsed JSON content or null if 404 Not Found.
+ * @throws {Error} If network request fails with a status other than 404.
+ */
 async function fetchFileAtSha(path, sha) {
   const key = `${sha}:${path}`;
   if (fileCache.has(key)) return fileCache.get(key);
@@ -488,12 +746,24 @@ async function fetchFileAtSha(path, sha) {
   return json;
 }
 
+/**
+ * Normalizes voyage log dump JSON structures into a consistent object containing buildNumber and logs array.
+ *
+ * @param {Array|object|null} json - Raw parsed JSON data from voyage_logs_dump.json.
+ * @returns {{ buildNumber: number|string|null, logs: Array<object> }} Normalized logs data.
+ */
 function normalizeLogs(json) {
   if (!json) return { buildNumber: null, logs: [] };
   if (Array.isArray(json)) return { buildNumber: null, logs: json };
   return { buildNumber: json.build_number || null, logs: json.data || [] };
 }
 
+/**
+ * Normalizes raw JSON dump data that may be wrapped in an object `{ data: [...] }` or returned directly as an array.
+ *
+ * @param {Array|object|null} json - Raw parsed JSON data.
+ * @returns {Array<object>} Array of items.
+ */
 function normalizeArrayJson(json) {
   if (!json) return [];
   if (Array.isArray(json)) return json;
@@ -506,21 +776,45 @@ function normalizeArrayJson(json) {
 // leading digits are used for ordering within a group.
 const SUBTITLE_PART_RE = /^(.*)-(\d.*)$/;
 
+/**
+ * Extracts the storyline group key from a quest subtitle asset name (e.g. 'CU3_3' from 'CU3_3-1').
+ *
+ * @param {string|null|undefined} name - Asset Name string.
+ * @returns {string} Group identifier key.
+ */
 function subtitleGroupKey(name) {
   const m = SUBTITLE_PART_RE.exec(name || "");
   return m ? m[1] : (name || "");
 }
 
+/**
+ * Extracts the part label suffix from a quest subtitle asset name (e.g. '1' from 'CU3_3-1').
+ *
+ * @param {string|null|undefined} name - Asset Name string.
+ * @returns {string} Part label string.
+ */
 function subtitlePartLabel(name) {
   const m = SUBTITLE_PART_RE.exec(name || "");
   return m ? m[2] : "";
 }
 
+/**
+ * Parses the leading numeric index from a subtitle part label for numerical sorting.
+ *
+ * @param {string|null|undefined} name - Asset Name string.
+ * @returns {number} Integer part number, or 0 if unparseable.
+ */
 function subtitlePartNumber(name) {
   const n = parseInt(subtitlePartLabel(name), 10);
   return Number.isNaN(n) ? 0 : n;
 }
 
+/**
+ * Groups flat quest subtitle records by storyline prefix and calculates total duration per storyline.
+ *
+ * @param {Array<object>} subs - Flat array of subtitle dialogue objects.
+ * @returns {Array<{ key: string, items: Array<object>, totalDuration: number }>} Grouped subtitle storylines.
+ */
 function groupSubtitles(subs) {
   const order = [];
   const byKey = new Map();
@@ -541,6 +835,13 @@ function groupSubtitles(subs) {
 
 // ---------- commit history ----------
 
+/**
+ * Queries GitHub REST API to retrieve full commit history touching a specific repository file path.
+ *
+ * @param {string} path - Relative repository path to query history for.
+ * @returns {Promise<Array<{ sha: string, message: string, date: string }>>} List of commit summary objects.
+ * @throws {Error} If GitHub API request fails.
+ */
 async function fetchCommitsForPath(path) {
   const commits = [];
   for (let page = 1; ; page++) {
@@ -560,6 +861,11 @@ async function fetchCommitsForPath(path) {
   return commits;
 }
 
+/**
+ * Aggregates and deduplicates commit history across all tracked data files, sorted newest to oldest.
+ *
+ * @returns {Promise<Array<{ sha: string, message: string, date: string }>>} Sorted list of version commits.
+ */
 async function buildVersionList() {
   const [logCommits, subCommits, sampleTextCommits, sampleDataCommits] = await Promise.all([
     fetchCommitsForPath(PATHS.logs),
@@ -574,6 +880,9 @@ async function buildVersionList() {
   return [...bySha.values()].sort((a, b) => new Date(b.date) - new Date(a.date));
 }
 
+/**
+ * Populates HTML select dropdown elements for Browse and Compare mode versions.
+ */
 function populateVersionSelects() {
   const optionsHtml = versions
     .map((v) => `<option value="${v.sha}">${escapeHtml(formatDate(v.date))} · ${escapeHtml(firstLine(v.message))} (${v.sha.slice(0, 7)})</option>`)
@@ -588,6 +897,15 @@ function populateVersionSelects() {
 
 // ---------- browse: master list rendering ----------
 
+/**
+ * Generates the HTML template string for a single entry row in a master list screen.
+ *
+ * @param {number} idx - Index of the entry in the filtered array.
+ * @param {string} title - Entry display title.
+ * @param {string} badge - Secondary metadata badge text (e.g. page count).
+ * @param {boolean} isSelected - Whether the entry is currently selected.
+ * @returns {string} Rendered HTML string.
+ */
 function entryRowHtml(idx, title, badge, isSelected) {
   return `<div class="entry ${isSelected ? "selected" : ""}" data-idx="${idx}">
     <span class="entry-title">${escapeHtml(title) || "<em>(untitled)</em>"}</span>
@@ -595,6 +913,11 @@ function entryRowHtml(idx, title, badge, isSelected) {
   </div>`;
 }
 
+/**
+ * Filters and renders voyage log items in the Browse mode master list screen.
+ *
+ * @param {string} filterText - Search query string.
+ */
 function renderBrowseLogs(filterText) {
   const term = (filterText || "").toLowerCase();
   filteredLogs = currentBrowseLogs.filter(
@@ -625,6 +948,11 @@ function renderBrowseLogs(filterText) {
   }
 }
 
+/**
+ * Filters and renders quest subtitle storyline groups in the Browse mode master list screen.
+ *
+ * @param {string} filterText - Search query string.
+ */
 function renderBrowseSubs(filterText) {
   const term = (filterText || "").toLowerCase();
   const groups = groupSubtitles(currentBrowseSubs);
@@ -662,6 +990,9 @@ function renderBrowseSubs(filterText) {
 
 // ---------- browse: detail pane rendering ----------
 
+/**
+ * Renders the full details and fragments of the currently selected voyage log in the detail screen.
+ */
 function renderLogDetail() {
   const pane = document.getElementById("detail-pane");
   const log = filteredLogs[selectedLogIdx];
@@ -686,6 +1017,9 @@ function renderLogDetail() {
   `;
 }
 
+/**
+ * Renders the dialogue sequence lines and duration metrics of the selected quest subtitle group.
+ */
 function renderSubDetail() {
   const pane = document.getElementById("detail-pane");
   const group = filteredSubGroups[selectedSubIdx];
@@ -709,6 +1043,9 @@ function renderSubDetail() {
   `;
 }
 
+/**
+ * Dispatches detail screen rendering according to the currently active Browse mode scope.
+ */
 function renderDetail() {
   if (browseScope === "logs") renderLogDetail();
   else if (browseScope === "subtitles") renderSubDetail();
@@ -719,6 +1056,13 @@ function renderDetail() {
 // entirely). voyage_sampledata_text_dump.json is dumped straight from the game at
 // each version, so its sentDescription is the source of truth for `unlock` -- it's
 // merged in here rather than trusted from the curated file.
+/**
+ * Enriches curated sample data objects with authoritative unlock descriptions from game text dumps.
+ *
+ * @param {Array<object>} samples - Hand-curated sample data entries.
+ * @param {Array<object>} textDump - Authoritative raw sample text records dumped from game engine.
+ * @returns {Array<object>} Merged sample data records.
+ */
 function mergeSampleDataText(samples, textDump) {
   const byId = new Map();
   for (const t of textDump) byId.set(t.id, t);
@@ -728,6 +1072,12 @@ function mergeSampleDataText(samples, textDump) {
   });
 }
 
+/**
+ * Loads all data dumps for a specific commit SHA in Browse mode and re-renders lists and detail panes.
+ *
+ * @param {string} sha - Git commit SHA to load.
+ * @returns {Promise<void>} Resolves when version data is loaded and rendered.
+ */
 async function loadBrowseVersion(sha) {
   setStatus("Loading version…");
   currentBrowseSha = sha;
@@ -761,12 +1111,24 @@ async function loadBrowseVersion(sha) {
 
 // ---------- sample data ----------
 
+/**
+ * Formats a sample data item identifier into a standardized code (e.g. 'SD-013' or 'CAVE-502').
+ *
+ * @param {object} it - Sample data item record.
+ * @returns {string} Formatted sample code string.
+ */
 function sampleCode(it) {
   return it.collection === "cave"
     ? `CAVE-${String(it.id.replace("CavePainting_", "")).padStart(3, "0")}`
     : `SD-${String(it.id).padStart(3, "0")}`;
 }
 
+/**
+ * Returns a human-readable discovery location label for a sample data collectible.
+ *
+ * @param {object} it - Sample data item record.
+ * @returns {string} Location name or 'Orbit archive' for cave paintings.
+ */
 function sampleSiteLabel(it) {
   return it.collection === "cave" ? "Orbit archive" : it.site || "—";
 }
@@ -775,11 +1137,22 @@ function sampleSiteLabel(it) {
 // the *_dump.json files -- raw.githubusercontent.com works directly as an <img> src,
 // no fetch/decode needed, and it's naturally version-aware like the JSON dumps (not
 // every id has art, e.g. "Bed on Wheels" -- a 404 there is expected, not a bug).
+/**
+ * Constructs the raw GitHub URL for a sample collectible's thumbnail image at the current commit SHA.
+ *
+ * @param {object} it - Sample data item record.
+ * @returns {string|null} Full image URL string or null if no SHA is selected.
+ */
 function sampleImageUrl(it) {
   if (!currentBrowseSha) return null;
   return `https://raw.githubusercontent.com/${REPO}/${currentBrowseSha}/${PATHS.sampleImagesDir}/SampleData_${it.id}.png`;
 }
 
+/**
+ * Filters and renders sample collectible cards in the Browse mode master list.
+ *
+ * @param {string} filterText - Search query string.
+ */
 function renderSampleList(filterText) {
   const term = (filterText || "").toLowerCase();
   filteredSamples = sampleData.filter((it) => {
@@ -810,6 +1183,9 @@ function renderSampleList(filterText) {
   }
 }
 
+/**
+ * Renders collectible artwork, field reading notes, and encrypted/decrypted memory lore in the detail screen.
+ */
 function renderSampleDetail() {
   const pane = document.getElementById("sampledata-detail-pane");
   const it = filteredSamples[selectedSampleIdx];
@@ -874,6 +1250,11 @@ function renderSampleDetail() {
   }
 }
 
+/**
+ * Decrypts and unlocks hidden lore memory text for a specific sample data item.
+ *
+ * @param {string} id - Sample data item ID.
+ */
 function unlockSample(id) {
   const it = sampleData.find((s) => s.id === id);
   if (!it || !it.unlock) return;
@@ -884,6 +1265,13 @@ function unlockSample(id) {
 
 // ---------- diffing ----------
 
+/**
+ * Computes a word-by-word visual diff using jsdiff, rendering `<ins>` and `<del>` tags for changes.
+ *
+ * @param {string} oldText - Baseline text string.
+ * @param {string} newText - Updated text string.
+ * @returns {string} HTML string containing formatted diff markup.
+ */
 function renderWordDiff(oldText, newText) {
   oldText = oldText || "";
   newText = newText || "";
@@ -901,6 +1289,14 @@ function renderWordDiff(oldText, newText) {
     .join("");
 }
 
+/**
+ * Compares two lists of objects by a unique key function, returning added, removed, and changed sets.
+ *
+ * @param {Array<object>} fromList - Baseline items list.
+ * @param {Array<object>} toList - Target items list.
+ * @param {function(object): string} keyFn - Function returning unique string key for an item.
+ * @returns {{ added: Array<object>, removed: Array<object>, changed: Array<{ key: string, from: object, to: object }> }}
+ */
 function diffByKey(fromList, toList, keyFn) {
   const fromMap = new Map(fromList.map((x) => [keyFn(x), x]));
   const toMap = new Map(toList.map((x) => [keyFn(x), x]));
@@ -916,6 +1312,13 @@ function diffByKey(fromList, toList, keyFn) {
   return { added, removed, changed };
 }
 
+/**
+ * Computes and renders HTML diff markup for fragments belonging to a voyage log.
+ *
+ * @param {object} fromLog - Baseline log object.
+ * @param {object} toLog - Target log object.
+ * @returns {string} Rendered HTML diff string for fragments.
+ */
 function renderFragmentDiff(fromLog, toLog) {
   const { added, removed, changed } = diffByKey(fromLog.fragments || [], toLog.fragments || [], (f) => f.id);
   if (!added.length && !removed.length && !changed.length) return "";
@@ -931,6 +1334,13 @@ function renderFragmentDiff(fromLog, toLog) {
   return parts.join("");
 }
 
+/**
+ * Renders an individual difference card for an added, removed, or modified voyage log.
+ *
+ * @param {'added'|'removed'|'changed'} kind - Type of diff change.
+ * @param {object} log - Log record or change pair.
+ * @returns {string} Rendered diff card HTML.
+ */
 function renderLogDiffCard(kind, log) {
   if (kind === "added") {
     return `<div class="diff-card added"><span class="diff-tag added">Added</span><span class="id-tag">${escapeHtml(log.id)}</span>
@@ -953,6 +1363,12 @@ function renderLogDiffCard(kind, log) {
   </div>`;
 }
 
+/**
+ * Computes and renders the full structural and textual diff between two versions of voyage logs.
+ *
+ * @param {Array<object>} fromLogs - Baseline voyage logs array.
+ * @param {Array<object>} toLogs - Target voyage logs array.
+ */
 function renderLogsDiff(fromLogs, toLogs) {
   const { added, removed, changed } = diffByKey(fromLogs, toLogs, (l) => l.id);
   const container = document.getElementById("compare-logs");
@@ -976,6 +1392,13 @@ function renderLogsDiff(fromLogs, toLogs) {
   container.innerHTML = html;
 }
 
+/**
+ * Renders an individual difference card for an added, removed, or modified quest subtitle line.
+ *
+ * @param {'added'|'removed'|'changed'} kind - Type of diff change.
+ * @param {object} item - Subtitle line record or change pair.
+ * @returns {string} Rendered diff card HTML.
+ */
 function renderSubDiffCard(kind, item) {
   if (kind === "added") {
     return `<div class="diff-card added"><span class="diff-tag added">Added</span><span class="id-tag">${escapeHtml(item.Name)}</span> ${formatDuration(item.Duration)}
@@ -991,6 +1414,12 @@ function renderSubDiffCard(kind, item) {
     <p>${renderWordDiff(item.from.Subtitle, item.to.Subtitle)}</p></div>`;
 }
 
+/**
+ * Computes and renders the full structural and textual diff between two versions of quest subtitles.
+ *
+ * @param {Array<object>} fromSubs - Baseline quest subtitles array.
+ * @param {Array<object>} toSubs - Target quest subtitles array.
+ */
 function renderSubsDiff(fromSubs, toSubs) {
   const { added, removed, changed } = diffByKey(fromSubs, toSubs, (s) => s.Name);
   const container = document.getElementById("compare-subtitles");
@@ -1014,6 +1443,13 @@ function renderSubsDiff(fromSubs, toSubs) {
   container.innerHTML = html;
 }
 
+/**
+ * Renders an individual difference card for an added, removed, or modified sample data item.
+ *
+ * @param {'added'|'removed'|'changed'} kind - Type of diff change.
+ * @param {object} item - Sample text record or change pair.
+ * @returns {string} Rendered diff card HTML.
+ */
 function renderSampleTextDiffCard(kind, item) {
   if (kind === "added") {
     return `<div class="diff-card added"><span class="diff-tag added">Added</span><span class="id-tag">${escapeHtml(item.id)}</span>
@@ -1037,17 +1473,36 @@ function renderSampleTextDiffCard(kind, item) {
 // Sample data ids come from FindAllOf()'s arbitrary traversal order (unlike logs/
 // subtitles, which are already author-ordered), e.g. "DA_SampleData_131" right
 // before "DA_SampleData_104" -- so sort numerically for a stable, readable diff.
+/**
+ * Computes numerical sorting tuple for sample data IDs to ensure stable diff ordering.
+ *
+ * @param {string} id - Raw sample data identifier.
+ * @returns {[number, number]} Sorting tuple [categoryWeight, numericId].
+ */
 function sampleIdSortKey(id) {
   const m = /^DA_SampleData_(?:(CavePainting)_)?(\d+)$/.exec(id || "");
   return m ? [m[1] ? 1 : 0, parseInt(m[2], 10)] : [2, 0];
 }
 
+/**
+ * Comparator function to sort sample data IDs numerically.
+ *
+ * @param {string} a - First sample data ID.
+ * @param {string} b - Second sample data ID.
+ * @returns {number} Comparison result (-1, 0, 1).
+ */
 function compareSampleIds(a, b) {
   const ka = sampleIdSortKey(a);
   const kb = sampleIdSortKey(b);
   return ka[0] - kb[0] || ka[1] - kb[1];
 }
 
+/**
+ * Computes and renders the full structural and textual diff between two versions of sample data text.
+ *
+ * @param {Array<object>} fromItems - Baseline sample text items.
+ * @param {Array<object>} toItems - Target sample text items.
+ */
 function renderSampleTextDiff(fromItems, toItems) {
   const { added, removed, changed } = diffByKey(fromItems, toItems, (s) => s.id);
   added.sort((a, b) => compareSampleIds(a.id, b.id));
@@ -1074,6 +1529,11 @@ function renderSampleTextDiff(fromItems, toItems) {
   container.innerHTML = html;
 }
 
+/**
+ * Fetches data artifacts for 'From' and 'To' commit SHAs and renders diff views across all scopes.
+ *
+ * @returns {Promise<void>} Resolves when diff comparison is completed and rendered.
+ */
 async function loadCompare() {
   const fromSha = document.getElementById("compare-from").value;
   const toSha = document.getElementById("compare-to").value;
@@ -1100,6 +1560,9 @@ async function loadCompare() {
 
 // ---------- toolbar wiring ----------
 
+/**
+ * Binds event listeners to Browse and Compare top-level navigation tabs.
+ */
 function wireModeTabs() {
   const tabs = document.querySelectorAll("#mode-tabs .tab");
   tabs.forEach((tab) => {
@@ -1107,6 +1570,11 @@ function wireModeTabs() {
   });
 }
 
+/**
+ * Switches the active UI application mode between 'browse' and 'compare'.
+ *
+ * @param {'browse'|'compare'} mode - Target application mode.
+ */
 function setMode(mode) {
   currentMode = mode;
   document.querySelectorAll("#mode-tabs .tab").forEach((t) => t.classList.toggle("active", t.dataset.mode === mode));
@@ -1130,6 +1598,9 @@ function setMode(mode) {
 const SCOPE_TITLES = { logs: "DATA LOGS", subtitles: "QUEST SUBTITLES", sampledata: "SAMPLE DATA" };
 const COMPARE_SCOPE_TITLES = { logs: "VOYAGE LOGS", subtitles: "QUEST SUBTITLES", sampledata: "SAMPLE DATA" };
 
+/**
+ * Binds event listeners to Browse mode content category tabs (Logs, Subtitles, Sample Data).
+ */
 function wireBrowseContentTabs() {
   const buttons = document.querySelectorAll("#browse-content-tabs .content-tab");
   buttons.forEach((btn) => {
@@ -1139,6 +1610,9 @@ function wireBrowseContentTabs() {
   });
 }
 
+/**
+ * Binds event listeners to Compare mode content category tabs (Logs, Subtitles, Sample Data).
+ */
 function wireCompareContentTabs() {
   const buttons = document.querySelectorAll("#compare-content-tabs .content-tab");
   const label = document.getElementById("compare-scope-label");
@@ -1155,6 +1629,9 @@ function wireCompareContentTabs() {
   });
 }
 
+/**
+ * Binds event listeners to Sample Data subcategory filter tabs (All, Hologram, Painting).
+ */
 function wireSampleContentTabs() {
   const buttons = document.querySelectorAll("#sampledata-content-tabs .content-tab");
   buttons.forEach((btn) => {
@@ -1164,6 +1641,9 @@ function wireSampleContentTabs() {
   });
 }
 
+/**
+ * Attaches delegated click listeners to master list rows for item selection.
+ */
 function wireEntryListClicks() {
   document.getElementById("logs-list").addEventListener("click", (e) => {
     const row = e.target.closest(".entry");
@@ -1188,6 +1668,9 @@ function wireEntryListClicks() {
   });
 }
 
+/**
+ * Attaches real-time search filtering listeners to the terminal search input.
+ */
 function wireFilterInput() {
   document.getElementById("filter-input").addEventListener("input", (e) => {
     if (currentMode !== "browse") return;
@@ -1197,6 +1680,9 @@ function wireFilterInput() {
   });
 }
 
+/**
+ * Attaches click and selection listeners to deep-link sharing buttons.
+ */
 function wireShareLinkButton() {
   document.getElementById("copy-link-btn").addEventListener("click", async () => {
     if (currentMode !== "browse" || !currentSelectedEntryKey()) return;
@@ -1234,6 +1720,11 @@ function wireShareLinkButton() {
 
 // ---------- device controls ----------
 
+/**
+ * Steps the selected master list entry forward or backward by the specified index delta.
+ *
+ * @param {number} delta - Number of steps (+1 for next, -1 for previous).
+ */
 function moveSelection(delta) {
   if (currentMode !== "browse") return;
   if (browseScope === "logs") {
@@ -1259,6 +1750,11 @@ function moveSelection(delta) {
 
 // Compare mode has no browsable entry list (just diff cards), so PREV/NEXT there
 // still step through the "to" version instead.
+/**
+ * Steps the Compare mode 'To' version forward or backward by index in the commit dropdown.
+ *
+ * @param {number} delta - Index step direction (+1 for older, -1 for newer).
+ */
 function stepVersion(delta) {
   const select = document.getElementById("compare-to");
   const nextIndex = select.selectedIndex + delta;
@@ -1267,10 +1763,18 @@ function stepVersion(delta) {
   select.dispatchEvent(new Event("change"));
 }
 
+/**
+ * Smoothly scrolls the active Browse mode detail screen viewport vertically.
+ *
+ * @param {number} delta - Vertical scroll offset in pixels.
+ */
 function scrollBrowseDetail(delta) {
   document.querySelector("#panel-browse .detail-screen .screen-scroll")?.scrollBy({ top: delta, behavior: "smooth" });
 }
 
+/**
+ * Initializes physical hardware pushbuttons (EXE, EXIT, UP, DOWN, PREV, NEXT, display toggles).
+ */
 function wireDeviceControls() {
   // In Browse mode, UP/DOWN scroll the detail pane and PREV/NEXT step between
   // entries in the list -- Compare mode has no entry list, so there PREV/NEXT
@@ -1314,6 +1818,9 @@ function wireDeviceControls() {
   const led = document.getElementById("status-led");
   const dispBtn = document.getElementById("disp-toggle");
   const screensEls = () => document.querySelectorAll(".screens");
+  /**
+   * Applies CSS brightness, contrast, and saturation filter settings to CRT screen viewports.
+   */
 
   function applyDisplayFilter() {
     screensEls().forEach((el) => {
@@ -1345,6 +1852,11 @@ function wireDeviceControls() {
 
 // ---------- bootstrap ----------
 
+/**
+ * Bootstraps the application on DOMContentLoaded: initializes UI listeners, loads commit history, and applies initial hash state.
+ *
+ * @returns {Promise<void>} Resolves when application initialization completes.
+ */
 async function init() {
   if (!REPO) {
     setStatus("Could not determine which repo to load from this URL -- pass ?repo=owner/name (e.g. for local testing).", true);
