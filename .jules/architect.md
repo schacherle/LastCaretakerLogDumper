@@ -1,0 +1,3 @@
+## 2026-11-11 - Static Frontend Modularization into Clean Architecture Layers
+**Learning:** In a pure static GitHub Pages deployment with zero build tools/bundlers, standard ES modules (`<script type="module">` with explicit `.js` import extensions) provide clean architectural layering (Core, API, Domain, State, UI) without introducing build dependencies or runtime bundle steps.
+**Action:** When decoupling legacy monolithic scripts on static web assets, structure modules by architectural layer under dedicated namespaces (`site/js/{core,api,domain,state,ui}`) and maintain explicit relative `.js` import paths.
