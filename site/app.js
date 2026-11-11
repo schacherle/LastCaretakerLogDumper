@@ -146,12 +146,6 @@ function currentSelectedEntryKey() {
   return selectedSampleKey;
 }
 
-function currentSelectedEntry() {
-  if (browseScope === "logs") return filteredLogs[selectedLogIdx] || null;
-  if (browseScope === "subtitles") return filteredSubGroups[selectedSubIdx] || null;
-  return filteredSamples[selectedSampleIdx] || null;
-}
-
 function logPageKey(fragment, index) {
   return fragment && fragment.id ? `page:${fragment.id}` : `page:${index + 1}`;
 }
@@ -430,7 +424,7 @@ async function applyBrowseHashState() {
     if (state.scope === "sampledata") applySampleScope(state.sampleScope, { resetFilter: false });
 
     const browseSelect = document.getElementById("browse-version");
-  const version = resolveVersionSha(state.version) || browseSelect.value;
+    const version = resolveVersionSha(state.version) || browseSelect.value;
     if (browseSelect.value !== version) browseSelect.value = version;
     if (currentBrowseSha !== version) await loadBrowseVersion(version);
 
