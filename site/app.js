@@ -4,12 +4,19 @@
 // so the repo this site should read from can be read straight off the URL instead of
 // hardcoded -- the same app.js works unmodified on any fork's Pages deployment. Falls
 // back to this repo for local testing (file://, localhost) where that pattern doesn't apply.
+// Validate repository slug pattern (owner/repo). GitHub usernames and repo names
+// only contain alphanumeric characters, hyphens, and underscores (and repo names may include periods).
+// Owner names on GitHub cannot contain dots. Enforcing strict GitHub naming rules prevents path
+// traversal, scheme injection, or domain spoofing into GitHub API and raw content requests.
+const REPO_SLUG_RE = /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?\/[A-Za-z0-9_.-]{1,100}$/;
+
 function detectRepo() {
   const override = new URLSearchParams(location.search).get("repo");
-  if (override) return override;
+  if (override && REPO_SLUG_RE.test(override)) return override;
   const m = /^([^.]+)\.github\.io$/.exec(location.hostname);
   const repoName = m && location.pathname.split("/").filter(Boolean)[0];
-  return m && repoName ? `${m[1]}/${repoName}` : null;
+  const detected = m && repoName ? `${m[1]}/${repoName}` : null;
+  return detected && REPO_SLUG_RE.test(detected) ? detected : null;
 }
 
 const REPO = detectRepo();
@@ -199,19 +206,28 @@ function writeBrowseHash(extra = {}) {
   history.replaceState(null, "", `${location.pathname}${location.search}${suffix}`);
 }
 
+// Hex SHA or SHA prefix validator (1 to 40 hexadecimal characters) to avoid injection.
+const SHA_HEX_RE = /^[0-9a-fA-F]{1,40}$/;
+const VALID_SAMPLE_SCOPES = new Set(["all", "field", "cave"]);
+
 function parseBrowseHash() {
   const raw = location.hash.replace(/^#/, "");
   if (!raw) return null;
   const params = new URLSearchParams(raw);
   if ((params.get("mode") || "browse") !== "browse") return null;
   const scope = params.get("scope");
+  const rawVersion = params.get("version") || "";
+  const version = SHA_HEX_RE.test(rawVersion) ? rawVersion : "";
+  const rawSampleScope = params.get("sampleScope") || "all";
+  const sampleScope = VALID_SAMPLE_SCOPES.has(rawSampleScope) ? rawSampleScope : "all";
+
   return {
     scope: SCOPE_TITLES[scope] ? scope : "logs",
-    version: params.get("version") || "",
+    version,
     entry: params.get("entry") || "",
     page: params.get("page") || "",
     text: trimmedSelectionText(params.get("text") || ""),
-    sampleScope: params.get("sampleScope") || "all",
+    sampleScope,
     unlocked: params.get("unlocked") === "1",
   };
 }
@@ -775,9 +791,12 @@ function sampleSiteLabel(it) {
 // the *_dump.json files -- raw.githubusercontent.com works directly as an <img> src,
 // no fetch/decode needed, and it's naturally version-aware like the JSON dumps (not
 // every id has art, e.g. "Bed on Wheels" -- a 404 there is expected, not a bug).
+// Validate image ID pattern (alphanumeric, underscores, hyphens) to ensure safe URL assembly
+const SAFE_ID_RE = /^[A-Za-z0-9_.-]+$/;
+
 function sampleImageUrl(it) {
-  if (!currentBrowseSha) return null;
-  return `https://raw.githubusercontent.com/${REPO}/${currentBrowseSha}/${PATHS.sampleImagesDir}/SampleData_${it.id}.png`;
+  if (!currentBrowseSha || !it || !SAFE_ID_RE.test(String(it.id))) return null;
+  return `https://raw.githubusercontent.com/${encodeURI(REPO)}/${encodeURIComponent(currentBrowseSha)}/${PATHS.sampleImagesDir}/SampleData_${encodeURIComponent(it.id)}.png`;
 }
 
 function renderSampleList(filterText) {
