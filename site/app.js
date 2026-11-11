@@ -27,6 +27,7 @@ let versions = []; // [{ sha, message, date }], newest first
 let currentBrowseSha = null; // sha of the version currently loaded in Browse mode
 let currentBrowseLogs = [];
 let currentBrowseSubs = [];
+let groupedBrowseSubs = []; // cached subtitle groups for currentBrowseSubs
 let filteredLogs = [];
 let filteredSubGroups = [];
 
@@ -39,6 +40,7 @@ let selectedLogKey = null;
 let selectedSubKey = null;
 
 let sampleData = []; // reloaded per-version by loadBrowseVersion(), like currentBrowseLogs/Subs
+let sampleDataById = new Map(); // O(1) sample lookups by id
 let filteredSamples = [];
 let sampleScope = "all"; // "all" | "field" | "cave"
 let selectedSampleIdx = -1;
@@ -369,31 +371,41 @@ function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
 
+let updateSelectionRafId = null;
+
 function updateSelectionLinkButton() {
-  const btn = document.getElementById("selection-link-btn");
-  if (!btn) return;
-  const selection = window.getSelection();
-  const context = getDetailSelectionContext();
-  if (currentMode !== "browse" || !context || !selection || selection.rangeCount === 0) {
-    hideSelectionLinkButton();
-    return;
+  if (updateSelectionRafId != null) {
+    cancelAnimationFrame(updateSelectionRafId);
   }
+  // Coalesce position updates via requestAnimationFrame to avoid layout thrashing
+  // on rapid selection change or smooth scroll events.
+  updateSelectionRafId = requestAnimationFrame(() => {
+    updateSelectionRafId = null;
+    const btn = document.getElementById("selection-link-btn");
+    if (!btn) return;
+    const selection = window.getSelection();
+    const context = getDetailSelectionContext();
+    if (currentMode !== "browse" || !context || !selection || selection.rangeCount === 0) {
+      hideSelectionLinkButton();
+      return;
+    }
 
-  activeSelectionContext = context;
-  const rect = selectionButtonRect(selection.getRangeAt(0));
-  if (!rect || (!rect.width && !rect.height)) {
-    hideSelectionLinkButton();
-    return;
-  }
+    activeSelectionContext = context;
+    const rect = selectionButtonRect(selection.getRangeAt(0));
+    if (!rect || (!rect.width && !rect.height)) {
+      hideSelectionLinkButton();
+      return;
+    }
 
-  btn.classList.remove("hidden");
-  const margin = 10;
-  const width = btn.offsetWidth;
-  const height = btn.offsetHeight;
-  const left = clamp(rect.right - width / 2, margin, window.innerWidth - width - margin);
-  const top = clamp(rect.bottom + 8, margin, window.innerHeight - height - margin);
-  btn.style.left = `${left}px`;
-  btn.style.top = `${top}px`;
+    btn.classList.remove("hidden");
+    const margin = 10;
+    const width = btn.offsetWidth;
+    const height = btn.offsetHeight;
+    const left = clamp(rect.right - width / 2, margin, window.innerWidth - width - margin);
+    const top = clamp(rect.bottom + 8, margin, window.innerHeight - height - margin);
+    btn.style.left = `${left}px`;
+    btn.style.top = `${top}px`;
+  });
 }
 
 function syncBrowseSelectionHash() {
@@ -627,7 +639,8 @@ function renderBrowseLogs(filterText) {
 
 function renderBrowseSubs(filterText) {
   const term = (filterText || "").toLowerCase();
-  const groups = groupSubtitles(currentBrowseSubs);
+  // Use pre-computed groupedBrowseSubs to eliminate repeated grouping work on keystrokes
+  const groups = groupedBrowseSubs;
   filteredSubGroups = !term
     ? groups
     : groups.filter(
@@ -741,7 +754,13 @@ async function loadBrowseVersion(sha) {
     const { logs } = normalizeLogs(logsJson);
     currentBrowseLogs = logs;
     currentBrowseSubs = normalizeArrayJson(subsJson);
+    // Pre-calculate subtitle grouping once per loaded version
+    groupedBrowseSubs = groupSubtitles(currentBrowseSubs);
+
     sampleData = mergeSampleDataText(normalizeArrayJson(sampleJson), normalizeArrayJson(sampleTextJson));
+    // Build O(1) id -> sample record lookup map
+    sampleDataById = new Map(sampleData.map((s) => [s.id, s]));
+
     selectedLogIdx = -1;
     selectedSubIdx = -1;
     selectedSampleIdx = -1;
@@ -875,7 +894,8 @@ function renderSampleDetail() {
 }
 
 function unlockSample(id) {
-  const it = sampleData.find((s) => s.id === id);
+  // Use O(1) indexed lookup map instead of O(N) Array.find
+  const it = sampleDataById.get(id);
   if (!it || !it.unlock) return;
   unlockedSamples.add(id);
   renderSampleDetail();
@@ -901,6 +921,28 @@ function renderWordDiff(oldText, newText) {
     .join("");
 }
 
+// Deep structural equality helper for diff comparison to avoid JSON.stringify overhead and allocations
+function isDeepEqual(a, b) {
+  if (a === b) return true;
+  if (!a || !b || typeof a !== "object" || typeof b !== "object") return false;
+  if (Array.isArray(a) !== Array.isArray(b)) return false;
+  if (Array.isArray(a)) {
+    if (a.length !== b.length) return false;
+    for (let i = 0; i < a.length; i++) {
+      if (!isDeepEqual(a[i], b[i])) return false;
+    }
+    return true;
+  }
+  const keysA = Object.keys(a);
+  const keysB = Object.keys(b);
+  if (keysA.length !== keysB.length) return false;
+  for (let i = 0; i < keysA.length; i++) {
+    const k = keysA[i];
+    if (!Object.prototype.hasOwnProperty.call(b, k) || !isDeepEqual(a[k], b[k])) return false;
+  }
+  return true;
+}
+
 function diffByKey(fromList, toList, keyFn) {
   const fromMap = new Map(fromList.map((x) => [keyFn(x), x]));
   const toMap = new Map(toList.map((x) => [keyFn(x), x]));
@@ -911,7 +953,8 @@ function diffByKey(fromList, toList, keyFn) {
     if (!fromMap.has(k)) continue;
     const a = fromMap.get(k);
     const b = toMap.get(k);
-    if (JSON.stringify(a) !== JSON.stringify(b)) changed.push({ key: k, from: a, to: b });
+    // Fast structural comparison avoids serializing whole objects to JSON strings
+    if (!isDeepEqual(a, b)) changed.push({ key: k, from: a, to: b });
   }
   return { added, removed, changed };
 }
