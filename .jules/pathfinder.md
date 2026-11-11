@@ -1,0 +1,5 @@
+# Pathfinder's Journal - LastCaretakerLogDumper
+
+## 2026-11-11 - Static Site Local Development & GitHub API Rate-Limit Diagnostics
+**Learning:** The static web archive in `site/` dynamically fetches version history and JSON dumps directly from GitHub's REST API and `raw.githubusercontent.com`. When run locally without tooling, developers faced multiple friction points: 1) running a generic static server failed to provide or communicate the required `?repo=` parameter, causing an ambiguous error; 2) port conflicts resulted in silent failures or generic crashes; 3) GitHub API rate limits (HTTP 403) resulted in cryptic `(403)` error messages without remediation guidance or reset time visibility.
+**Action:** Provide a zero-dependency local development server (`site/dev-server.mjs`) with CLI flag parsing, port conflict diagnostics, and auto-fallback to `the1killer/LastCaretakerLogDumper` on localhost/127.0.0.1; enhance `site/app.js` with actionable HTTP 403 (with rate-limit reset timestamp) and HTTP 404 diagnostics; and maintain automated unit tests for dev server CLI and routing.

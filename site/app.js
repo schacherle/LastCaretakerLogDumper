@@ -9,7 +9,20 @@ function detectRepo() {
   if (override) return override;
   const m = /^([^.]+)\.github\.io$/.exec(location.hostname);
   const repoName = m && location.pathname.split("/").filter(Boolean)[0];
-  return m && repoName ? `${m[1]}/${repoName}` : null;
+  if (m && repoName) return `${m[1]}/${repoName}`;
+
+  // Local development fallback: when testing via localhost, 127.0.0.1, or file://
+  // without an explicit ?repo= override, default to the upstream repository.
+  const isLocal = ["localhost", "127.0.0.1", ""].includes(location.hostname) || location.protocol === "file:";
+  if (isLocal) {
+    const fallback = "the1killer/LastCaretakerLogDumper";
+    console.info(
+      `[DX Info] Running locally without ?repo= parameter. Defaulting to repository "${fallback}". ` +
+      `To target another repository, use "?repo=owner/repo".`
+    );
+    return fallback;
+  }
+  return null;
 }
 
 const REPO = detectRepo();
@@ -474,13 +487,19 @@ async function fetchFileAtSha(path, sha) {
   const key = `${sha}:${path}`;
   if (fileCache.has(key)) return fileCache.get(key);
   const url = `https://raw.githubusercontent.com/${REPO}/${sha}/${path}`;
-  const res = await fetch(url);
+  let res;
+  try {
+    res = await fetch(url);
+  } catch (netErr) {
+    throw new Error(`Network error while fetching ${path} @ ${sha.slice(0, 7)}: ${netErr.message}. Check your internet connection.`);
+  }
+
   if (res.status === 404) {
     fileCache.set(key, null);
     return null;
   }
   if (!res.ok) {
-    throw new Error(`Failed to fetch ${path} @ ${sha.slice(0, 7)} (${res.status})`);
+    throw new Error(`Failed to fetch ${path} @ ${sha.slice(0, 7)} (HTTP ${res.status} ${res.statusText || ""}). Check that repo "${REPO}" and path exist.`);
   }
   const buf = await res.arrayBuffer();
   const json = JSON.parse(decodeArrayBuffer(buf));
@@ -545,8 +564,31 @@ async function fetchCommitsForPath(path) {
   const commits = [];
   for (let page = 1; ; page++) {
     const url = `https://api.github.com/repos/${REPO}/commits?path=${encodeURIComponent(path)}&per_page=100&page=${page}`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`Failed to list commits for ${path} (${res.status})`);
+    let res;
+    try {
+      res = await fetch(url);
+    } catch (netErr) {
+      throw new Error(`Network error contacting GitHub API for "${path}": ${netErr.message}. Check your internet connection.`);
+    }
+
+    if (!res.ok) {
+      if (res.status === 403) {
+        const resetHeader = res.headers.get("x-ratelimit-reset");
+        const resetTime = resetHeader ? new Date(parseInt(resetHeader, 10) * 1000).toLocaleTimeString() : "shortly";
+        throw new Error(
+          `GitHub API rate limit exceeded (HTTP 403). Rate limit will reset at ${resetTime}. ` +
+          `Try again after reset or test with a different network connection.`
+        );
+      }
+      if (res.status === 404) {
+        throw new Error(
+          `Repository or file history not found (HTTP 404): "${REPO}" -> "${path}". ` +
+          `Verify that the repository exists, is public, or check ?repo= parameter.`
+        );
+      }
+      throw new Error(`Failed to list commits for ${path} (HTTP ${res.status} ${res.statusText || ""})`);
+    }
+
     const data = await res.json();
     for (const c of data) {
       commits.push({
