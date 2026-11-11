@@ -125,9 +125,11 @@ function applyBrowseScope(scope, options = {}) {
   if (resetFilter) filterInput.value = "";
   filterInput.placeholder = browseScope === "sampledata" ? "type to filter sample data…" : "type to filter…";
 
-  renderBrowseLogs(currentFilterValue());
-  renderBrowseSubs(currentFilterValue());
-  renderSampleList(currentFilterValue());
+  // Performance optimization: only render the list corresponding to the newly active scope
+  const val = currentFilterValue();
+  if (scope === "logs") renderBrowseLogs(val);
+  else if (scope === "subtitles") renderBrowseSubs(val);
+  else if (scope === "sampledata") renderSampleList(val);
   updateCopyLinkButton();
 }
 
@@ -369,31 +371,37 @@ function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
 
+let selectionRafId = null;
+
 function updateSelectionLinkButton() {
-  const btn = document.getElementById("selection-link-btn");
-  if (!btn) return;
-  const selection = window.getSelection();
-  const context = getDetailSelectionContext();
-  if (currentMode !== "browse" || !context || !selection || selection.rangeCount === 0) {
-    hideSelectionLinkButton();
-    return;
-  }
+  if (selectionRafId) cancelAnimationFrame(selectionRafId);
+  selectionRafId = requestAnimationFrame(() => {
+    selectionRafId = null;
+    const btn = document.getElementById("selection-link-btn");
+    if (!btn) return;
+    const selection = window.getSelection();
+    const context = getDetailSelectionContext();
+    if (currentMode !== "browse" || !context || !selection || selection.rangeCount === 0) {
+      hideSelectionLinkButton();
+      return;
+    }
 
-  activeSelectionContext = context;
-  const rect = selectionButtonRect(selection.getRangeAt(0));
-  if (!rect || (!rect.width && !rect.height)) {
-    hideSelectionLinkButton();
-    return;
-  }
+    activeSelectionContext = context;
+    const rect = selectionButtonRect(selection.getRangeAt(0));
+    if (!rect || (!rect.width && !rect.height)) {
+      hideSelectionLinkButton();
+      return;
+    }
 
-  btn.classList.remove("hidden");
-  const margin = 10;
-  const width = btn.offsetWidth;
-  const height = btn.offsetHeight;
-  const left = clamp(rect.right - width / 2, margin, window.innerWidth - width - margin);
-  const top = clamp(rect.bottom + 8, margin, window.innerHeight - height - margin);
-  btn.style.left = `${left}px`;
-  btn.style.top = `${top}px`;
+    btn.classList.remove("hidden");
+    const margin = 10;
+    const width = btn.offsetWidth;
+    const height = btn.offsetHeight;
+    const left = clamp(rect.right - width / 2, margin, window.innerWidth - width - margin);
+    const top = clamp(rect.bottom + 8, margin, window.innerHeight - height - margin);
+    btn.style.left = `${left}px`;
+    btn.style.top = `${top}px`;
+  });
 }
 
 function syncBrowseSelectionHash() {
@@ -521,7 +529,13 @@ function subtitlePartNumber(name) {
   return Number.isNaN(n) ? 0 : n;
 }
 
+// Memoized subtitle grouping cache to avoid repeated RegExp parsing, sorting,
+// and aggregation computations during UI updates and filter keystrokes.
+let cachedSubsRef = null;
+let cachedGroupedSubs = [];
+
 function groupSubtitles(subs) {
+  if (subs === cachedSubsRef) return cachedGroupedSubs;
   const order = [];
   const byKey = new Map();
   for (const s of subs) {
@@ -532,11 +546,15 @@ function groupSubtitles(subs) {
     }
     byKey.get(key).push(s);
   }
-  return order.map((key) => {
+  cachedGroupedSubs = order.map((key) => {
     const items = byKey.get(key).slice().sort((a, b) => subtitlePartNumber(a.Name) - subtitlePartNumber(b.Name));
     const totalDuration = items.reduce((sum, s) => sum + (s.Duration || 0), 0);
-    return { key, items, totalDuration };
+    // Pre-extract search text haystack once per group to optimize search filtering:
+    const haystack = `${key} ${items.map((s) => `${s.Name || ""} ${s.Subtitle || ""}`).join(" ")}`.toLowerCase();
+    return { key, items, totalDuration, haystack };
   });
+  cachedSubsRef = subs;
+  return cachedGroupedSubs;
 }
 
 // ---------- commit history ----------
@@ -598,7 +616,7 @@ function entryRowHtml(idx, title, badge, isSelected) {
 function renderBrowseLogs(filterText) {
   const term = (filterText || "").toLowerCase();
   filteredLogs = currentBrowseLogs.filter(
-    (l) => !term || (l.title || "").toLowerCase().includes(term) || (l.id || "").toLowerCase().includes(term)
+    (l) => !term || (l._haystack || (l._haystack = `${l.title || ""} ${l.id || ""}`.toLowerCase())).includes(term)
   );
   if (selectedLogKey) {
     const matchIdx = filteredLogs.findIndex((l) => l.id === selectedLogKey);
@@ -630,11 +648,7 @@ function renderBrowseSubs(filterText) {
   const groups = groupSubtitles(currentBrowseSubs);
   filteredSubGroups = !term
     ? groups
-    : groups.filter(
-        (g) =>
-          g.key.toLowerCase().includes(term) ||
-          g.items.some((s) => (s.Name || "").toLowerCase().includes(term) || (s.Subtitle || "").toLowerCase().includes(term))
-      );
+    : groups.filter((g) => g.haystack.includes(term));
   if (selectedSubKey) {
     const matchIdx = filteredSubGroups.findIndex((g) => g.key === selectedSubKey);
     if (matchIdx !== -1) selectedSubIdx = matchIdx;
@@ -784,7 +798,7 @@ function renderSampleList(filterText) {
   const term = (filterText || "").toLowerCase();
   filteredSamples = sampleData.filter((it) => {
     const matchesScope = sampleScope === "all" || it.collection === sampleScope;
-    const hay = `${it.title} ${it.short} ${it.site || ""}`.toLowerCase();
+    const hay = it._haystack || (it._haystack = `${it.title} ${it.short} ${it.site || ""}`.toLowerCase());
     const matchesTerm = !term || hay.includes(term);
     return matchesScope && matchesTerm;
   });
@@ -1037,9 +1051,19 @@ function renderSampleTextDiffCard(kind, item) {
 // Sample data ids come from FindAllOf()'s arbitrary traversal order (unlike logs/
 // subtitles, which are already author-ordered), e.g. "DA_SampleData_131" right
 // before "DA_SampleData_104" -- so sort numerically for a stable, readable diff.
+// Optimized without RegExp overhead using direct string prefix checking and slicing.
 function sampleIdSortKey(id) {
-  const m = /^DA_SampleData_(?:(CavePainting)_)?(\d+)$/.exec(id || "");
-  return m ? [m[1] ? 1 : 0, parseInt(m[2], 10)] : [2, 0];
+  if (!id) return [2, 0];
+  const str = String(id);
+  if (str.startsWith("DA_SampleData_CavePainting_")) {
+    const n = parseInt(str.slice(27), 10);
+    return [1, Number.isNaN(n) ? 0 : n];
+  }
+  if (str.startsWith("DA_SampleData_")) {
+    const n = parseInt(str.slice(14), 10);
+    return [0, Number.isNaN(n) ? 0 : n];
+  }
+  return [2, 0];
 }
 
 function compareSampleIds(a, b) {
