@@ -1,0 +1,5 @@
+# Navigator's Journal - Critical Learnings
+
+## 2026-11-11 - Route State and History Synchronization in Static Web Archives
+**Learning:** In purely client-side static web apps that rely on location hash for routing (e.g. GitHub Pages hosting static JSON dumps), using `history.pushState` on major view transitions (mode switching, scope change, entry selection) while using `history.replaceState` for filter updates allows natural browser back/forward traversal. Both `hashchange` and `popstate` events must be monitored to ensure state synchronization across all browser navigation entry points. Furthermore, missing route entities (such as invalid entry IDs or scopes in deep links) must render graceful "not found" notifications in the detail pane rather than leaving blank or unhandled states.
+**Action:** Always listen to both `hashchange` and `popstate` for hash-based navigation routers, validate all incoming route parameters against known sets or collections, provide graceful fallbacks with clear user messaging for missing entities, and differentiate between discrete route transitions (`pushState`) and continuous UI state adjustments like filtering (`replaceState`).

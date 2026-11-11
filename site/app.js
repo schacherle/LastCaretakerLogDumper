@@ -106,7 +106,7 @@ function setBrowseModeUi(scope) {
   document.getElementById("detail-pane").classList.toggle("hidden", scope === "sampledata");
   document.getElementById("sampledata-detail-pane").classList.toggle("hidden", scope !== "sampledata");
   document.getElementById("sampledata-content-tabs").classList.toggle("hidden", scope !== "sampledata");
-  title.textContent = SCOPE_TITLES[scope];
+  if (title) title.textContent = SCOPE_TITLES[scope] || SCOPE_TITLES.logs;
 }
 
 function setSampleScopeUi(scope) {
@@ -116,28 +116,31 @@ function setSampleScopeUi(scope) {
 }
 
 function applyBrowseScope(scope, options = {}) {
-  if (!SCOPE_TITLES[scope]) return;
-  const { resetFilter = true } = options;
-  browseScope = scope;
-  setBrowseModeUi(scope);
+  const validScope = SCOPE_TITLES[scope] ? scope : "logs";
+  const { resetFilter = true, syncUrl = true } = options;
+  browseScope = validScope;
+  setBrowseModeUi(validScope);
 
   const filterInput = document.getElementById("filter-input");
-  if (resetFilter) filterInput.value = "";
-  filterInput.placeholder = browseScope === "sampledata" ? "type to filter sample data…" : "type to filter…";
+  if (filterInput && resetFilter) filterInput.value = "";
+  if (filterInput) filterInput.placeholder = browseScope === "sampledata" ? "type to filter sample data…" : "type to filter…";
 
   renderBrowseLogs(currentFilterValue());
   renderBrowseSubs(currentFilterValue());
   renderSampleList(currentFilterValue());
   updateCopyLinkButton();
+  if (syncUrl) writeRouteHash({ replace: false });
 }
 
 function applySampleScope(scope, options = {}) {
-  if (!["all", "field", "cave"].includes(scope)) return;
-  const { resetFilter = true } = options;
-  sampleScope = scope;
-  setSampleScopeUi(scope);
-  if (resetFilter) document.getElementById("filter-input").value = "";
+  const validScope = ["all", "field", "cave"].includes(scope) ? scope : "all";
+  const { resetFilter = true, syncUrl = true } = options;
+  sampleScope = validScope;
+  setSampleScopeUi(validScope);
+  const filterInput = document.getElementById("filter-input");
+  if (filterInput && resetFilter) filterInput.value = "";
   renderSampleList(currentFilterValue());
+  if (syncUrl) writeRouteHash({ replace: false });
 }
 
 function currentSelectedEntryKey() {
@@ -178,8 +181,18 @@ function resolveVersionSha(version) {
   return matches.length === 1 ? matches[0].sha : "";
 }
 
-function buildBrowseHash(extra = {}) {
+function buildRouteHash(extra = {}) {
   const params = new URLSearchParams();
+  if (currentMode === "compare") {
+    params.set("mode", "compare");
+    params.set("scope", compareScope);
+    const fromSha = document.getElementById("compare-from")?.value;
+    const toSha = document.getElementById("compare-to")?.value;
+    if (fromSha) params.set("from", shortSha(fromSha));
+    if (toSha) params.set("to", shortSha(toSha));
+    return params.toString();
+  }
+
   params.set("mode", "browse");
   params.set("scope", browseScope);
   if (currentBrowseSha) params.set("version", shortSha(currentBrowseSha));
@@ -192,28 +205,63 @@ function buildBrowseHash(extra = {}) {
   return params.toString();
 }
 
-function writeBrowseHash(extra = {}) {
-  if (isApplyingHashState || currentMode !== "browse") return;
-  const hash = buildBrowseHash(extra);
+function writeRouteHash(options = {}) {
+  if (isApplyingHashState) return;
+  const { extra = {}, replace = true } = options;
+  const hash = buildRouteHash(extra);
   const suffix = hash ? `#${hash}` : "";
-  history.replaceState(null, "", `${location.pathname}${location.search}${suffix}`);
+  const targetUrl = `${location.pathname}${location.search}${suffix}`;
+  if (location.hash !== (suffix || "")) {
+    if (replace) {
+      history.replaceState(null, "", targetUrl);
+    } else {
+      history.pushState(null, "", targetUrl);
+    }
+  }
 }
 
-function parseBrowseHash() {
+function writeBrowseHash(extra = {}) {
+  writeRouteHash({ extra, replace: true });
+}
+
+function parseRouteHash() {
   const raw = location.hash.replace(/^#/, "");
   if (!raw) return null;
   const params = new URLSearchParams(raw);
-  if ((params.get("mode") || "browse") !== "browse") return null;
-  const scope = params.get("scope");
+  const rawMode = params.get("mode") || "browse";
+  const mode = rawMode === "compare" ? "compare" : "browse";
+
+  if (mode === "compare") {
+    const rawScope = params.get("scope");
+    const scope = COMPARE_SCOPE_TITLES[rawScope] ? rawScope : "logs";
+    return {
+      mode: "compare",
+      scope,
+      from: params.get("from") || "",
+      to: params.get("to") || "",
+    };
+  }
+
+  const rawScope = params.get("scope");
+  const scope = SCOPE_TITLES[rawScope] ? rawScope : "logs";
+  const rawSampleScope = params.get("sampleScope") || "all";
+  const sampleScopeVal = ["all", "field", "cave"].includes(rawSampleScope) ? rawSampleScope : "all";
+
   return {
-    scope: SCOPE_TITLES[scope] ? scope : "logs",
+    mode: "browse",
+    scope,
     version: params.get("version") || "",
     entry: params.get("entry") || "",
     page: params.get("page") || "",
     text: trimmedSelectionText(params.get("text") || ""),
-    sampleScope: params.get("sampleScope") || "all",
+    sampleScope: sampleScopeVal,
     unlocked: params.get("unlocked") === "1",
   };
+}
+
+function parseBrowseHash() {
+  const route = parseRouteHash();
+  return route && route.mode === "browse" ? route : null;
 }
 
 function scrollSelectedEntryIntoView() {
@@ -319,7 +367,7 @@ function getDetailSelectionContext() {
 }
 
 function browseShareUrl(extra = {}) {
-  const hash = buildBrowseHash(extra);
+  const hash = buildRouteHash(extra);
   return `${location.origin}${location.pathname}${location.search}#${hash}`;
 }
 
@@ -397,7 +445,7 @@ function updateSelectionLinkButton() {
 }
 
 function syncBrowseSelectionHash() {
-  writeBrowseHash();
+  writeRouteHash({ replace: true });
   updateCopyLinkButton();
   updateSelectionLinkButton();
 }
@@ -405,39 +453,103 @@ function syncBrowseSelectionHash() {
 function selectBrowseEntryByKey(scope, key) {
   if (!key) return false;
   if (scope === "logs") {
+    const foundIdx = filteredLogs.findIndex((l) => l.id === key);
+    if (foundIdx !== -1) {
+      selectedLogIdx = foundIdx;
+      selectedLogKey = key;
+      renderBrowseLogs(currentFilterValue());
+      return true;
+    }
+    selectedLogIdx = -1;
     selectedLogKey = key;
     renderBrowseLogs(currentFilterValue());
-    return !!filteredLogs[selectedLogIdx] && filteredLogs[selectedLogIdx].id === key;
+    return false;
   }
   if (scope === "subtitles") {
+    const foundIdx = filteredSubGroups.findIndex((g) => g.key === key);
+    if (foundIdx !== -1) {
+      selectedSubIdx = foundIdx;
+      selectedSubKey = key;
+      renderBrowseSubs(currentFilterValue());
+      return true;
+    }
+    selectedSubIdx = -1;
     selectedSubKey = key;
     renderBrowseSubs(currentFilterValue());
-    return !!filteredSubGroups[selectedSubIdx] && filteredSubGroups[selectedSubIdx].key === key;
+    return false;
   }
+  const foundIdx = filteredSamples.findIndex((s) => s.id === key);
+  if (foundIdx !== -1) {
+    selectedSampleIdx = foundIdx;
+    selectedSampleKey = key;
+    renderSampleList(currentFilterValue());
+    return true;
+  }
+  selectedSampleIdx = -1;
   selectedSampleKey = key;
   renderSampleList(currentFilterValue());
-  return !!filteredSamples[selectedSampleIdx] && filteredSamples[selectedSampleIdx].id === key;
+  return false;
 }
 
-async function applyBrowseHashState() {
-  const state = parseBrowseHash();
+function applyCompareScope(scope, options = {}) {
+  const validScope = COMPARE_SCOPE_TITLES[scope] ? scope : "logs";
+  const { syncUrl = true } = options;
+  compareScope = validScope;
+  document.querySelectorAll("#compare-content-tabs .content-tab").forEach((b) => {
+    b.classList.toggle("active", b.dataset.content === validScope);
+  });
+  document.getElementById("compare-logs").classList.toggle("active", compareScope === "logs");
+  document.getElementById("compare-subtitles").classList.toggle("active", compareScope === "subtitles");
+  document.getElementById("compare-sampledata").classList.toggle("active", compareScope === "sampledata");
+  const label = document.getElementById("compare-scope-label");
+  if (label) label.textContent = COMPARE_SCOPE_TITLES[compareScope];
+  if (syncUrl) writeRouteHash({ replace: false });
+}
+
+async function applyRouteState() {
+  const state = parseRouteHash();
   if (!state) return false;
 
   isApplyingHashState = true;
   try {
-    setMode("browse");
-    applyBrowseScope(state.scope, { resetFilter: true });
-    if (state.scope === "sampledata") applySampleScope(state.sampleScope, { resetFilter: false });
+    if (state.mode === "compare") {
+      setMode("compare", { syncUrl: false });
+      applyCompareScope(state.scope, { syncUrl: false });
+
+      const fromSelect = document.getElementById("compare-from");
+      const toSelect = document.getElementById("compare-to");
+      const defaultFrom = versions[1]?.sha || versions[0]?.sha || "";
+      const defaultTo = versions[0]?.sha || "";
+      const resolvedFrom = (state.from && resolveVersionSha(state.from)) || fromSelect.value || defaultFrom;
+      const resolvedTo = (state.to && resolveVersionSha(state.to)) || toSelect.value || defaultTo;
+
+      if (fromSelect && fromSelect.value !== resolvedFrom) fromSelect.value = resolvedFrom;
+      if (toSelect && toSelect.value !== resolvedTo) toSelect.value = resolvedTo;
+
+      await loadCompare();
+      writeRouteHash({ replace: true });
+      return true;
+    }
+
+    setMode("browse", { syncUrl: false });
+    applyBrowseScope(state.scope, { resetFilter: true, syncUrl: false });
+    if (state.scope === "sampledata") applySampleScope(state.sampleScope, { resetFilter: false, syncUrl: false });
 
     const browseSelect = document.getElementById("browse-version");
-  const version = resolveVersionSha(state.version) || browseSelect.value;
-    if (browseSelect.value !== version) browseSelect.value = version;
+    const defaultBrowse = versions[0]?.sha || "";
+    const version = (state.version && resolveVersionSha(state.version)) || browseSelect.value || defaultBrowse;
+    if (browseSelect && browseSelect.value !== version) browseSelect.value = version;
     if (currentBrowseSha !== version) await loadBrowseVersion(version);
 
     if (state.scope === "sampledata" && state.unlocked && state.entry) unlockedSamples.add(state.entry);
-    if (state.entry) selectBrowseEntryByKey(state.scope, state.entry);
-    scrollSelectedEntryIntoView();
-    if (state.page || state.text) requestAnimationFrame(() => focusBrowseHashTarget(state));
+    if (state.entry) {
+      const found = selectBrowseEntryByKey(state.scope, state.entry);
+      if (found) {
+        scrollSelectedEntryIntoView();
+        if (state.page || state.text) requestAnimationFrame(() => focusBrowseHashTarget(state));
+      }
+    }
+    writeRouteHash({ replace: true });
     updateCopyLinkButton();
     return true;
   } finally {
@@ -602,11 +714,16 @@ function renderBrowseLogs(filterText) {
   );
   if (selectedLogKey) {
     const matchIdx = filteredLogs.findIndex((l) => l.id === selectedLogKey);
-    if (matchIdx !== -1) selectedLogIdx = matchIdx;
+    if (matchIdx !== -1) {
+      selectedLogIdx = matchIdx;
+    } else {
+      selectedLogIdx = -1;
+    }
+  } else {
+    selectedLogIdx = filteredLogs.length ? 0 : -1;
   }
   if (selectedLogIdx >= filteredLogs.length) selectedLogIdx = filteredLogs.length ? 0 : -1;
-  if (selectedLogIdx === -1 && filteredLogs.length) selectedLogIdx = 0;
-  selectedLogKey = filteredLogs[selectedLogIdx]?.id || null;
+  selectedLogKey = filteredLogs[selectedLogIdx]?.id || selectedLogKey || null;
 
   const container = document.getElementById("logs-list");
   container.innerHTML = filteredLogs.length
@@ -616,7 +733,7 @@ function renderBrowseLogs(filterText) {
           return entryRowHtml(i, l.title, `${count} ${count === 1 ? "PAGE" : "PAGES"}`, i === selectedLogIdx);
         })
         .join("")
-    : `<p class="empty-note">No logs match your filter.</p>`;
+    : `<p class="empty-note">${term ? "No logs match your filter." : "No logs found in this version."}</p>`;
 
   if (browseScope === "logs") {
     document.getElementById("list-count").textContent = `${filteredLogs.length}/${currentBrowseLogs.length}`;
@@ -637,11 +754,16 @@ function renderBrowseSubs(filterText) {
       );
   if (selectedSubKey) {
     const matchIdx = filteredSubGroups.findIndex((g) => g.key === selectedSubKey);
-    if (matchIdx !== -1) selectedSubIdx = matchIdx;
+    if (matchIdx !== -1) {
+      selectedSubIdx = matchIdx;
+    } else {
+      selectedSubIdx = -1;
+    }
+  } else {
+    selectedSubIdx = filteredSubGroups.length ? 0 : -1;
   }
   if (selectedSubIdx >= filteredSubGroups.length) selectedSubIdx = filteredSubGroups.length ? 0 : -1;
-  if (selectedSubIdx === -1 && filteredSubGroups.length) selectedSubIdx = 0;
-  selectedSubKey = filteredSubGroups[selectedSubIdx]?.key || null;
+  selectedSubKey = filteredSubGroups[selectedSubIdx]?.key || selectedSubKey || null;
 
   const container = document.getElementById("subs-list");
   container.innerHTML = filteredSubGroups.length
@@ -651,7 +773,7 @@ function renderBrowseSubs(filterText) {
           return entryRowHtml(i, g.key, `${count} ${count === 1 ? "LINE" : "LINES"}`, i === selectedSubIdx);
         })
         .join("")
-    : `<p class="empty-note">No subtitles match your filter.</p>`;
+    : `<p class="empty-note">${term ? "No subtitles match your filter." : "No subtitles found in this version."}</p>`;
 
   if (browseScope === "subtitles") {
     document.getElementById("list-count").textContent = `${filteredSubGroups.length}/${groups.length}`;
@@ -666,6 +788,10 @@ function renderLogDetail() {
   const pane = document.getElementById("detail-pane");
   const log = filteredLogs[selectedLogIdx];
   if (!log) {
+    if (selectedLogKey && !filteredLogs.some((l) => l.id === selectedLogKey)) {
+      pane.innerHTML = `<p class="empty-note">Entry "${escapeHtml(selectedLogKey)}" not found in current view or version.</p>`;
+      return;
+    }
     pane.innerHTML = `<p class="empty-note">Select an entry from the list.</p>`;
     return;
   }
@@ -690,6 +816,10 @@ function renderSubDetail() {
   const pane = document.getElementById("detail-pane");
   const group = filteredSubGroups[selectedSubIdx];
   if (!group) {
+    if (selectedSubKey && !filteredSubGroups.some((g) => g.key === selectedSubKey)) {
+      pane.innerHTML = `<p class="empty-note">Subtitle group "${escapeHtml(selectedSubKey)}" not found in current view or version.</p>`;
+      return;
+    }
     pane.innerHTML = `<p class="empty-note">Select an entry from the list.</p>`;
     return;
   }
@@ -790,18 +920,23 @@ function renderSampleList(filterText) {
   });
   if (selectedSampleKey) {
     const matchIdx = filteredSamples.findIndex((it) => it.id === selectedSampleKey);
-    if (matchIdx !== -1) selectedSampleIdx = matchIdx;
+    if (matchIdx !== -1) {
+      selectedSampleIdx = matchIdx;
+    } else {
+      selectedSampleIdx = -1;
+    }
+  } else {
+    selectedSampleIdx = filteredSamples.length ? 0 : -1;
   }
   if (selectedSampleIdx >= filteredSamples.length) selectedSampleIdx = filteredSamples.length ? 0 : -1;
-  if (selectedSampleIdx === -1 && filteredSamples.length) selectedSampleIdx = 0;
-  selectedSampleKey = filteredSamples[selectedSampleIdx]?.id || null;
+  selectedSampleKey = filteredSamples[selectedSampleIdx]?.id || selectedSampleKey || null;
 
   const container = document.getElementById("sampledata-list");
   container.innerHTML = filteredSamples.length
     ? filteredSamples
         .map((it, i) => entryRowHtml(i, it.title, sampleCode(it), i === selectedSampleIdx))
         .join("")
-    : `<p class="empty-note">No sample data matches your filter.</p>`;
+    : `<p class="empty-note">${term ? "No sample data matches your filter." : "No sample data found in this category."}</p>`;
 
   if (browseScope === "sampledata") {
     document.getElementById("list-count").textContent = `${filteredSamples.length}/${sampleData.length}`;
@@ -814,6 +949,10 @@ function renderSampleDetail() {
   const pane = document.getElementById("sampledata-detail-pane");
   const it = filteredSamples[selectedSampleIdx];
   if (!it) {
+    if (selectedSampleKey && !filteredSamples.some((s) => s.id === selectedSampleKey)) {
+      pane.innerHTML = `<p class="empty-note">Sample record "${escapeHtml(selectedSampleKey)}" not found in current view or category.</p>`;
+      return;
+    }
     pane.innerHTML = `<p class="empty-note">Select a record from the list.</p>`;
     return;
   }
@@ -1078,6 +1217,14 @@ async function loadCompare() {
   const fromSha = document.getElementById("compare-from").value;
   const toSha = document.getElementById("compare-to").value;
   if (!fromSha || !toSha) return;
+
+  const compareLogsEl = document.getElementById("compare-logs");
+  const compareSubsEl = document.getElementById("compare-subtitles");
+  const compareSampleEl = document.getElementById("compare-sampledata");
+  if (compareLogsEl) compareLogsEl.innerHTML = `<p class="empty-note">Comparing versions…</p>`;
+  if (compareSubsEl) compareSubsEl.innerHTML = `<p class="empty-note">Comparing versions…</p>`;
+  if (compareSampleEl) compareSampleEl.innerHTML = `<p class="empty-note">Comparing versions…</p>`;
+
   setStatus("Comparing versions…");
   try {
     const [fromLogsJson, toLogsJson, fromSubsJson, toSubsJson, fromSampleJson, toSampleJson] = await Promise.all([
@@ -1094,6 +1241,9 @@ async function loadCompare() {
     setStatus("");
   } catch (err) {
     console.error(err);
+    if (compareLogsEl) compareLogsEl.innerHTML = `<p class="empty-note">Error loading comparison: ${escapeHtml(err.message)}</p>`;
+    if (compareSubsEl) compareSubsEl.innerHTML = `<p class="empty-note">Error loading comparison: ${escapeHtml(err.message)}</p>`;
+    if (compareSampleEl) compareSampleEl.innerHTML = `<p class="empty-note">Error loading comparison: ${escapeHtml(err.message)}</p>`;
     setStatus(err.message, true);
   }
 }
@@ -1103,13 +1253,15 @@ async function loadCompare() {
 function wireModeTabs() {
   const tabs = document.querySelectorAll("#mode-tabs .tab");
   tabs.forEach((tab) => {
-    tab.addEventListener("click", () => setMode(tab.dataset.mode));
+    tab.addEventListener("click", () => setMode(tab.dataset.mode, { syncUrl: true }));
   });
 }
 
-function setMode(mode) {
-  currentMode = mode;
-  document.querySelectorAll("#mode-tabs .tab").forEach((t) => t.classList.toggle("active", t.dataset.mode === mode));
+function setMode(mode, options = {}) {
+  const targetMode = mode === "compare" ? "compare" : "browse";
+  const { syncUrl = true } = options;
+  currentMode = targetMode;
+  document.querySelectorAll("#mode-tabs .tab").forEach((t) => t.classList.toggle("active", t.dataset.mode === targetMode));
   document.getElementById("panel-browse").classList.toggle("active", currentMode === "browse");
   document.getElementById("panel-compare").classList.toggle("active", currentMode === "compare");
   document.getElementById("browse-controls").classList.toggle("hidden", currentMode !== "browse");
@@ -1117,13 +1269,14 @@ function setMode(mode) {
   const filterInput = document.getElementById("filter-input");
   const terminalBar = document.getElementById("terminal-bar");
   if (currentMode === "compare") {
-    terminalBar.classList.add("disabled");
-    filterInput.placeholder = "filtering not available in compare mode";
+    if (terminalBar) terminalBar.classList.add("disabled");
+    if (filterInput) filterInput.placeholder = "filtering not available in compare mode";
   } else {
-    terminalBar.classList.remove("disabled");
-    filterInput.placeholder = browseScope === "sampledata" ? "type to filter sample data…" : "type to filter…";
+    if (terminalBar) terminalBar.classList.remove("disabled");
+    if (filterInput) filterInput.placeholder = browseScope === "sampledata" ? "type to filter sample data…" : "type to filter…";
   }
   updateCopyLinkButton();
+  if (syncUrl) writeRouteHash({ replace: false });
   if (currentMode === "compare") loadCompare();
 }
 
@@ -1134,23 +1287,16 @@ function wireBrowseContentTabs() {
   const buttons = document.querySelectorAll("#browse-content-tabs .content-tab");
   buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      applyBrowseScope(btn.dataset.content, { resetFilter: true });
+      applyBrowseScope(btn.dataset.content, { resetFilter: true, syncUrl: true });
     });
   });
 }
 
 function wireCompareContentTabs() {
   const buttons = document.querySelectorAll("#compare-content-tabs .content-tab");
-  const label = document.getElementById("compare-scope-label");
   buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      buttons.forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-      compareScope = btn.dataset.content;
-      document.getElementById("compare-logs").classList.toggle("active", compareScope === "logs");
-      document.getElementById("compare-subtitles").classList.toggle("active", compareScope === "subtitles");
-      document.getElementById("compare-sampledata").classList.toggle("active", compareScope === "sampledata");
-      label.textContent = COMPARE_SCOPE_TITLES[compareScope];
+      applyCompareScope(btn.dataset.content, { syncUrl: true });
     });
   });
 }
@@ -1159,7 +1305,7 @@ function wireSampleContentTabs() {
   const buttons = document.querySelectorAll("#sampledata-content-tabs .content-tab");
   buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      applySampleScope(btn.dataset.content, { resetFilter: true });
+      applySampleScope(btn.dataset.content, { resetFilter: true, syncUrl: true });
     });
   });
 }
@@ -1168,23 +1314,29 @@ function wireEntryListClicks() {
   document.getElementById("logs-list").addEventListener("click", (e) => {
     const row = e.target.closest(".entry");
     if (!row) return;
+    const oldKey = selectedLogKey;
     selectedLogIdx = Number(row.dataset.idx);
     selectedLogKey = filteredLogs[selectedLogIdx]?.id || null;
     renderBrowseLogs(currentFilterValue());
+    if (selectedLogKey !== oldKey) writeRouteHash({ replace: false });
   });
   document.getElementById("subs-list").addEventListener("click", (e) => {
     const row = e.target.closest(".entry");
     if (!row) return;
+    const oldKey = selectedSubKey;
     selectedSubIdx = Number(row.dataset.idx);
     selectedSubKey = filteredSubGroups[selectedSubIdx]?.key || null;
     renderBrowseSubs(currentFilterValue());
+    if (selectedSubKey !== oldKey) writeRouteHash({ replace: false });
   });
   document.getElementById("sampledata-list").addEventListener("click", (e) => {
     const row = e.target.closest(".entry");
     if (!row) return;
+    const oldKey = selectedSampleKey;
     selectedSampleIdx = Number(row.dataset.idx);
     selectedSampleKey = filteredSamples[selectedSampleIdx]?.id || null;
     renderSampleList(currentFilterValue());
+    if (selectedSampleKey !== oldKey) writeRouteHash({ replace: false });
   });
 }
 
@@ -1372,17 +1524,34 @@ async function init() {
     return;
   }
 
-  document.getElementById("browse-version").addEventListener("change", (e) => loadBrowseVersion(e.target.value));
-  document.getElementById("compare-from").addEventListener("change", loadCompare);
-  document.getElementById("compare-to").addEventListener("change", loadCompare);
+  document.getElementById("browse-version")?.addEventListener("change", async (e) => {
+    await loadBrowseVersion(e.target.value);
+    writeRouteHash({ replace: false });
+  });
+  document.getElementById("compare-from")?.addEventListener("change", async () => {
+    await loadCompare();
+    writeRouteHash({ replace: false });
+  });
+  document.getElementById("compare-to")?.addEventListener("change", async () => {
+    await loadCompare();
+    writeRouteHash({ replace: false });
+  });
+
   window.addEventListener("hashchange", () => {
-    applyBrowseHashState().catch((err) => {
+    applyRouteState().catch((err) => {
       console.error(err);
       setStatus(err.message, true);
     });
   });
 
-  if (!(await applyBrowseHashState())) {
+  window.addEventListener("popstate", () => {
+    applyRouteState().catch((err) => {
+      console.error(err);
+      setStatus(err.message, true);
+    });
+  });
+
+  if (!(await applyRouteState())) {
     await loadBrowseVersion(document.getElementById("browse-version").value);
   }
 }
