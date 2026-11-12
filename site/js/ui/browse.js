@@ -323,15 +323,16 @@ export function renderTimelineDetail() {
     if (state.currentBrowseSha) params.set("version", shortSha(state.currentBrowseSha));
     params.set("entry", ev.logId);
     if (ev.pageKey) params.set("page", ev.pageKey);
-    logLinkHtml = ` <a class="timeline-log-link" href="#${escapeHtml(params.toString())}">View in Voyage Logs →</a>`;
+    logLinkHtml = `<div class="timeline-actions"><a class="device-btn unlock-btn timeline-log-link" href="#${escapeHtml(params.toString())}">View in Voyage Logs</a></div>`;
   }
   pane.innerHTML = `
     <div class="detail-head-1">${escapeHtml(ev.displayDate)} — ${escapeHtml(ev.fragmentTitle || ev.logTitle)} ${state.selectedTimelineIdx + 1}/${state.filteredTimeline.length}</div>
-    <div class="detail-head-2">${escapeHtml(ev.logTitle)}${logLinkHtml}</div>
+    <div class="detail-head-2">${escapeHtml(ev.logTitle)}</div>
     <div class="fragment" data-link-page="${escapeHtml(ev.pageKey)}">
       ${ev.fragmentTitle ? `<div class="fragment-title">${escapeHtml(ev.fragmentTitle)}</div>` : ""}
       <p>${escapeHtml(ev.fragmentDesc)}</p>
     </div>
+    ${logLinkHtml}
   `;
 }
 
