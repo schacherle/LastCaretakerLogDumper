@@ -126,6 +126,25 @@ export async function fetchCommitsForPath(path) {
 }
 
 /**
+ * Returns true when running from localhost, 127.0.0.1, or file://.
+ * @param {Location|object} [loc] - Location-like object.
+ * @returns {boolean}
+ */
+export function isLocalEnvironment(loc = typeof location !== "undefined" ? location : null) {
+  return Boolean(
+    loc && (loc.hostname === "localhost" || loc.hostname === "127.0.0.1" || loc.protocol === "file:")
+  );
+}
+
+/**
+ * Returns the synthetic version entry for the local working copy.
+ * @returns {{sha: string, message: string, date: string}}
+ */
+export function createLocalVersionEntry() {
+  return { sha: "local", message: "Working Copy (Local Dumps)", date: new Date().toISOString() };
+}
+
+/**
  * Builds the deduplicated, newest-first version list across all tracked archive files.
  * Includes `"Working Copy (Local Dumps)"` when running locally or if GitHub history is unavailable.
  * @returns {Promise<Array<{sha: string, message: string, date: string}>>}
@@ -149,12 +168,8 @@ export async function buildVersionList() {
     console.warn("Could not load GitHub commit history:", err);
   }
 
-  const isLocal =
-    typeof location !== "undefined" &&
-    (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.protocol === "file:");
-  if (isLocal || githubVersions.length === 0) {
-    const localEntry = { sha: "local", message: "Working Copy (Local Dumps)", date: new Date().toISOString() };
-    return [localEntry, ...githubVersions];
+  if (isLocalEnvironment() || githubVersions.length === 0) {
+    return [createLocalVersionEntry(), ...githubVersions];
   }
   return githubVersions;
 }

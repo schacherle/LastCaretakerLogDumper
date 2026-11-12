@@ -1,6 +1,6 @@
 import { escapeHtml, formatDate, firstLine } from "./js/core/formatters.js";
 import { copyText } from "./js/core/clipboard.js";
-import { REPO, buildVersionList } from "./js/api/github.js";
+import { REPO, buildVersionList, isLocalEnvironment, createLocalVersionEntry } from "./js/api/github.js";
 import { state, currentSelectedEntryKey, resolveVersionSha } from "./js/state/store.js";
 import {
   parseAppHash,
@@ -44,23 +44,28 @@ export function setStatus(text, isError = false) {
   el.classList.toggle("error", !!isError);
 }
 
-function populateVersionSelects() {
+function populateVersionSelects({ preserveSelection = false } = {}) {
+  const browseEl = document.getElementById("browse-version");
+  const toEl = document.getElementById("compare-to");
+  const fromEl = document.getElementById("compare-from");
+  const prevBrowse = preserveSelection && browseEl ? browseEl.value : "";
+  const prevTo = preserveSelection && toEl ? toEl.value : "";
+  const prevFrom = preserveSelection && fromEl ? fromEl.value : "";
+
   const optionsHtml = state.versions
     .map(
       (v) =>
         `<option value="${escapeHtml(v.sha)}">${escapeHtml(formatDate(v.date))} · ${escapeHtml(firstLine(v.message))} (${escapeHtml(v.sha.slice(0, 7))})</option>`
     )
     .join("");
-  for (const id of ["browse-version", "compare-from", "compare-to"]) {
-    const el = document.getElementById(id);
+  for (const el of [browseEl, toEl, fromEl]) {
     if (el) el.innerHTML = optionsHtml;
   }
-  const browseEl = document.getElementById("browse-version");
-  const toEl = document.getElementById("compare-to");
-  const fromEl = document.getElementById("compare-from");
-  if (browseEl) browseEl.value = state.versions[0].sha;
-  if (toEl) toEl.value = state.versions[0].sha;
-  if (fromEl) fromEl.value = (state.versions[1] || state.versions[0]).sha;
+
+  const hasSha = (sha) => sha && state.versions.some((v) => v.sha === sha);
+  if (browseEl) browseEl.value = hasSha(prevBrowse) ? prevBrowse : state.versions[0].sha;
+  if (toEl) toEl.value = hasSha(prevTo) ? prevTo : state.versions[0].sha;
+  if (fromEl) fromEl.value = hasSha(prevFrom) ? prevFrom : (state.versions[1] || state.versions[0]).sha;
 }
 
 /**
@@ -328,18 +333,25 @@ export async function init() {
   wireShareLinkButton();
   wireDeviceControls(setStatus);
 
-  setStatus("Loading commit history…");
-  try {
-    state.versions = await buildVersionList();
-    if (!state.versions.length) {
-      throw new Error("No commit history found for data dump files in this repository. Ensure the repository path is correct.");
-    }
+  const initialHash = parseAppHash(location.hash);
+  const localFastPath = isLocalEnvironment() && (!initialHash?.version || initialHash.version === "local");
+  if (localFastPath) {
+    state.versions = [createLocalVersionEntry()];
     populateVersionSelects();
-    setStatus("");
-  } catch (err) {
-    console.error(err);
-    setStatus(err.message, true);
-    return;
+  } else {
+    setStatus("Loading commit history…");
+    try {
+      state.versions = await buildVersionList();
+      if (!state.versions.length) {
+        throw new Error("No commit history found for data dump files in this repository. Ensure the repository path is correct.");
+      }
+      populateVersionSelects();
+      setStatus("");
+    } catch (err) {
+      console.error(err);
+      setStatus(err.message, true);
+      return;
+    }
   }
 
   document.getElementById("browse-version")?.addEventListener("change", async (e) => {
@@ -375,6 +387,16 @@ export async function init() {
   if (!(await applyAppHashState())) {
     const browseSelect = document.getElementById("browse-version");
     if (browseSelect) await loadBrowseVersion(browseSelect.value, setStatus);
+  }
+
+  if (localFastPath) {
+    buildVersionList()
+      .then((versions) => {
+        if (!versions.length) return;
+        state.versions = versions;
+        populateVersionSelects({ preserveSelection: true });
+      })
+      .catch((err) => console.warn("Background commit history load failed:", err));
   }
 }
 

@@ -571,10 +571,11 @@ export async function loadBrowseVersion(sha, setStatus) {
     state.selectedSubKey = null;
     state.selectedSampleKey = null;
 
-    renderBrowseLogs(currentFilterValue());
-    renderBrowseTimeline(currentFilterValue());
-    renderBrowseSubs(currentFilterValue());
-    renderSampleList(currentFilterValue());
+    const filter = currentFilterValue();
+    if (state.browseScope === "logs") renderBrowseLogs(filter);
+    else if (state.browseScope === "timeline") renderBrowseTimeline(filter);
+    else if (state.browseScope === "subtitles") renderBrowseSubs(filter);
+    else if (state.browseScope === "sampledata") renderSampleList(filter);
     setStatus("");
   } catch (err) {
     console.error(err);
