@@ -266,6 +266,27 @@ function wireFilterInput() {
   });
 }
 
+function wireMobileListToggle() {
+  const listScreen = document.getElementById("list-screen");
+  const header = document.getElementById("list-screen-header");
+  const toggleBtn = document.getElementById("list-toggle-btn");
+  if (!listScreen || !header || !toggleBtn) return;
+
+  const toggle = () => {
+    const expanded = listScreen.classList.toggle("mobile-expanded");
+    toggleBtn.setAttribute("aria-expanded", String(expanded));
+    toggleBtn.textContent = expanded ? "COLLAPSE ▴" : "EXPAND ▾";
+  };
+
+  header.addEventListener("click", (e) => {
+    // Only toggle on mobile breakpoint where the toggle button is visible.
+    if (getComputedStyle(toggleBtn).display === "none") return;
+    if (e.target === toggleBtn || header.contains(e.target)) {
+      toggle();
+    }
+  });
+}
+
 function wireShareLinkButton() {
   document.getElementById("copy-link-btn")?.addEventListener("click", async () => {
     if (state.currentMode === "compare") {
@@ -330,6 +351,7 @@ export async function init() {
   wireSampleContentTabs();
   wireEntryListClicks();
   wireFilterInput();
+  wireMobileListToggle();
   wireShareLinkButton();
   wireDeviceControls(setStatus);
 

@@ -305,6 +305,33 @@ select:focus-visible {
   margin-bottom: 0.7rem;
 }
 
+.screen-title-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.list-toggle-btn {
+  display: none;
+  font-family: var(--font);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--green);
+  background: rgba(51, 255, 51, 0.08);
+  border: 1px solid rgba(51, 255, 51, 0.45);
+  border-radius: 3px;
+  padding: 0.18rem 0.45rem;
+  cursor: pointer;
+}
+
+.list-toggle-btn:hover,
+.list-toggle-btn:focus-visible {
+  background: rgba(51, 255, 51, 0.18);
+  outline: none;
+  box-shadow: 0 0 0 2px var(--green);
+}
+
 .list-count {
   font-size: 0.72rem;
   font-weight: 700;
@@ -738,7 +765,11 @@ del.diff-del {
 @media (max-width: 700px) {
   .screens { flex-direction: column; }
   .list-screen, .detail-screen { flex: 1 1 auto; }
-  .screen-scroll { max-height: 40vh; }
+  .screen-scroll { max-height: 55vh; }
+  .list-screen .screen-scroll { max-height: 9.5rem; }
+  .list-screen.mobile-expanded .screen-scroll { max-height: 55vh; }
+  .list-toggle-btn { display: inline-flex; align-items: center; }
+  .list-screen .screen-title-row { cursor: pointer; }
   .toolbar-controls { margin-left: 0; }
   .control-strip { flex-wrap: wrap; }
   .control-block-label { writing-mode: horizontal-tb; transform: none; }

@@ -79,10 +79,13 @@
 
   <section id="panel-browse" class="panel active" role="tabpanel" aria-labelledby="tab-mode-browse">
     <div class="screens">
-      <div class="screen list-screen">
-        <div class="screen-title-row">
+      <div class="screen list-screen" id="list-screen">
+        <div class="screen-title-row" id="list-screen-header">
           <h2 class="screen-title" id="list-screen-title">DATA LOGS</h2>
-          <span class="list-count" id="list-count" aria-live="polite"></span>
+          <div class="screen-title-meta">
+            <span class="list-count" id="list-count" aria-live="polite"></span>
+            <button type="button" class="list-toggle-btn" id="list-toggle-btn" aria-expanded="false" aria-controls="list-screen-scroll">EXPAND ▾</button>
+          </div>
         </div>
         <div class="screen-scroll" id="list-screen-scroll" tabindex="0" role="region" aria-label="Archive entries list">
           <div id="logs-list" class="entry-list" role="listbox" aria-label="Voyage Logs"></div>
