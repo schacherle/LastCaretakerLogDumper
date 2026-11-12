@@ -1,11 +1,11 @@
-import { escapeHtml, formatDuration, clamp, trimmedSelectionText, resolveSelectedIndex, shortSha } from "../core/formatters.js";
+import { escapeHtml, formatDuration, clamp, trimmedSelectionText, resolveSelectedIndex } from "../core/formatters.js";
 import { PATHS, fetchFileAtSha } from "../api/github.js";
 import { state, currentSelectedEntryKey, SCOPE_TITLES } from "../state/store.js";
 import { normalizeLogs, normalizeArrayJson, logPageKey } from "../domain/logs.js";
 import { buildTimelineEvents } from "../domain/timeline.js";
 import { groupSubtitles, subtitlePartLabel, subtitlePageKey } from "../domain/subtitles.js";
 import { sampleCode, sampleSiteLabel, sampleImageUrl, mergeSampleDataText, VALID_SAMPLE_SCOPES } from "../domain/sampledata.js";
-import { syncUrlHash, writeBrowseHash, browseShareUrl, getActiveDetailPane } from "../state/router.js";
+import { syncUrlHash, writeBrowseHash, browseShareUrl, getActiveDetailPane, shortSha } from "../state/router.js";
 
 /**
  * Returns the current search filter input value.
