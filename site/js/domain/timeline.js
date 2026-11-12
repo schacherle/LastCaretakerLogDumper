@@ -76,12 +76,14 @@ export function extractTimelineDate(text) {
 }
 
 /**
- * Extracts and chronologically sorts dated events from voyage log fragments.
+ * Extracts and chronologically sorts dated events from voyage log fragments
+ * and optional curated in-game asset entries (e.g., `site/timeline/data.json`).
  * Pre-computes `_haystack` for fast client-side filtering.
  * @param {Array<object>} logs - Normalized voyage logs array.
+ * @param {Array<object>} [extraEntries] - Optional curated timeline entries (`{ name, date, additionalInformation, source }`).
  * @returns {Array<object>} Sorted timeline event objects.
  */
-export function buildTimelineEvents(logs) {
+export function buildTimelineEvents(logs, extraEntries = []) {
   const events = [];
   (logs || []).forEach((log) => {
     const fragments = log.fragments || [];
@@ -113,6 +115,29 @@ export function buildTimelineEvents(logs) {
           _haystack: `${dt.displayDate} ${logTitle} ${log.id || ""} ${fragmentTitle} ${fragmentDesc}`.toLowerCase(),
         });
       }
+    });
+  });
+
+  (extraEntries || []).forEach((entry, idx) => {
+    const dt = extractTimelineDate(entry?.date);
+    if (!dt) return;
+    const name = String(entry.name || entry.title || "").trim();
+    const info = String(entry.additionalInformation || entry.description || "").trim();
+    const source = String(entry.source || "In-Game Asset").trim();
+    const key = entry.id ? String(entry.id) : `asset:${idx}:${name || dt.displayDate}`;
+    events.push({
+      key,
+      year: dt.year,
+      month: dt.month,
+      day: dt.day,
+      displayDate: dt.displayDate,
+      logId: "In-Game Asset",
+      logTitle: source,
+      fragmentId: key,
+      fragmentTitle: name || source,
+      fragmentDesc: info,
+      pageKey: "1",
+      _haystack: `${dt.displayDate} ${source} ${name} ${info}`.toLowerCase(),
     });
   });
 

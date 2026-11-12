@@ -539,17 +539,18 @@ export async function loadBrowseVersion(sha, setStatus) {
   setStatus("Loading version…");
   state.currentBrowseSha = sha;
   try {
-    const [logsJson, subsJson, sampleJson, sampleTextJson] = await Promise.all([
+    const [logsJson, subsJson, sampleJson, sampleTextJson, timelineJson] = await Promise.all([
       fetchFileAtSha(PATHS.logs, sha),
       fetchFileAtSha(PATHS.subtitles, sha),
       fetchFileAtSha(PATHS.sampleData, sha),
       fetchFileAtSha(PATHS.sampleText, sha),
+      fetchFileAtSha(PATHS.timelineData, sha),
     ]);
     const { logs } = normalizeLogs(logsJson);
     state.currentBrowseLogs = logs;
     state.currentBrowseSubs = normalizeArrayJson(subsJson);
     state.groupedBrowseSubs = groupSubtitles(state.currentBrowseSubs);
-    state.timelineEvents = buildTimelineEvents(logs);
+    state.timelineEvents = buildTimelineEvents(logs, normalizeArrayJson(timelineJson));
     state.sampleData = mergeSampleDataText(normalizeArrayJson(sampleJson), normalizeArrayJson(sampleTextJson));
     state.sampleDataById = new Map(state.sampleData.map((s) => [s.id, s]));
 

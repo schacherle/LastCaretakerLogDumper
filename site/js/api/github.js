@@ -12,6 +12,7 @@ export const PATHS = {
   subtitles: "voyage_quest_subtitles_dump.json",
   sampleText: "voyage_sampledata_text_dump.json",
   sampleData: "site/sampledata/data.json",
+  timelineData: "site/timeline/data.json",
   sampleImagesDir: "sampledata_images",
 };
 
@@ -132,14 +133,15 @@ export async function fetchCommitsForPath(path) {
 export async function buildVersionList() {
   let githubVersions = [];
   try {
-    const [logCommits, subCommits, sampleTextCommits, sampleDataCommits] = await Promise.all([
+    const [logCommits, subCommits, sampleTextCommits, sampleDataCommits, timelineCommits] = await Promise.all([
       fetchCommitsForPath(PATHS.logs),
       fetchCommitsForPath(PATHS.subtitles),
       fetchCommitsForPath(PATHS.sampleText),
       fetchCommitsForPath(PATHS.sampleData),
+      fetchCommitsForPath(PATHS.timelineData),
     ]);
     const bySha = new Map();
-    for (const c of [...logCommits, ...subCommits, ...sampleTextCommits, ...sampleDataCommits]) {
+    for (const c of [...logCommits, ...subCommits, ...sampleTextCommits, ...sampleDataCommits, ...timelineCommits]) {
       if (!bySha.has(c.sha)) bySha.set(c.sha, c);
     }
     githubVersions = [...bySha.values()].sort((a, b) => new Date(b.date) - new Date(a.date));
