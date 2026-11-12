@@ -65,7 +65,10 @@ function populateVersionSelects({ preserveSelection = false } = {}) {
   const hasSha = (sha) => sha && state.versions.some((v) => v.sha === sha);
   if (browseEl) browseEl.value = hasSha(prevBrowse) ? prevBrowse : state.versions[0].sha;
   if (toEl) toEl.value = hasSha(prevTo) ? prevTo : state.versions[0].sha;
-  if (fromEl) fromEl.value = hasSha(prevFrom) ? prevFrom : (state.versions[1] || state.versions[0]).sha;
+  if (fromEl) {
+    const keepFrom = hasSha(prevFrom) && (state.currentMode === "compare" || prevFrom !== prevTo);
+    fromEl.value = keepFrom ? prevFrom : (state.versions[1] || state.versions[0]).sha;
+  }
 }
 
 /**
@@ -396,7 +399,7 @@ function wireShareLinkButton() {
 export async function init() {
   if (!REPO) {
     setStatus(
-      "Repository not specified. Add '?repo=owner/repo' to the URL (for example, '?repo=schacherle/LastCaretakerLogDumper') to load archive data.",
+      "Repository not specified. Add '?repo=owner/repo' to the URL (for example, '?repo=the1killer/LastCaretakerLogDumper') to load archive data.",
       true
     );
     return;
@@ -413,7 +416,10 @@ export async function init() {
   wireDeviceControls(setStatus);
 
   const initialHash = parseAppHash(location.hash);
-  const localFastPath = isLocalEnvironment() && (!initialHash?.version || initialHash.version === "local");
+  const localFastPath =
+    isLocalEnvironment() &&
+    initialHash?.mode !== "compare" &&
+    (!initialHash?.version || initialHash.version === "local");
   if (localFastPath) {
     state.versions = [createLocalVersionEntry()];
     populateVersionSelects();

@@ -313,7 +313,7 @@ select:focus-visible {
 
 .list-toggle-btn {
   display: none;
-  font-family: var(--font);
+  font-family: inherit;
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -501,15 +501,15 @@ select:focus-visible {
 .ok-tag { color: var(--green); }
 .locked-tag { color: var(--rem); }
 
-.unlock-btn {
+.device-btn.unlock-btn {
   margin-top: 0.3rem;
   border-color: var(--orange);
   color: var(--orange);
   background: transparent;
 }
 
-.unlock-btn:hover { background: rgba(243, 86, 5, 0.15); }
-.unlock-btn:focus-visible {
+.device-btn.unlock-btn:hover { background: rgba(243, 86, 5, 0.15); }
+.device-btn.unlock-btn:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px var(--orange);
 }
