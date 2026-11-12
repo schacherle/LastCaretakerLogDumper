@@ -766,14 +766,29 @@ del.diff-del {
   .screens { flex-direction: column; }
   .list-screen, .detail-screen { flex: 1 1 auto; }
   .screen-scroll { max-height: 55vh; }
-  .list-screen .screen-scroll { max-height: 9.5rem; }
-  .list-screen.mobile-expanded .screen-scroll { max-height: 55vh; }
-  .list-toggle-btn { display: inline-flex; align-items: center; }
-  .list-screen .screen-title-row { cursor: pointer; }
   .toolbar-controls { margin-left: 0; }
   .control-strip { flex-wrap: wrap; }
   .control-block-label { writing-mode: horizontal-tb; transform: none; }
   .terminal-bar { flex-wrap: wrap; }
+}
+
+/* The toggle button and compact height ONLY activate when screens are stacked vertically (above and below) */
+.screens.is-stacked .list-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+}
+
+.screens.is-stacked .list-screen .screen-title-row {
+  cursor: pointer;
+}
+
+.screens.is-stacked .list-screen .screen-scroll {
+  min-height: 0;
+  max-height: 9.5rem;
+}
+
+.screens.is-stacked .list-screen.mobile-expanded .screen-scroll {
+  max-height: 55vh;
 }
 
 @media (min-width:1000px) and (min-height: 800px) {

@@ -208,6 +208,11 @@ function wireEntryListClicks() {
       const item = list[idx];
       setKey(item?.id || item?.key || null);
       renderFn(currentFilterValue());
+      const screens = document.querySelector(".screens");
+      if (screens?.classList.contains("is-stacked")) {
+        const detailScreen = document.querySelector(".detail-screen");
+        detailScreen?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     };
 
     container.addEventListener("click", (e) => {
@@ -266,25 +271,77 @@ function wireFilterInput() {
   });
 }
 
+/**
+ * Detects whether the list screen and detail screen are rendered in a stacked (above/below) layout
+ * rather than side-by-side.
+ * @param {HTMLElement} listScreen
+ * @param {HTMLElement} detailScreen
+ * @returns {boolean} True if detail is positioned below list.
+ */
+export function isScreenLayoutStacked(listScreen, detailScreen) {
+  if (!listScreen || !detailScreen) return false;
+  if (typeof detailScreen.offsetTop === "number" && typeof listScreen.offsetTop === "number") {
+    if (detailScreen.offsetTop >= listScreen.offsetTop + 100) return true;
+    if (detailScreen.offsetTop === listScreen.offsetTop) return false;
+  }
+  if (typeof detailScreen.getBoundingClientRect === "function" && typeof listScreen.getBoundingClientRect === "function") {
+    const listRect = listScreen.getBoundingClientRect();
+    const detailRect = detailScreen.getBoundingClientRect();
+    if (detailRect.top >= listRect.bottom - 20) return true;
+    if (Math.abs(detailRect.top - listRect.top) < 20 && detailRect.left >= listRect.right - 20) return false;
+  }
+  return false;
+}
+
+/**
+ * Updates the `.is-stacked` class on `.screens` according to whether the screens are vertically
+ * stacked (mobile/narrow view) or positioned side-by-side (desktop/wide view).
+ */
+export function updateStackedLayout() {
+  const listScreen = document.getElementById("list-screen");
+  const detailScreen = document.querySelector(".detail-screen");
+  const screens = document.querySelector(".screens");
+  const toggleBtn = document.getElementById("list-toggle-btn");
+  if (!listScreen || !detailScreen || !screens) return;
+
+  const isStacked = isScreenLayoutStacked(listScreen, detailScreen);
+  screens.classList.toggle("is-stacked", isStacked);
+
+  if (!isStacked) {
+    listScreen.classList.remove("mobile-expanded");
+    if (toggleBtn) {
+      toggleBtn.setAttribute("aria-expanded", "false");
+      toggleBtn.textContent = "EXPAND ▾";
+    }
+  }
+}
+
 function wireMobileListToggle() {
   const listScreen = document.getElementById("list-screen");
   const header = document.getElementById("list-screen-header");
   const toggleBtn = document.getElementById("list-toggle-btn");
+  const screens = document.querySelector(".screens");
   if (!listScreen || !header || !toggleBtn) return;
 
   const toggle = () => {
+    if (!screens?.classList.contains("is-stacked")) return;
     const expanded = listScreen.classList.toggle("mobile-expanded");
     toggleBtn.setAttribute("aria-expanded", String(expanded));
     toggleBtn.textContent = expanded ? "COLLAPSE ▴" : "EXPAND ▾";
   };
 
   header.addEventListener("click", (e) => {
-    // Only toggle on mobile breakpoint where the toggle button is visible.
-    if (getComputedStyle(toggleBtn).display === "none") return;
+    if (!screens?.classList.contains("is-stacked")) return;
     if (e.target === toggleBtn || header.contains(e.target)) {
       toggle();
     }
   });
+
+  updateStackedLayout();
+  window.addEventListener("resize", updateStackedLayout);
+  if (typeof ResizeObserver !== "undefined" && screens) {
+    new ResizeObserver(updateStackedLayout).observe(screens);
+  }
 }
 
 function wireShareLinkButton() {
@@ -410,6 +467,7 @@ export async function init() {
     const browseSelect = document.getElementById("browse-version");
     if (browseSelect) await loadBrowseVersion(browseSelect.value, setStatus);
   }
+  updateStackedLayout();
 
   if (localFastPath) {
     buildVersionList()
