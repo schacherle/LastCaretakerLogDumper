@@ -319,7 +319,7 @@ export function renderTimelineDetail() {
   }
   pane.innerHTML = `
     <div class="detail-head-1">${escapeHtml(ev.displayDate)} — ${escapeHtml(ev.fragmentTitle || ev.logTitle)} ${state.selectedTimelineIdx + 1}/${state.filteredTimeline.length}</div>
-    <div class="detail-head-2">${escapeHtml(ev.logTitle)} · ${escapeHtml(ev.logId)}</div>
+    <div class="detail-head-2">${escapeHtml(ev.logTitle)}</div>
     <div class="fragment" data-link-page="${escapeHtml(ev.pageKey)}">
       ${ev.fragmentTitle ? `<div class="fragment-title">${escapeHtml(ev.fragmentTitle)}</div>` : ""}
       <p>${escapeHtml(ev.fragmentDesc)}</p>
