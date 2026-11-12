@@ -1,4 +1,4 @@
-import { escapeHtml, formatDuration, clamp, trimmedSelectionText, resolveSelectedIndex } from "../core/formatters.js";
+import { escapeHtml, formatDuration, clamp, trimmedSelectionText, resolveSelectedIndex, shortSha } from "../core/formatters.js";
 import { PATHS, fetchFileAtSha } from "../api/github.js";
 import { state, currentSelectedEntryKey, SCOPE_TITLES } from "../state/store.js";
 import { normalizeLogs, normalizeArrayJson, logPageKey } from "../domain/logs.js";
@@ -317,9 +317,17 @@ export function renderTimelineDetail() {
     pane.innerHTML = `<p class="empty-note">Select a timeline event from the list to view its entry details.</p>`;
     return;
   }
+  let logLinkHtml = "";
+  if (!ev.isAsset && ev.logId) {
+    const params = new URLSearchParams({ mode: "browse", scope: "logs" });
+    if (state.currentBrowseSha) params.set("version", shortSha(state.currentBrowseSha));
+    params.set("entry", ev.logId);
+    if (ev.pageKey) params.set("page", ev.pageKey);
+    logLinkHtml = ` <a class="timeline-log-link" href="#${escapeHtml(params.toString())}">View in Voyage Logs →</a>`;
+  }
   pane.innerHTML = `
     <div class="detail-head-1">${escapeHtml(ev.displayDate)} — ${escapeHtml(ev.fragmentTitle || ev.logTitle)} ${state.selectedTimelineIdx + 1}/${state.filteredTimeline.length}</div>
-    <div class="detail-head-2">${escapeHtml(ev.logTitle)}</div>
+    <div class="detail-head-2">${escapeHtml(ev.logTitle)}${logLinkHtml}</div>
     <div class="fragment" data-link-page="${escapeHtml(ev.pageKey)}">
       ${ev.fragmentTitle ? `<div class="fragment-title">${escapeHtml(ev.fragmentTitle)}</div>` : ""}
       <p>${escapeHtml(ev.fragmentDesc)}</p>

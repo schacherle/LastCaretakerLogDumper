@@ -112,6 +112,7 @@ export function buildTimelineEvents(logs, extraEntries = []) {
           fragmentTitle,
           fragmentDesc,
           pageKey: logPageKey(frag, fIdx),
+          isAsset: false,
           _haystack: `${dt.displayDate} ${logTitle} ${log.id || ""} ${fragmentTitle} ${fragmentDesc}`.toLowerCase(),
         });
       }
@@ -137,6 +138,7 @@ export function buildTimelineEvents(logs, extraEntries = []) {
       fragmentTitle: name || source,
       fragmentDesc: info,
       pageKey: "1",
+      isAsset: true,
       _haystack: `${dt.displayDate} ${source} ${name} ${info}`.toLowerCase(),
     });
   });
